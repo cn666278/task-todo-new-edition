@@ -54,7 +54,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        Icon(Icons.person,size: 20,),
+        Icon(Icons.person,),
+        // 头像png控件
+        // CircleAvatar(
+        //   backgroundImage: AssetImage(
+        //     "images/header.png"
+        //   ),
+        // ),
         SizedBox(width: 20,)
       ],
     );
