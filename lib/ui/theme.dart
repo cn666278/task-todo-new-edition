@@ -10,14 +10,16 @@ const Color deepOrange = Colors.deepOrange;
 Color darkHeaderClr = const Color(0xFF424242);
 
 class Themes{
-  // ThemeData used to change the color, style ..
-  static final light = ThemeData(
-  primaryColor: primaryClr, // used to change the bar and main page bottom color
-  brightness: Brightness.light,
-  );
+    // ThemeData used to change the color, style ..
+    static final light = ThemeData(
+      backgroundColor: Colors.white,
+      primaryColor: primaryClr, // used to change the bar and main page bottom color
+      brightness: Brightness.light,
+    );
 
-  static final dark =  ThemeData(
-  primaryColor: Colors.red, // used to change the bar and main page bottom color
-  brightness: Brightness.dark,
-  );
+    static final dark =  ThemeData(
+      backgroundColor: darkGreyClr,
+      primaryColor: darkGreyClr, // used to change the bar and main page bottom color
+      brightness: Brightness.dark,
+    );
 }

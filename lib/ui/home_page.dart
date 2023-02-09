@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
   
   _appBar(){
     return AppBar(
+      elevation: 0, // eliminate the shadow of header banner
+      backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: (){
           ThemeServices().switchTheme();
@@ -49,12 +51,19 @@ class _HomePageState extends State<HomePage> {
           notifyHelper.scheduledNotification();
         },
         child: Icon(
-          Icons.nightlight_rounded,
+          // Day and moon icon should change according to the Theme Mode
+          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
           size: 20,
+          // Icon color should change according to the Theme Mode
+          color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
       actions: [
-        Icon(Icons.person,),
+        Icon(
+          Icons.person,
+          // Icon color should change according to the Theme Mode
+          color: Get.isDarkMode ? Colors.white : Colors.black,
+        ),
         // 头像png控件
         // CircleAvatar(
         //   backgroundImage: AssetImage(
