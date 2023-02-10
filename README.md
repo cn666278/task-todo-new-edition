@@ -4,6 +4,12 @@ A new Flutter project.
 
 ## Getting Started
 
+
+1. Turn off all anti-virus software, personal hot spots
+2. Open the project file using Android Studio
+3. Run Flutter Doctor to ensure the required runtime configuration
+4. Running the project
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
