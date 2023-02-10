@@ -1,8 +1,12 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
+import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/ui/widgets/button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,15 +14,17 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 // update from 2023/02/09
 class _HomePageState extends State<HomePage> {
   var notifyHelper;
+
   @override
-  void initState(){
+  void initState() {
     // TODO: implement initState
     super.initState();
     notifyHelper = NotifyHelper();
-    notifyHelper.initializeNotification(); // 初始化
+    notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
   }
 
@@ -26,27 +32,65 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      // using for the two columns on the top to show Time, date and add task bar
       body: Column(
         children: [
-          Text("Theme Data",
-          style: TextStyle(
-            fontSize: 30
-          ),)
+          _appTaskBar(),
+          Container(
+            child: DatePicker(
+              DateTime.now(),
+              height: 100,
+              width: 80,
+            ),
+          )
         ],
       ),
     );
   }
-  
-  _appBar(){
+
+  // rebuilt the Container() in _appTaskBar
+  _appTaskBar(){
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // wrap Column with a container so that can add padding, margin..
+          Container(
+            // margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // margin left
+              children: [
+                // you can change the time showing format by DateFormat.yMMMd()
+                Text(
+                  DateFormat.yMMMd().format(DateTime.now()),
+                  style: subHeadingStyle,
+                ),
+                Text(
+                  "Today",
+                  style: headingStyle,
+                ),
+              ],
+            ),
+          ),
+          MyButton(label: "Add Task", onTap: () => null)
+        ],
+      ),
+    );
+  }
+
+  _appBar() {
     return AppBar(
       elevation: 0, // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
-        onTap: (){
+        onTap: () {
           ThemeServices().switchTheme();
           notifyHelper.displayNotification(
             title: "Theme changed",
-            body: Get.isDarkMode ? "Activated Light Theme" : "Activated Dark Theme",
+            body: Get.isDarkMode
+                ? "Activated Light Theme"
+                : "Activated Dark Theme",
           );
           notifyHelper.scheduledNotification();
         },
@@ -70,7 +114,9 @@ class _HomePageState extends State<HomePage> {
         //     "images/header.png"
         //   ),
         // ),
-        SizedBox(width: 20,)
+        SizedBox(
+          width: 20,
+        )
       ],
     );
   }

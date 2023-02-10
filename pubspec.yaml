@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   get_storage:
   get:
+  intl:             # using for the time showing
+  google_fonts:
+  date_picker_timeline:
   flutter_local_notifications: ^9.9.0 # 不能使用更高版本否则部分功能不可用：onSelectNotification
   flutter_native_timezone:
 
