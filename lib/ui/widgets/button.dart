@@ -19,11 +19,11 @@ class MyButton extends StatelessWidget {
           color: primaryClr,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.only(left: 22, top: 18),
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
