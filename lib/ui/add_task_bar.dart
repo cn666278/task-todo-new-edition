@@ -14,6 +14,8 @@ class AddTaskPage extends StatefulWidget {
 
 class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
+  String _endTime = "9:30 PM";
+  String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,39 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
+              Row(
+                children: [
+                  Expanded(
+                      child: MyInputField(
+                    title: "Start Time",
+                    hint: _startTime,
+                    widget: IconButton(
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: true);
+                        },
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        )),
+                  )),
+                  SizedBox(
+                    width: 14,
+                  ),
+                  Expanded(
+                      child: MyInputField(
+                    title: "End Time",
+                    hint: _endTime,
+                    widget: IconButton(
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: false);
+                        },
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        )),
+                  )),
+                ],
+              )
             ],
           ),
         ),
@@ -92,16 +127,41 @@ class _AddTaskPageState extends State<AddTaskPage> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
-        lastDate: DateTime(2050)
-    );
+        lastDate: DateTime(2050));
 
-    if(_pickerDate!=null){
+    if (_pickerDate != null) {
       setState(() {
         _selectedDate = _pickerDate;
         print(_selectedDate);
       });
-    }else{
+    } else {
       print("it is null or something went wrong");
     }
+  }
+
+  _getTimeFromUser({required bool isStartTime}) async {
+    var pickedTime = await _showTimepicker();
+    String _formatedTime = pickedTime.format(context);
+    if (pickedTime == null) {
+      print("Time canceled");
+    } else if (isStartTime == true) {
+      setState(() {
+        _startTime = _formatedTime;
+      });
+    } else if (isStartTime == false) {
+      setState(() {
+        _endTime = _formatedTime;
+      });
+    }
+  }
+
+  _showTimepicker() {
+    return showTimePicker(
+        initialEntryMode: TimePickerEntryMode.input,
+        context: context,
+        initialTime: TimeOfDay(
+          hour: int.parse(_startTime.split(":")[0]),
+          minute: int.parse(_startTime.split(":")[1].split(" ")[0]),
+        ));
   }
 }
