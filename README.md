@@ -14,7 +14,7 @@ A new Flutter project.
 1. Turn off all anti-virus software, personal hot spots
 2. Open the project file using Android Studio
 3. Run Flutter Doctor to ensure the required runtime configuration
-4. Link to your devices(virtual machine or physcal machine)
+4. Link to your devices(virtual machine or physical machine)
 5. Running the project   
 
 ### Prototype 
