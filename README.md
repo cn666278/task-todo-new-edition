@@ -4,15 +4,22 @@ A new Flutter project.
 
 ## Getting Started
 
+### Description and main functions  
+
+[The planning design of app](https://github.com/cn666278/task-todo-new-edition/blob/main/FYP_Final.edited.docx)  
+
+[Main functions design](https://github.com/cn666278/task-todo-new-edition/blob/main/Flutter%20Project%20Note.docx)  
+
 ### Run the code
 1. Turn off all anti-virus software, personal hot spots
 2. Open the project file using Android Studio
 3. Run Flutter Doctor to ensure the required runtime configuration
-4. Link to your devices(virtual machine or physcal machine)
+4. Link to your devices(virtual machine or physical machine)
 5. Running the project   
 
 ### Prototype 
 [Prototype design using Figma](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
+
 
 ## Others
 This project is a starting point for a Flutter application.
