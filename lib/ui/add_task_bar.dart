@@ -25,6 +25,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   ];
   String _selectedRepeat = "None"; // default value
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
+  int _selectedColor = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -144,11 +145,69 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       repeatList.map<DropdownMenuItem<String>>((String? value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value!, style: TextStyle(color: Colors.grey),),
+                      child: Text(
+                        value!,
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     );
                   }).toList(),
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Color",
+                        style: titleStyle,
+                      ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      // Wrap widget can help put things in horizontal line
+                      Wrap(
+                        children: List<Widget>.generate(4, (int index) {
+                          return GestureDetector(
+                            // make the color selectable
+                            onTap: () {
+                              setState(() { // use setState() to trigger the result
+                                _selectedColor = index; // save the index color
+                                print("color index:$index");
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: CircleAvatar(
+                                radius: 14,
+                                backgroundColor:
+                                    // add more colors here
+                                    index == 0
+                                        ? primaryClr
+                                        : index == 1
+                                            ? pinkClr
+                                            : index == 2
+                                                ? yellowClr
+                                                : Colors.deepOrange,
+                                // we want to show the selected color with tick only,
+                                // other should be blank (empty Container)
+                                child: _selectedColor == index ? Icon(
+                                  Icons.done,
+                                  color: Colors.white,
+                                  size: 16,
+                                ):Container(),
+                              ),
+                            ),
+                          );
+                        }),
+                      )
+                    ],
+                  )
+                ],
+              )
             ],
           ),
         ),
