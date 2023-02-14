@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
 
 // convert StatelessWidget to StatefulWidget by Alt + ENTER
@@ -157,61 +158,71 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 height: 15,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Color",
-                        style: titleStyle,
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      // Wrap widget can help put things in horizontal line
-                      Wrap(
-                        children: List<Widget>.generate(4, (int index) {
-                          return GestureDetector(
-                            // make the color selectable
-                            onTap: () {
-                              setState(() { // use setState() to trigger the result
-                                _selectedColor = index; // save the index color
-                                print("color index:$index");
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: CircleAvatar(
-                                radius: 14,
-                                backgroundColor:
-                                    // add more colors here
-                                    index == 0
-                                        ? primaryClr
-                                        : index == 1
-                                            ? pinkClr
-                                            : index == 2
-                                                ? yellowClr
-                                                : Colors.deepOrange,
-                                // we want to show the selected color with tick only,
-                                // other should be blank (empty Container)
-                                child: _selectedColor == index ? Icon(
-                                  Icons.done,
-                                  color: Colors.white,
-                                  size: 16,
-                                ):Container(),
-                              ),
-                            ),
-                          );
-                        }),
-                      )
-                    ],
-                  )
+                  _colorPalette(),
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: MyButton(label: "Create Task", onTap: ()=>null),
+                  ),
                 ],
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  _colorPalette(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Color",
+          style: titleStyle,
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        // Wrap widget can help put things in horizontal line
+        Wrap(
+          children: List<Widget>.generate(4, (int index) {
+            return GestureDetector(
+              // make the color selectable
+              onTap: () {
+                setState(() { // use setState() to trigger the result
+                  _selectedColor = index; // save the index color
+                  print("color index:$index");
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor:
+                  // add more colors here
+                  index == 0
+                      ? primaryClr
+                      : index == 1
+                      ? pinkClr
+                      : index == 2
+                      ? yellowClr
+                      : Colors.deepOrange,
+                  // we want to show the selected color with tick only,
+                  // other should be blank (empty Container)
+                  child: _selectedColor == index ? Icon(
+                    Icons.done,
+                    color: Colors.white,
+                    size: 16,
+                  ):Container(),
+                ),
+              ),
+            );
+          }),
+        )
+      ],
     );
   }
 
