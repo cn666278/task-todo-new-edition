@@ -35,7 +35,7 @@ TextStyle get subHeadingStyle {
   // here you can change any font style you like with GoogleFonts.lato
   return GoogleFonts.lato(
       textStyle: TextStyle(
-    fontSize: 23,
+    fontSize: 24,
     fontWeight: FontWeight.bold,
     color: Get.isDarkMode ? Colors.grey[500] : Colors.grey,
   ));
@@ -44,7 +44,7 @@ TextStyle get subHeadingStyle {
 TextStyle get headingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: FontWeight.bold,
     color: Get.isDarkMode ? Colors.white : Colors.black,
   ));

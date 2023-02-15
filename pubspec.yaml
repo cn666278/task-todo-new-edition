@@ -42,6 +42,7 @@ dependencies:
   date_picker_timeline:
   flutter_local_notifications: ^9.9.0 # 不能使用更高版本否则部分功能不可用：onSelectNotification
   flutter_native_timezone:
+  sqflite: 
 
 dev_dependencies:
   flutter_test:

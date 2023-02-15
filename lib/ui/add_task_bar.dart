@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
+import '../models/task.dart';
 
 // convert StatelessWidget to StatefulWidget by Alt + ENTER
 class AddTaskPage extends StatefulWidget {
@@ -14,6 +16,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final TaskController _taskController = Get.put(TaskController());
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
@@ -43,8 +48,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Task",
                 style: headingStyle,
               ),
-              MyInputField(title: "Title", hint: "Enter your title"),
-              MyInputField(title: "Note", hint: "Enter your note here"),
+              MyInputField(title: "Title", hint: "Enter your title", controller: _titleController,),
+              MyInputField(title: "Note", hint: "Enter your note here", controller: _noteController,),
               MyInputField(
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -164,7 +169,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   _colorPalette(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: MyButton(label: "Create Task", onTap: ()=>null),
+                    child: MyButton(label: "Create Task", onTap: () => _validateDate()),
                   ),
                 ],
               )
@@ -175,7 +180,38 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  _colorPalette(){
+  _validateDate() {
+    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      _addTaskToDb();
+      Get.back();
+    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
+      Get.snackbar("Required", "All fields are required. ",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: pinkClr,
+          icon: Icon(Icons.warning_amber_rounded,
+          color: Colors.red,
+          ));
+    }
+  }
+
+  _addTaskToDb(){
+    _taskController.addTask(
+      task:Task(
+        note: _noteController.text,
+        title: _titleController.text,
+        date: DateFormat.yMd().format(_selectedDate),
+        startTime: _startTime,
+        endTime: _endTime,
+        remind: _selectedRemind,
+        repeat: _selectedRepeat,
+        color: _selectedColor,
+        isCompleted: 0, id: 1,
+      ),
+    );
+  }
+
+  _colorPalette() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -192,7 +228,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
             return GestureDetector(
               // make the color selectable
               onTap: () {
-                setState(() { // use setState() to trigger the result
+                setState(() {
+                  // use setState() to trigger the result
                   _selectedColor = index; // save the index color
                   print("color index:$index");
                 });
@@ -202,21 +239,23 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: CircleAvatar(
                   radius: 14,
                   backgroundColor:
-                  // add more colors here
-                  index == 0
-                      ? primaryClr
-                      : index == 1
-                      ? pinkClr
-                      : index == 2
-                      ? yellowClr
-                      : Colors.deepOrange,
+                      // add more colors here
+                      index == 0
+                          ? primaryClr
+                          : index == 1
+                              ? pinkClr
+                              : index == 2
+                                  ? yellowClr
+                                  : Colors.deepOrange,
                   // we want to show the selected color with tick only,
                   // other should be blank (empty Container)
-                  child: _selectedColor == index ? Icon(
-                    Icons.done,
-                    color: Colors.white,
-                    size: 16,
-                  ):Container(),
+                  child: _selectedColor == index
+                      ? Icon(
+                          Icons.done,
+                          color: Colors.white,
+                          size: 16,
+                        )
+                      : Container(),
                 ),
               ),
             );
