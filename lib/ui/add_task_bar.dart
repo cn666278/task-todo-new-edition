@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
+import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
-import '../models/task.dart';
+
 
 // convert StatelessWidget to StatefulWidget by Alt + ENTER
 class AddTaskPage extends StatefulWidget {
@@ -197,17 +198,17 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   _addTaskToDb(){
     _taskController.addTask(
-      task:Task(
-        note: _noteController.text,
-        title: _titleController.text,
-        date: DateFormat.yMd().format(_selectedDate),
-        startTime: _startTime,
-        endTime: _endTime,
-        remind: _selectedRemind,
-        repeat: _selectedRepeat,
-        color: _selectedColor,
-        isCompleted: 0, id: 1,
-      ),
+        task: Task(
+          note: _noteController.text,
+          title: _titleController.text,
+          date: DateFormat.yMd().format(_selectedDate),
+          startTime: _startTime,
+          endTime: _endTime,
+          remind: _selectedRemind,
+          repeat: _selectedRepeat,
+          color: _selectedColor,
+          isCompleted: 0,
+        )
     );
   }
 

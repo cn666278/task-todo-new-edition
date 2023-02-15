@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 
+// import '../models/task.dart';
 
 class TaskController extends GetxController{
   @override
@@ -9,18 +10,18 @@ class TaskController extends GetxController{
     super.onReady();
   }
 
-  // var taskList = <Task?>[].obs;
+  var taskList = <Task>[].obs;
 
   // await 异步处理
-  Future<void> addTask({Task? task}) {
-    return null;
+  Future<int> addTask({Task? task}) async {
+    return await DBHelper.insert(task);
   }
 
   // get all the data from table
-  // void getTasks() async{
-  //   List<Map<String, dynamic>> tasks = await DBHelper.query();
-  //   taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-  // }
+  void getTasks() async{
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+  }
 
   // void delete(Task task){
   //   DBHelper.delete(task);
