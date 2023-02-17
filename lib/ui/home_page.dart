@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 // update from 2023/02/09
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDate = DateTime.now();
+  final _taskController = Get.put(TaskController());
   var notifyHelper;
 
   @override
@@ -29,6 +31,9 @@ class _HomePageState extends State<HomePage> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
+    setState(() {
+      print("I am here");
+    });
   }
 
   @override
@@ -39,15 +44,37 @@ class _HomePageState extends State<HomePage> {
       // using for the two columns on the top to show Time, date and add task bar
       body: Column(
         children: [
-          _appTaskBar(),
+          _addTaskBar(),
           _addDateBar(),
+          _showTasks(),
         ],
       ),
     );
   }
 
+  _showTasks() {
+    return Expanded(
+      child: Obx(() {
+        print("OBX");
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+            itemBuilder: (_, context) {
+              print("itemBuilder");
+              print(_taskController.taskList.length);
+              // print("tasks length:" + "$tasksCount");
+              return Container(
+                width: 100,
+                height: 50,
+                color: Colors.green,
+                margin: const EdgeInsets.only(bottom: 10),
+              );
+            });
+      }),
+    );
+  }
+
   // rebuilt the Container() in _addDateBar
-  _addDateBar(){
+  _addDateBar() {
     return Container(
       margin: const EdgeInsets.only(top: 20, left: 20),
       child: DatePicker(
@@ -59,26 +86,19 @@ class _HomePageState extends State<HomePage> {
         selectedTextColor: Colors.white,
         dateTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey
-          ),
+              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         dayTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey
-          ),
+              fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         monthTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[400]
-          ),
+              color: Colors.grey[400]),
         ),
-        onDateChange: (date){
+        onDateChange: (date) {
           _selectedDate = date;
         },
       ),
@@ -86,7 +106,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // rebuilt the Container() in _appTaskBar
-  _appTaskBar(){
+  _addTaskBar() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -110,7 +130,11 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: "  Add Task", onTap: ()=> Get.to(AddTaskPage())),
+          MyButton(label: "+ Add Task", onTap: () async {
+            // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
+            await Get.to(() => AddTaskPage());
+            _taskController.getTasks();
+          }) // Get.to: jump to a new page
         ],
       ),
     );
@@ -158,4 +182,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

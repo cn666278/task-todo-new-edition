@@ -11,7 +11,9 @@ class DBHelper{
       return;
     }
     try{
-      String _path = await getDatabasesPath() + 'tasks.db'; // DATABASE name: tasks.db
+      // DATABASE name: tasks.db
+      // Create a database
+      String _path = await getDatabasesPath() + 'tasks.db';
       _db = await openDatabase(
           _path,
           version: _version,
