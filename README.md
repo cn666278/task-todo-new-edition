@@ -17,7 +17,7 @@ A new Flutter project.
 4. Link to your devices(virtual machine or physical machine)
 5. Running the project   
 
-### Prototype 
+### Prototype (GUI design)
 [Prototype design using Figma](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
 
 
