@@ -1,6 +1,7 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,7 @@ import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,6 +48,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          SizedBox(height: 10,),
           _showTasks(),
         ],
       ),
@@ -55,19 +58,28 @@ class _HomePageState extends State<HomePage> {
   _showTasks() {
     return Expanded(
       child: Obx(() {
-        print("OBX");
         return ListView.builder(
             itemCount: _taskController.taskList.length,
-            itemBuilder: (_, context) {
-              print("itemBuilder");
+            itemBuilder: (_, index) {
               print(_taskController.taskList.length);
-              // print("tasks length:" + "$tasksCount");
-              return Container(
-                width: 100,
-                height: 50,
-                color: Colors.green,
-                margin: const EdgeInsets.only(bottom: 10),
-              );
+
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                print("Tapped");
+                              },
+                              child: TaskTile(_taskController.taskList[index]),
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+
             });
       }),
     );
@@ -130,11 +142,13 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: "+ Add Task", onTap: () async {
-            // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
-            await Get.to(() => AddTaskPage());
-            _taskController.getTasks();
-          }) // Get.to: jump to a new page
+          MyButton(
+              label: "+ Add Task",
+              onTap: () async {
+                // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
+                await Get.to(() => AddTaskPage());
+                _taskController.getTasks();
+              }) // Get.to: jump to a new page
         ],
       ),
     );
