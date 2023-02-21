@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
+import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
@@ -48,7 +49,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           _showTasks(),
         ],
       ),
@@ -63,25 +66,112 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (_, index) {
               print(_taskController.taskList.length);
 
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                print("Tapped");
-                              },
-                              child: TaskTile(_taskController.taskList[index]),
-                            )
-                          ],
-                        ),
+              return AnimationConfiguration.staggeredList(
+                  position: index,
+                  child: SlideAnimation(
+                    child: FadeInAnimation(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _showBottomSheet(
+                                  context, _taskController.taskList[index]);
+                            },
+                            child: TaskTile(_taskController.taskList[index]),
+                          )
+                        ],
                       ),
-                    ));
-
+                    ),
+                  ));
             });
       }),
+    );
+  }
+
+  /* used to show the task state: Task Completed / Delete Task
+  * */
+  _showBottomSheet(BuildContext context, Task task) {
+    Get.bottomSheet(Container(
+      padding: EdgeInsets.only(top: 4),
+      // judge the BottomSheet height by the variable: isCompleted 0/1
+      height: task.isCompleted == 1
+          ? MediaQuery.of(context).size.height * 0.24
+          : MediaQuery.of(context).size.height * 0.32,
+      color: Get.isDarkMode ? darkGreyClr : Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 6,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
+            ),
+          ),
+          Spacer(),
+          task.isCompleted == 1
+              ? Container()
+              : _bottomSheetButton(
+                  label: "Task Completed",
+                  onTap: () {
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
+          _bottomSheetButton(
+            label: "Delete Task",
+            onTap: () {
+              Get.back();
+            },
+            clr: Colors.red[400]!,
+            context: context,
+          ),
+          SizedBox(height: 22,),
+          _bottomSheetButton(
+            label: "Close",
+            onTap: () {
+              Get.back();
+            },
+            clr: Colors.white,
+            isClose: true, // set as ture
+            context: context,
+          ),
+          SizedBox(height: 10,),
+        ],
+      ),
+    ));
+  }
+
+  _bottomSheetButton({
+    required String label,
+    required Function()? onTap,
+    required Color clr,
+    bool isClose = false,
+    required BuildContext context,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 4.0),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+            border: Border.all(
+          width: 2,
+          color: isClose == true ? Get.isDarkMode ? Colors.grey[600]! : Colors.grey[350]! : clr,
+        ),
+          borderRadius: BorderRadius.circular(20),
+          color: isClose == true ? Colors.transparent : clr,
+        ),
+        child: Center(
+          child: Text(
+            label,
+            // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
+            style: isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+          ),
+        ),
+      ),
     );
   }
 
