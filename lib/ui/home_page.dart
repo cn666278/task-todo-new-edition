@@ -64,25 +64,52 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
-              print(_taskController.taskList.length);
-
-              return AnimationConfiguration.staggeredList(
-                  position: index,
-                  child: SlideAnimation(
-                    child: FadeInAnimation(
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _showBottomSheet(
-                                  context, _taskController.taskList[index]);
-                            },
-                            child: TaskTile(_taskController.taskList[index]),
-                          )
-                        ],
+              // print(_taskController.taskList.length);
+              Task task = _taskController.taskList[index]; // pass an instance
+              // Tasks display logic by Date
+              print(task.toJson());
+              if(task.repeat == "Daily") {
+                DateTime date = DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat('HH:mm').format(date);
+                notifyHelper.scheduledNotification();
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _showBottomSheet(context, task);
+                              },
+                              child: TaskTile(task),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ));
+                    ));
+              }
+              // TODO ??? Weekly? Montly?
+              if(task.date == DateFormat.yMd().format(_selectedDate)){
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _showBottomSheet(context, task);
+                              },
+                              child: TaskTile(task),
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+              } else{
+                return Container(); // cannot find any match date
+              }
             });
       }),
     );
@@ -113,7 +140,9 @@ class _HomePageState extends State<HomePage> {
               ? Container()
               : _bottomSheetButton(
                   label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
                   onTap: () {
+                    _taskController.markTaskCompleted(task.id!);
                     Get.back();
                   },
                   clr: primaryClr,
@@ -122,22 +151,30 @@ class _HomePageState extends State<HomePage> {
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
+              // TODO -- Add warning message to avoid wrong deletion
+              _taskController.delete(task);
               Get.back();
             },
             clr: Colors.red[400]!,
             context: context,
           ),
-          SizedBox(height: 22,),
+          SizedBox(
+            height: 22,
+          ),
           _bottomSheetButton(
-            label: "Close",
+            label: "Details",
+            // TODO --- jump to Details page
             onTap: () {
               Get.back();
             },
             clr: Colors.white,
-            isClose: true, // set as ture
+            isClose: true,
+            // set as ture
             context: context,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     ));
@@ -157,10 +194,14 @@ class _HomePageState extends State<HomePage> {
         height: 55,
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
-            border: Border.all(
-          width: 2,
-          color: isClose == true ? Get.isDarkMode ? Colors.grey[600]! : Colors.grey[350]! : clr,
-        ),
+          border: Border.all(
+            width: 2,
+            color: isClose == true
+                ? Get.isDarkMode
+                    ? Colors.grey[600]!
+                    : Colors.grey[350]!
+                : clr,
+          ),
           borderRadius: BorderRadius.circular(20),
           color: isClose == true ? Colors.transparent : clr,
         ),
@@ -168,7 +209,8 @@ class _HomePageState extends State<HomePage> {
           child: Text(
             label,
             // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
-            style: isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+            style:
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
@@ -201,7 +243,9 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey[400]),
         ),
         onDateChange: (date) {
-          _selectedDate = date;
+          setState(() {
+            _selectedDate = date;
+          });
         },
       ),
     );
@@ -257,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                 ? "Activated Light Theme"
                 : "Activated Dark Theme",
           );
-          notifyHelper.scheduledNotification();
+          // notifyHelper.scheduledNotification();
         },
         child: Icon(
           // Day and moon icon should change according to the Theme Mode

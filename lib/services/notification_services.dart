@@ -53,7 +53,8 @@ class NotifyHelper{
         importance: Importance.max, priority: Priority.high);
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     // var platformChannelSpecifics = NotificationDetails(
     //     android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
@@ -65,7 +66,7 @@ class NotifyHelper{
     );
   }
 
-  scheduledNotification() async {
+  scheduledNotification(int hour, int minute, Task task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         "scheduled title",
@@ -73,7 +74,7 @@ class NotifyHelper{
         tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
         const NotificationDetails(
             android: AndroidNotificationDetails('your channel id',
-                'your channel name')),
+                'your channel name', channelDescription: 'your channel description')),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime
