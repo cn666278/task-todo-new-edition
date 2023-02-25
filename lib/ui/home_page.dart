@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("build method called");
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: context.theme.backgroundColor,
@@ -68,10 +69,14 @@ class _HomePageState extends State<HomePage> {
               Task task = _taskController.taskList[index]; // pass an instance
               // Tasks display logic by Date
               print(task.toJson());
-              if(task.repeat == "Daily") {
-                DateTime date = DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat('HH:mm').format(date);
-                notifyHelper.scheduledNotification();
+              if (task.repeat == "Daily") {
+                DateTime date =
+                DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.scheduledNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -89,8 +94,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ));
               }
+              // if(task.repeat == "Weekly") {
+              //   DateTime date = DateFormat.jm().parse(task.startTime.toString());
+              //   // print(date.weekday);
+              // }
               // TODO ??? Weekly? Montly?
-              if(task.date == DateFormat.yMd().format(_selectedDate)){
+              if (task.date == DateFormat.yMd().format(_selectedDate)) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -107,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ));
-              } else{
+              } else {
                 return Container(); // cannot find any match date
               }
             });
@@ -139,15 +148,15 @@ class _HomePageState extends State<HomePage> {
           task.isCompleted == 1
               ? Container()
               : _bottomSheetButton(
-                  label: "Task Completed",
-                  // TODO -- Add warning message to avoid wrong selection
-                  onTap: () {
-                    _taskController.markTaskCompleted(task.id!);
-                    Get.back();
-                  },
-                  clr: primaryClr,
-                  context: context,
-                ),
+            label: "Task Completed",
+            // TODO -- Add warning message to avoid wrong selection
+            onTap: () {
+              _taskController.markTaskCompleted(task.id!);
+              Get.back();
+            },
+            clr: primaryClr,
+            context: context,
+          ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
@@ -198,8 +207,8 @@ class _HomePageState extends State<HomePage> {
             width: 2,
             color: isClose == true
                 ? Get.isDarkMode
-                    ? Colors.grey[600]!
-                    : Colors.grey[350]!
+                ? Colors.grey[600]!
+                : Colors.grey[350]!
                 : clr,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -210,7 +219,7 @@ class _HomePageState extends State<HomePage> {
             label,
             // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
-                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
