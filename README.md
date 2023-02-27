@@ -20,6 +20,9 @@ A new Flutter project.
 ### Prototype (GUI design)
 [Prototype design using Figma](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
 
+### Database
+sqflite数据库是一款轻量级的关系型数据库，如同 iOS和Android中的SQLite
+[SQFLite](https://www.jianshu.com/p/e1a0fb3d202a)
 
 ## Others
 This project is a starting point for a Flutter application.
