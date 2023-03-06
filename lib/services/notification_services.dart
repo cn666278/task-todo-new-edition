@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:todo_app_new_edition/models/task.dart';
+import 'package:todo_app_new_edition/ui/notified_page.dart';
 
 class NotifyHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -79,7 +80,9 @@ class NotifyHelper {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+        matchDateTimeComponents: DateTimeComponents.time,
+        payload: "${task.title}|"+"${task.note}|"
+    );
   }
 
   tz.TZDateTime _convertTime(int hour, int minutes){
@@ -117,13 +120,11 @@ class NotifyHelper {
     } else {
       print("Notification Done");
     }
-
     if (payload == "Theme Changed") {
       print("Nothing navigate to");
     } else {
-      Get.to(() => Container(
-        color: Colors.white,
-      ));
+      // TODO -- SENT TO A NEW PAGE [ERROR!!!]
+      Get.to(() => NotifiedPage(label:payload));
     }
   }
 

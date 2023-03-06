@@ -196,6 +196,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
+  /* Add task to database */
   _addTaskToDb() async{
     int value = await _taskController.addTask(
         task: Task(

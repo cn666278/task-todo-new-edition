@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
             label: "Task Completed",
             // TODO -- Add warning message to avoid wrong selection
             onTap: () {
-              _taskController.markTaskCompleted(task.id!);
+              _taskController.markTaskCompleted(task.id!); // UPDATE
               Get.back();
             },
             clr: primaryClr,
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
             label: "Delete Task",
             onTap: () {
               // TODO -- Add warning message to avoid wrong deletion
-              _taskController.delete(task);
+              _taskController.delete(task); // DELETE
               Get.back();
             },
             clr: Colors.red[400]!,
