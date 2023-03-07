@@ -75,7 +75,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         onPressed: () {
                           _getTimeFromUser(isStartTime: true);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.access_time_rounded,
                           color: Colors.grey,
                         )),
@@ -91,7 +91,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         onPressed: () {
                           _getTimeFromUser(isStartTime: false);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.access_time_rounded,
                           color: Colors.grey,
                         )),
@@ -226,7 +226,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           height: 8.0,
         ),
         // Wrap widget can help put things in horizontal line
-        Wrap(
+        Wrap( // used for the horizontal layout
           children: List<Widget>.generate(4, (int index) {
             return GestureDetector(
               // make the color selectable

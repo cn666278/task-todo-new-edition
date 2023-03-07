@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 class NotifiedPage extends StatelessWidget {
   final String? label;
-
   const NotifiedPage({Key? key, required this.label}) : super(key: key);
 
   @override
@@ -31,11 +30,15 @@ class NotifiedPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               color: Get.isDarkMode ? Colors.white:Colors.grey[400]
             ),
-            child: Text(
-              this.label.toString().split("|")[1],
-              style: TextStyle(
-                color: Get.isDarkMode ? Colors.black:Colors.white,
-                fontSize: 26
+            child: Padding(
+              // TODO --- ADD MORE INFO: TIME/ DDL / ...
+              padding: const EdgeInsets.only(left: 80,top: 15),
+              child: Text(
+                label.toString().split("|")[1],
+                style: TextStyle(
+                  color: Get.isDarkMode ? Colors.black:Colors.white,
+                  fontSize: 26
+                ),
               ),
             ),
           ),

@@ -15,7 +15,8 @@ class NotifyHelper {
   get selectNotificationSubject => null;
 
   initializeNotification() async {
-    tz.initializeTimeZones();
+    _configureLocalTimeZone();
+    // tz.initializeTimeZones();
     final IOSInitializationSettings initializationSettingsIOS =
     IOSInitializationSettings(
         requestSoundPermission: false,
@@ -96,7 +97,8 @@ class NotifyHelper {
     return scheduleDate;
   }
 
-  /* get the local time zone */
+  // TODO ---- Something wrong in this function(?Phone timezone setting?)
+  /* get local timezone */
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();

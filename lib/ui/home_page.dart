@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
     setState(() {
-      print("I am here");
+      print("Initialize");
     });
   }
 
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
               print(task.toJson());
               if (task.repeat == "Daily") {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -148,15 +148,15 @@ class _HomePageState extends State<HomePage> {
           task.isCompleted == 1
               ? Container()
               : _bottomSheetButton(
-            label: "Task Completed",
-            // TODO -- Add warning message to avoid wrong selection
-            onTap: () {
-              _taskController.markTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: primaryClr,
-            context: context,
-          ),
+                  label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
+                  onTap: () {
+                    _taskController.markTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
@@ -207,8 +207,8 @@ class _HomePageState extends State<HomePage> {
             width: 2,
             color: isClose == true
                 ? Get.isDarkMode
-                ? Colors.grey[600]!
-                : Colors.grey[350]!
+                    ? Colors.grey[600]!
+                    : Colors.grey[350]!
                 : clr,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> {
             label,
             // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
-            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
@@ -237,14 +237,17 @@ class _HomePageState extends State<HomePage> {
         initialSelectedDate: DateTime.now(),
         selectionColor: primaryClr,
         selectedTextColor: Colors.white,
+        // Date
         dateTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
+        // Day
         dayTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
               fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
+        // Month
         monthTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
               fontSize: 13,
