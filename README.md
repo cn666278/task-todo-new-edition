@@ -25,6 +25,16 @@ A new Flutter project.
 
 [SQFLite](https://www.jianshu.com/p/e1a0fb3d202a)
 
+`MySQL+XAMPP`
+1. start the MySQL service
+cmd -> net start mysql 
+
+2. open XAMPP start Apache and MySQL
+
+3. click the admin in XAMPP
+
+4. Enter the http://localhost/phpmyadmin/ page  
+  
 ## Others
 This project is a starting point for a Flutter application.
 
