@@ -35,6 +35,7 @@ cmd -> net start mysql
 3. click the admin in XAMPP
 
 4. Enter the http://localhost/phpmyadmin/ page  
+5. make php file in C:\xampp\htdocs\dashboard
   
 ## Others
 This project is a starting point for a Flutter application.
