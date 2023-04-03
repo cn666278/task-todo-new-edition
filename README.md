@@ -41,6 +41,9 @@ cmd -> net start mysql
 
 [Flutter Error: Cannot run with sound null safety](https://zhuanlan.zhihu.com/p/405838959)  
 
+[ERROR 1396 (HY000): Operation ALTER USER failed for ‘root‘@‘localhost‘](https://blog.csdn.net/q258523454/article/details/84555847)  
+
+
 ## Others
 This project is a starting point for a Flutter application.
 
