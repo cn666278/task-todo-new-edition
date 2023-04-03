@@ -39,6 +39,8 @@ cmd -> net start mysql
   
 [Edit your password in MySQL database](https://blog.csdn.net/qq_52487066/article/details/127009665)  
 
+[Flutter Error: Cannot run with sound null safety](https://zhuanlan.zhihu.com/p/405838959)  
+
 ## Others
 This project is a starting point for a Flutter application.
 
