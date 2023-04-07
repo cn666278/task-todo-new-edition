@@ -20,16 +20,13 @@ class TaskController extends GetxController {
   // get all the data from table
   void getTasks() async{
     List<Map<String, dynamic>> tasks = await DBHelper.query();
-    // Task.fromJson(tasks);
-    // taskList.assignAll(Task.fromJson(tasks));
-    // List<Map<String, dynamic>> val = [];
     print(tasks);
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     print(taskList);
   }
 
-  void delete(Task task) {
-    DBHelper.delete(task);
+  void delete(Task task) async {
+    await DBHelper.delete(task);
     getTasks(); // update the current new task list
     // after delete we have to update the task page
   }

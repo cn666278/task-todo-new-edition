@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
     setState(() {
+      _taskController.getTasks();
       print("Initialize");
     });
   }

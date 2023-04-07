@@ -184,6 +184,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   _validateDate() {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
       _addTaskToDb();
+      _taskController.getTasks();
       Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required. ",
