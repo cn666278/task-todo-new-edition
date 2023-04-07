@@ -15,8 +15,8 @@ class NotifyHelper {
   get selectNotificationSubject => null;
 
   initializeNotification() async {
-    _configureLocalTimeZone();
-    // tz.initializeTimeZones();
+    // _configureLocalTimeZone();
+    tz.initializeTimeZones();
     final IOSInitializationSettings initializationSettingsIOS =
     IOSInitializationSettings(
         requestSoundPermission: false,

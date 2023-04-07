@@ -45,6 +45,11 @@ dependencies:
   timezone:
   sqflite:
   flutter_staggered_animations:
+  flutter_lints: ^2.0.0
+  http:
+  flutter_toastr:
+  mysql1:
+  mysql_utils:
 
 dev_dependencies:
   flutter_test:
