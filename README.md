@@ -35,7 +35,12 @@ cmd -> net start mysql
 3. click the admin in XAMPP
 
 4. Enter the http://localhost/phpmyadmin/ page  
-5. make php file in C:\xampp\htdocs\dashboard
+5. make php file in C:\xampp\htdocs\dashboard  
+  
+  
+Dart API Package:  
+1. [mysql1](https://pub.flutter-io.cn/packages/mysql1)  
+2. [mysql_utils](https://pub.flutter-io.cn/packages/mysql_utils)  
   
 [Edit your password in MySQL database](https://blog.csdn.net/qq_52487066/article/details/127009665)  
 
