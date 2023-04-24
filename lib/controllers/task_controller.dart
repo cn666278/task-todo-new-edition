@@ -11,6 +11,7 @@ class TaskController extends GetxController {
   }
 
   var taskList = <Task>[].obs;
+  var taskDetailList = <Task>[].obs;
 
   // await 异步处理
   Future<int> addTask({Task? task}) async {
@@ -20,7 +21,7 @@ class TaskController extends GetxController {
   // get all the data from table
   void getTasks() async{
     List<Map<String, dynamic>> tasks = await DBHelper.query();
-    print(tasks);
+    // print(tasks);
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     print(taskList);
   }
@@ -36,5 +37,14 @@ class TaskController extends GetxController {
   void markTaskCompleted(int id) async {
     await DBHelper.update(id);
     getTasks(); // update the current new task list
+  }
+
+  // get all the data from table
+  void getTaskDetails(Task task) async{
+    // todo edit the dunction query()
+    List<Map<String, dynamic>> taskDetail = await DBHelper.queryTaskDetail(task);
+    // print(taskDetail);
+    taskDetailList.assignAll(taskDetail.map((data) => Task.fromJson(data)).toList());
+    print(taskDetailList);
   }
 }

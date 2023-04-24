@@ -15,6 +15,7 @@ import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
+import 'package:todo_app_new_edition/ui/details.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class HomePage extends StatefulWidget {
 // update from 2023/02/09
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDate = DateTime.now();
+
   // TODO ???
   var db = new Mysql();
   final _taskController = Get.put(TaskController());
@@ -178,8 +180,9 @@ class _HomePageState extends State<HomePage> {
           _bottomSheetButton(
             label: "Details",
             // TODO --- jump to Details page
-            onTap: () {
-              Get.back();
+            onTap: () async {
+              await Get.to(() => TaskDetailPage(task: task));
+              _taskController.getTasks();
             },
             clr: Colors.white,
             isClose: true,
@@ -231,6 +234,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Calendar function
   // rebuilt the Container() in _addDateBar
   _addDateBar() {
     return Container(
