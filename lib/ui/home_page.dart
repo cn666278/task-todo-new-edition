@@ -76,6 +76,18 @@ class _HomePageState extends State<HomePage> {
               Task task = _taskController.taskList[index]; // pass an instance
               // Tasks display logic by Date
               print(task.toJson());
+              // used to format weekly date
+              // ref:
+              // 1. https://www.jianshu.com/p/00ccb0fbdb42
+              // 2. https://api.flutter.dev/flutter/intl/DateFormat-class.html
+              DateTime weeklyDate = DateFormat.yMd().parse(task.date.toString());
+              var weeklyTime = DateFormat("EEEE").format(weeklyDate);
+
+              // monthly date format
+              DateTime monthlyDate = DateFormat.yMd().parse(task.date.toString());
+              var monthlyTime = DateFormat("MMMM").format(monthlyDate);
+
+              // Daily task remind
               if (task.repeat == "Daily") {
                 DateTime date =
                     DateFormat.jm().parse(task.startTime.toString());
@@ -101,10 +113,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ));
               }
-              // if(task.repeat == "Weekly") {
-              //   DateTime date = DateFormat.jm().parse(task.startTime.toString());
-              //   // print(date.weekday);
-              // }
+
               // TODO ??? Weekly? Montly?
               if (task.date == DateFormat.yMd().format(_selectedDate)) {
                 return AnimationConfiguration.staggeredList(
@@ -123,7 +132,60 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ));
-              } else {
+              }
+              // Weekly task remind
+              else if (task.repeat == 'Weekly' && weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
+                DateTime date =
+                DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.repeatWeeklyNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _showBottomSheet(context, task);
+                              },
+                              child: TaskTile(task),
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+              }
+              // TODO -- Monthly task remind(Wrong)
+              // else if (task.repeat == 'Monthly' && monthlyTime == DateFormat.MMMM().format(_selectedDate)) {
+              //   DateTime date =
+              //   DateFormat.jm().parse(task.startTime.toString());
+              //   var myTime = DateFormat("HH:mm").format(date);
+              //   notifyHelper.repeatWeeklyNotification(
+              //       int.parse(myTime.toString().split(":")[0]), // hours
+              //       int.parse(myTime.toString().split(":")[1]), // minutes
+              //       task);
+              //   return AnimationConfiguration.staggeredList(
+              //       position: index,
+              //       child: SlideAnimation(
+              //         child: FadeInAnimation(
+              //           child: Row(
+              //             children: [
+              //               GestureDetector(
+              //                 onTap: () {
+              //                   _showBottomSheet(context, task);
+              //                 },
+              //                 child: TaskTile(task),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ));
+              // }
+              else {
                 return Container(); // cannot find any match date
               }
             });

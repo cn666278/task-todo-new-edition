@@ -6,6 +6,8 @@ import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
+import 'package:todo_app_new_edition/ui/widgets/update_button.dart';
 
 // Details page
 // convert StatelessWidget to StatefulWidget by Alt + ENTER
@@ -50,13 +52,25 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text(
-                // "Add Task",
-              task!.title!,
-                style: headingStyle,
-              ),
-              MyInputField(title: task!.title!, hint: "Enter your title", controller: _titleController,),
-              MyInputField(title: task!.note!, hint: "Enter your note here", controller: _noteController,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.task, color: _getBGClr(task?.color??0)),
+                    const SizedBox(width: 5,),
+                    Text(
+                      task!.title!,
+                      style: headingStyle,
+                    ),
+                  ],
+                ),
+                _colorPalette(),
+              ],
+            ),
+              MyInputField(title: "Title", hint: task!.title!, controller: _titleController,),
+              MyInputField(title: "Note", hint: task!.note!, controller: _noteController,),
               MyInputField(
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -176,7 +190,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                   _colorPalette(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: MyButton(label: "Create Task", onTap: () => _validateDate()),
+                    child: UpdateButton(label: "Update", onTap: () => _validateDate()),
                   ),
                 ],
               )
@@ -187,8 +201,25 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     );
   }
 
+  /* 控制TASK LIST 卡片颜色 */
+  _getBGClr(int no) {
+    switch (no) {
+      case 0:
+        return bluishClr;
+      case 1:
+        return pinkClr;
+      case 2:
+        return yellowClr;
+      case 3:
+        return deepOrange;
+      default:
+        return bluishClr;
+    }
+  }
+
   _validateDate() {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      // TODO -- CHANGE TO EDIT / UPDATE Function
       _addTaskToDb();
       _taskController.getTasks();
       Get.back();
@@ -225,13 +256,13 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Color",
-          style: titleStyle,
-        ),
-        SizedBox(
-          height: 8.0,
-        ),
+        // Text(
+        //   "Color",
+        //   style: titleStyle,
+        // ),
+        // SizedBox(
+        //   height: 8.0,
+        // ),
         // Wrap widget can help put things in horizontal line
         Wrap( // used for the horizontal layout
           children: List<Widget>.generate(4, (int index) {

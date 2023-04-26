@@ -157,4 +157,129 @@ class NotifyHelper {
     // );
     Get.dialog(Text("Welcome to my App"));
   }
+
+  Future<void> _cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  scheduledWeeklyNotification(int hour, int minute, Task task) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        task.id!.toInt(),
+        task.title,
+        task.note,
+        _convertTime(hour, minute),
+        // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        const NotificationDetails(
+            android: AndroidNotificationDetails(
+                'your channel id', 'your channel name')),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime, // edit this
+        payload: "${task.title}|"+"${task.note}|"
+    );
+  }
+
+  scheduledMonthlyNotification(int hour, int minute, Task task) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        task.id!.toInt(),
+        task.title,
+        task.note,
+        _convertTime(hour, minute),
+        const NotificationDetails(
+            android: AndroidNotificationDetails(
+                'your channel id', 'your channel name')),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime, // edit this
+        payload: "${task.title}|"+"${task.note}|"
+    );
+  }
+
+
+  Future<void> repeatWeeklyNotification(int hour, int minute, Task task) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+        'repeating channel id', 'repeating channel name',
+        channelDescription: 'repeating description');
+    const NotificationDetails notificationDetails =
+    NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+        task.id!.toInt(),
+        task.title,
+        task.note,
+        RepeatInterval.weekly,
+        notificationDetails,
+        androidAllowWhileIdle: true);
+  }
+
+  // NEW ADD FUNCTIONS(not used so far)
+  Future<void> _scheduleDailyTenAMLastYearNotification() async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'daily scheduled notification title',
+        'daily scheduled notification body',
+        _nextInstanceOfTenAMLastYear(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails('daily notification channel id',
+              'daily notification channel name',
+              channelDescription: 'daily notification description'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  Future<void> _scheduleWeeklyTenAMNotification() async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'weekly scheduled notification title',
+        'weekly scheduled notification body',
+        _nextInstanceOfTenAM(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails('weekly notification channel id',
+              'weekly notification channel name',
+              channelDescription: 'weekly notificationdescription'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+  }
+
+  tz.TZDateTime _nextInstanceOfTenAM() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+    tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  tz.TZDateTime _nextWeeklyInstanceOfTenAM() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+    tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 7));
+    }
+    return scheduledDate;
+  }
+
+  tz.TZDateTime _nextInstanceOfTenAMLastYear() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    return tz.TZDateTime(tz.local, now.year - 1, now.month, now.day, 10);
+  }
+
+  tz.TZDateTime _nextInstanceOfMondayTenAM() {
+    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
+    while (scheduledDate.weekday != DateTime.monday) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
 }
