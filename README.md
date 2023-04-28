@@ -1,6 +1,8 @@
 # todo_app_new_edition
 
-A new Flutter project.
+A new Flutter project.  
+
+[The advantages of Flutter](https://www.zhihu.com/question/485739670/answer/2950106277)  
 
 ## Getting Started
 
