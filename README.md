@@ -1,6 +1,8 @@
 # todo_app_new_edition
 
-A new Flutter project.
+A new Flutter project.  
+
+[The advantages of Flutter](https://www.zhihu.com/question/485739670/answer/2950106277)  
 
 ## Getting Started
 
@@ -56,6 +58,8 @@ A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [XMUX Technology reference](https://docs.xmux.xdea.io/developer/architecture/)  
+- [XMUX](https://github.com/XMUMY/XMUX)  
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
