@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+
+const Color backgroundColor2 = Color(0xFF17203A);
+const Color backgroundColorLight = Color(0xFFF2F6FF);
+const Color backgroundColorDark = Color(0xFF25254B);
+const Color shadowColorLight = Color(0xFF4A5367);
+const Color shadowColorDark = Colors.black;
 
 const Color bluishClr = Color(0xFF4e5ae8);
 const Color yellowClr = Color(0xFFFFB746);

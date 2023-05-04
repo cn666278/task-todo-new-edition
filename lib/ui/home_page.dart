@@ -1,5 +1,4 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
+import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 
