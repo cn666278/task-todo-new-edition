@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
+import 'package:todo_app_new_edition/onboding/onboding_screen.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
+import 'package:todo_app_new_edition/ui/entry_point.dart';
 import 'package:todo_app_new_edition/ui/home_page.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +30,9 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.dark,
       themeMode: ThemeServices().theme,
 
-      home: HomePage()
+      home: EntryPoint(),
+      // TODO -- When need to add the login function, uncomment this
+      // home: OnbodingScreen(), // login page
     );
   }
 }
