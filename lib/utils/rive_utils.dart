@@ -11,7 +11,7 @@ class RiveUtils {
     return controller.findInput<bool>("active") as SMIBool;
   }
 
-  static void chnageSMIBoolState(SMIBool input) {
+  static void changeSMIBoolState(SMIBool input) {
     input.change(true);
     Future.delayed(
       const Duration(seconds: 1),

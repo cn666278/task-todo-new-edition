@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
 import 'package:todo_app_new_edition/ui/home_page.dart';
+import 'package:todo_app_new_edition/ui/screens/demo.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav_item.dart';
 import 'package:todo_app_new_edition/ui/widgets/menu_btn.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_bar.dart';
+import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
 
 
@@ -26,6 +29,17 @@ class _EntryPointState extends State<EntryPoint>
   Menu selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
+
+  // TODO -- NEW ADDED
+  final PageController pageController = PageController();
+  int currentIndex = 0;
+
+  void onIndexChanged(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+    pageController.jumpToPage(index);
+  }
 
   void updateSelectedBtmNav(Menu menu) {
     if (selectedBottonNav != menu) {
@@ -130,52 +144,94 @@ class _EntryPointState extends State<EntryPoint>
               },
             ),
           ),
+          PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: pageController,
+            onPageChanged: onIndexChanged,
+            children: const [
+              DemoPage(title: "home"),
+              DemoPage(title: "map"),
+              DemoPage(title: "chat"),
+              DemoPage(title: "user"),
+            ],
+          ),
         ],
       ),
-      bottomNavigationBar: Transform.translate(
-        offset: Offset(0, 100 * animation.value),
-        child: SafeArea(
-          child: Container(
-            padding:
-            const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: BoxDecoration(
-              color: backgroundColor2.withOpacity(0.8),
-              borderRadius: const BorderRadius.all(Radius.circular(24)),
-              boxShadow: [
-                BoxShadow(
-                  color: backgroundColor2.withOpacity(0.3),
-                  offset: const Offset(0, 20),
-                  blurRadius: 20,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ...List.generate(
-                  bottomNavItems.length,
-                      (index) {
-                    Menu navBar = bottomNavItems[index];
-                    return BtmNavItem(
-                      navBar: navBar,
-                      press: () {
-                        RiveUtils.chnageSMIBoolState(navBar.rive.status!);
-                        updateSelectedBtmNav(navBar);
-                      },
-                      riveOnInit: (artboard) {
-                        navBar.rive.status = RiveUtils.getRiveInput(artboard,
-                            stateMachineName: navBar.rive.stateMachineName);
-                      },
-                      selectedNav: selectedBottonNav,
-                    );
-                  },
-                ),
-              ],
-            ),
+      bottomNavigationBar: BuildNavigation(
+        currentIndex: currentIndex,
+        items: [
+          NavigationItemModel(
+            label: "home",
+            icon: SvgIcon.layout,
           ),
-        ),
+          NavigationItemModel(
+            label: "map",
+            icon: SvgIcon.marker,
+          ),
+          NavigationItemModel(
+            label: "chat",
+            icon: SvgIcon.chat,
+            count: 3,
+          ),
+          NavigationItemModel(
+            label: "user",
+            icon: SvgIcon.user,
+          ),
+        ],
+        onTap: onIndexChanged, // 切换tab事件
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add_circle_rounded, size: 50),
+      ), // 浮动按钮
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
+
+      // TODO --DELETE
+      // bottomNavigationBar: Transform.translate(
+      //   offset: Offset(0, 100 * animation.value),
+      //   child: SafeArea(
+      //     child: Container(
+      //       padding:
+      //       const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
+      //       margin: const EdgeInsets.symmetric(horizontal: 24),
+      //       decoration: BoxDecoration(
+      //         color: backgroundColor2.withOpacity(0.8),
+      //         borderRadius: const BorderRadius.all(Radius.circular(24)),
+      //         boxShadow: [
+      //           BoxShadow(
+      //             color: backgroundColor2.withOpacity(0.3),
+      //             offset: const Offset(0, 20),
+      //             blurRadius: 20,
+      //           ),
+      //         ],
+      //       ),
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: [
+      //           ...List.generate(
+      //             bottomNavItems.length,
+      //                 (index) {
+      //               Menu navBar = bottomNavItems[index];
+      //               return BtmNavItem(
+      //                 navBar: navBar,
+      //                 press: () {
+      //                   RiveUtils.changeSMIBoolState(navBar.rive.status!);
+      //                   updateSelectedBtmNav(navBar);
+      //                 },
+      //                 riveOnInit: (artboard) {
+      //                   navBar.rive.status = RiveUtils.getRiveInput(artboard,
+      //                       stateMachineName: navBar.rive.stateMachineName);
+      //                 },
+      //                 selectedNav: selectedBottonNav,
+      //               );
+      //             },
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
