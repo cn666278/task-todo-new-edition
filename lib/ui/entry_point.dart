@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:rive/rive.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
+import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/home_page.dart';
 import 'package:todo_app_new_edition/ui/screens/demo.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
@@ -12,7 +15,6 @@ import 'package:todo_app_new_edition/ui/widgets/menu_btn.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_bar.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
-
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
@@ -58,7 +60,7 @@ class _EntryPointState extends State<EntryPoint>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(
-            () {
+        () {
           setState(() {});
         },
       );
@@ -127,7 +129,7 @@ class _EntryPointState extends State<EntryPoint>
                 }
 
                 setState(
-                      () {
+                  () {
                     isSideBarOpen = !isSideBarOpen;
                   },
                 );
@@ -139,22 +141,23 @@ class _EntryPointState extends State<EntryPoint>
                 artboard.addController(controller!);
 
                 isMenuOpenInput =
-                controller.findInput<bool>("isOpen") as SMIBool;
+                    controller.findInput<bool>("isOpen") as SMIBool;
                 isMenuOpenInput.value = true;
               },
             ),
           ),
-          PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: pageController,
-            onPageChanged: onIndexChanged,
-            children: const [
-              DemoPage(title: "home"),
-              DemoPage(title: "map"),
-              DemoPage(title: "chat"),
-              DemoPage(title: "user"),
-            ],
-          ),
+          // TODO -- Something wrong with the PageView(will overwrite the menu botton)
+          // PageView(
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   controller: pageController,
+          //   onPageChanged: onIndexChanged,
+          //   children: const [
+          //     HomePage(),
+          //     AddTaskPage(),
+          //     DemoPage(title: "chat"),
+          //     DemoPage(title: "user"),
+          //   ],
+          // ),
         ],
       ),
       bottomNavigationBar: BuildNavigation(
@@ -181,13 +184,16 @@ class _EntryPointState extends State<EntryPoint>
         onTap: onIndexChanged, // 切换tab事件
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => const AddTaskPage());
+        },
         child: const Icon(Icons.add_circle_rounded, size: 50),
-      ), // 浮动按钮
+      ),
+      // float button
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
+          FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
 
-      // TODO --DELETE
+      // TODO --DELETE( old menu bar with on Page jump)
       // bottomNavigationBar: Transform.translate(
       //   offset: Offset(0, 100 * animation.value),
       //   child: SafeArea(

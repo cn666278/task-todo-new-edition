@@ -377,6 +377,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
+          // TODO -- Logic for theme change
           ThemeServices().switchTheme();
           notifyHelper.displayNotification(
             title: "Theme changed",
