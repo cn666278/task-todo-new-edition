@@ -160,40 +160,40 @@ class _EntryPointState extends State<EntryPoint>
           // ),
         ],
       ),
-      bottomNavigationBar: BuildNavigation(
-        currentIndex: currentIndex,
-        items: [
-          NavigationItemModel(
-            label: "home",
-            icon: SvgIcon.layout,
-          ),
-          NavigationItemModel(
-            label: "map",
-            icon: SvgIcon.marker,
-          ),
-          NavigationItemModel(
-            label: "chat",
-            icon: SvgIcon.chat,
-            count: 3,
-          ),
-          NavigationItemModel(
-            label: "user",
-            icon: SvgIcon.user,
-          ),
-        ],
-        onTap: onIndexChanged, // 切换tab事件
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => const AddTaskPage());
-        },
-        child: const Icon(Icons.add_circle_rounded, size: 50),
-      ),
-      // float button
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
+      // bottomNavigationBar: BuildNavigation(
+      //   currentIndex: currentIndex,
+      //   items: [
+      //     NavigationItemModel(
+      //       label: "home",
+      //       icon: SvgIcon.layout,
+      //     ),
+      //     NavigationItemModel(
+      //       label: "map",
+      //       icon: SvgIcon.marker,
+      //     ),
+      //     NavigationItemModel(
+      //       label: "chat",
+      //       icon: SvgIcon.chat,
+      //       count: 3,
+      //     ),
+      //     NavigationItemModel(
+      //       label: "user",
+      //       icon: SvgIcon.user,
+      //     ),
+      //   ],
+      //   onTap: onIndexChanged, // 切换tab事件
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Get.to(() => const AddTaskPage());
+      //   },
+      //   child: const Icon(Icons.add_circle_rounded, size: 50),
+      // ),
+      // // float button
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
 
-      // TODO --DELETE( old menu bar with on Page jump)
+      // TODO --DELETE( old menu bar with no Page jump)
       // bottomNavigationBar: Transform.translate(
       //   offset: Offset(0, 100 * animation.value),
       //   child: SafeArea(

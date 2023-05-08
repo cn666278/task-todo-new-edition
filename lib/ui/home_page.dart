@@ -10,12 +10,16 @@ import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
+import 'package:todo_app_new_edition/ui/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/demo.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
+import 'package:todo_app_new_edition/utils/icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,6 +37,18 @@ class _HomePageState extends State<HomePage> {
   final _taskController = Get.put(TaskController());
   var notifyHelper;
 
+  // TODO -- NEW ADDED for menu bar
+  final PageController pageController = PageController();
+  int currentIndex = 0;
+
+  void onIndexChanged(int index) {
+    setState(() {
+      currentIndex = index;
+      Get.to(pages[index]);
+    });
+    // pageController.jumpToPage(index);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -45,6 +61,14 @@ class _HomePageState extends State<HomePage> {
       print("Initialize");
     });
   }
+
+  List pages = [
+    // EntryPoint(),
+    EntryPoint(),
+    AddTaskPage(),
+    DemoPage(title: "2"),
+    DemoPage(title: "3"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +87,38 @@ class _HomePageState extends State<HomePage> {
           _showTasks(),
         ],
       ),
+    bottomNavigationBar: BuildNavigation(
+      currentIndex: currentIndex,
+      onTap: onIndexChanged, // 切换tab事件
+      items: [
+        NavigationItemModel(
+          label: "home",
+          icon: SvgIcon.layout,
+        ),
+        NavigationItemModel(
+          label: "map",
+          icon: SvgIcon.marker,
+        ),
+        NavigationItemModel(
+          label: "chat",
+          icon: SvgIcon.chat,
+          count: 3,
+        ),
+        NavigationItemModel(
+          label: "user",
+          icon: SvgIcon.user,
+        ),
+      ],
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Get.to(() => const AddTaskPage());
+      },
+      child: const Icon(Icons.add_circle_rounded, size: 50),
+    ),
+    // float button
+    floatingActionButtonLocation:
+        FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
     );
   }
 
@@ -396,11 +452,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        Icon(
-          Icons.person,
-          // Icon color should change according to the Theme Mode
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
+        // Icon(
+        //   Icons.person,
+        //   // Icon color should change according to the Theme Mode
+        //   color: Get.isDarkMode ? Colors.white : Colors.black,
+        // ),
         // 头像png控件
         // CircleAvatar(
         //   backgroundImage: AssetImage(

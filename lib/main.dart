@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeServices().theme,
 
       home: EntryPoint(),
+      // home: HomePage(),
       // TODO -- When need to add the login function, uncomment this
       // home: OnbodingScreen(), // login page
     );
