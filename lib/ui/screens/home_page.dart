@@ -11,6 +11,8 @@ import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
 import 'package:todo_app_new_edition/ui/screens/demo.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
@@ -46,7 +48,6 @@ class _HomePageState extends State<HomePage> {
       currentIndex = index;
       Get.to(pages[index]);
     });
-    // pageController.jumpToPage(index);
   }
 
   @override
@@ -63,9 +64,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   List pages = [
-    // EntryPoint(),
     EntryPoint(),
-    AddTaskPage(),
+    Calendar(),
     DemoPage(title: "2"),
     DemoPage(title: "3"),
   ];
@@ -92,16 +92,18 @@ class _HomePageState extends State<HomePage> {
       onTap: onIndexChanged, // 切换tab事件
       items: [
         NavigationItemModel(
-          label: "home",
+          label: "All Task",
           icon: SvgIcon.layout,
+          // icon: SvgIcon.clipboard,
         ),
         NavigationItemModel(
-          label: "map",
-          icon: SvgIcon.marker,
+          label: "Calendar",
+          icon: SvgIcon.calendar,
         ),
         NavigationItemModel(
-          label: "chat",
-          icon: SvgIcon.chat,
+          label: "Tag",
+          icon: SvgIcon.tag,
+          // icon: SvgIcon.favorite,
           count: 3,
         ),
         NavigationItemModel(
@@ -111,14 +113,16 @@ class _HomePageState extends State<HomePage> {
       ],
     ),
     floatingActionButton: FloatingActionButton(
+      backgroundColor: menuIconColor,
       onPressed: () {
         Get.to(() => const AddTaskPage());
       },
+      // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
       child: const Icon(Icons.add_circle_rounded, size: 50),
     ),
     // float button
     floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
+        FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
     );
   }
 

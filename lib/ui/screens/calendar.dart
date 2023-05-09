@@ -1,25 +1,27 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:rive/rive.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
-import 'package:todo_app_new_edition/ui/screens/home_page.dart';
+import 'package:todo_app_new_edition/ui/add_task_bar.dart';
+import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
+import 'package:todo_app_new_edition/ui/screens/demo.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav_item.dart';
 import 'package:todo_app_new_edition/ui/widgets/menu_btn.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_bar.dart';
-import 'package:todo_app_new_edition/utils/icons.dart';
-import 'package:todo_app_new_edition/utils/rive_utils.dart';
 
-class EntryPoint extends StatefulWidget {
-  const EntryPoint({super.key});
+class Calendar extends StatefulWidget {
+  const Calendar({super.key});
 
   @override
-  State<EntryPoint> createState() => _EntryPointState();
+  State<Calendar> createState() => _CalendarState();
 }
 
-class _EntryPointState extends State<EntryPoint>
+class _CalendarState extends State<Calendar>
     with SingleTickerProviderStateMixin {
   bool isSideBarOpen = false;
 
@@ -56,7 +58,7 @@ class _EntryPointState extends State<EntryPoint>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(
-        () {
+            () {
           setState(() {});
         },
       );
@@ -104,7 +106,7 @@ class _EntryPointState extends State<EntryPoint>
                   borderRadius: BorderRadius.all(
                     Radius.circular(24),
                   ),
-                  child: HomePage(),
+                  child: CalendarPage(),
                 ),
               ),
             ),
@@ -125,7 +127,7 @@ class _EntryPointState extends State<EntryPoint>
                 }
 
                 setState(
-                  () {
+                      () {
                     isSideBarOpen = !isSideBarOpen;
                   },
                 );
@@ -137,57 +139,13 @@ class _EntryPointState extends State<EntryPoint>
                 artboard.addController(controller!);
 
                 isMenuOpenInput =
-                    controller.findInput<bool>("isOpen") as SMIBool;
+                controller.findInput<bool>("isOpen") as SMIBool;
                 isMenuOpenInput.value = true;
               },
             ),
           ),
-          // TODO -- Something wrong with the PageView(will overwrite the menu botton)
-          // PageView(
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   controller: pageController,
-          //   onPageChanged: onIndexChanged,
-          //   children: const [
-          //     HomePage(),
-          //     AddTaskPage(),
-          //     DemoPage(title: "chat"),
-          //     DemoPage(title: "user"),
-          //   ],
-          // ),
         ],
       ),
-      // bottomNavigationBar: BuildNavigation(
-      //   currentIndex: currentIndex,
-      //   items: [
-      //     NavigationItemModel(
-      //       label: "home",
-      //       icon: SvgIcon.layout,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "map",
-      //       icon: SvgIcon.marker,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "chat",
-      //       icon: SvgIcon.chat,
-      //       count: 3,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "user",
-      //       icon: SvgIcon.user,
-      //     ),
-      //   ],
-      //   onTap: onIndexChanged, // 切换tab事件
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Get.to(() => const AddTaskPage());
-      //   },
-      //   child: const Icon(Icons.add_circle_rounded, size: 50),
-      // ),
-      // // float button
-      // floatingActionButtonLocation:
-      //     FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
 
       // TODO --DELETE( old menu bar with no Page jump)
       // bottomNavigationBar: Transform.translate(

@@ -5,7 +5,7 @@ import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/onboding/onboding_screen.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
-import 'package:todo_app_new_edition/ui/home_page.dart';
+import 'package:todo_app_new_edition/ui/screens/home_page.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
 
