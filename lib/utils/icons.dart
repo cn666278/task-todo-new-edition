@@ -28,4 +28,5 @@ class SvgIcon {
   static const list = 'assets/svg/icon_list.svg';
   static const wechat = 'assets/svg/icon_wechat.svg';
   static const transform = 'assets/svg/icon_transform.svg';
+  static const calendar = 'assets/svg/icon_calendar.svg';
 }

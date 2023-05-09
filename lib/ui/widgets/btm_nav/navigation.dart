@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/icon.dart';
 
 
@@ -64,8 +65,9 @@ class BuildNavigation extends StatelessWidget {
                               items[i].count <= 99
                                   ? items[i].count.toString()
                                   : '99+',
-                              style: const TextStyle(
+                              style: GoogleFonts.lato(
                                 fontSize: 11,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
@@ -78,7 +80,11 @@ class BuildNavigation extends StatelessWidget {
               Text(
                 items[i].label,
                 maxLines: 1,
-                style: labelStyle?.copyWith(color: color),
+                style: GoogleFonts.lato(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
@@ -86,7 +92,7 @@ class BuildNavigation extends StatelessWidget {
       ));
     }
     return BottomAppBar(
-      color: theme.backgroundColor,
+      color: theme.backgroundColor, // bottom menu color
       shape: const CircularNotchedRectangle(), // 中间凹下的形状
       notchMargin: 10, // 凹下的尺寸
       child: SizedBox(
