@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 
 
@@ -36,13 +38,17 @@ class _CategoryListState extends State<CategoryList> {
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
             decoration: BoxDecoration(
               color: index == selectedIndex
-                  ? Colors.white.withOpacity(0.4)
+                  ? primaryClr.withOpacity(0.95)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
               categories[index],
-              style: TextStyle(color: Colors.white),
+              style: GoogleFonts.lato(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                color: index == selectedIndex ? Colors.white : Colors.grey,
+              ),
             ),
           ),
         ),

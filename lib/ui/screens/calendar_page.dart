@@ -11,6 +11,7 @@ import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
 import 'package:todo_app_new_edition/ui/screens/demo.dart';
@@ -66,7 +67,7 @@ class _CalendarPageState extends State<CalendarPage> {
   List pages = [
     EntryPoint(),
     Calendar(),
-    DemoPage(title: "2"),
+    AllTask(),
     DemoPage(title: "3"),
   ];
 
