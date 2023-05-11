@@ -65,10 +65,10 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   List pages = [
-    EntryPoint(),
-    Calendar(),
     AllTask(),
+    Calendar(),
     DemoPage(title: "3"),
+    EntryPoint(),
   ];
 
   @override
@@ -108,8 +108,9 @@ class _CalendarPageState extends State<CalendarPage> {
             count: 3,
           ),
           NavigationItemModel(
-            label: "user",
-            icon: SvgIcon.user,
+            label: "Report",
+            icon: SvgIcon.clipboard,
+            count: 3,
           ),
         ],
       ),

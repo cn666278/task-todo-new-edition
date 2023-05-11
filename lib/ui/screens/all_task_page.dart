@@ -64,10 +64,10 @@ class _AllTaskPageState extends State<AllTaskPage> {
   }
 
   List pages = [
-    EntryPoint(),
+    AllTask(),
     Calendar(),
-    AllTaskPage(),
     DemoPage(title: "3"),
+    EntryPoint(),
   ];
 
   @override
@@ -108,8 +108,8 @@ class _AllTaskPageState extends State<AllTaskPage> {
             icon: SvgIcon.tag,
           ),
           NavigationItemModel(
-            label: "user",
-            icon: SvgIcon.user,
+            label: "Report",
+            icon: SvgIcon.clipboard,
             count: 3,
           ),
         ],
@@ -340,18 +340,19 @@ class _AllTaskPageState extends State<AllTaskPage> {
               children: [
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
-                  DateFormat.yMMMd().format(DateTime.now()),
+                  DateFormat.yMMMEd().format(DateTime.now()),
                   style: subHeadingStyle,
                 ),
                 Text(
-                  "Today",
+                  "All Task",
                   style: headingStyle,
                 ),
               ],
             ),
           ),
           MyButton(
-              label: "+ Add Task",
+              // TODO Task progress design display
+              label: " Progress",
               onTap: () async {
                 // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
                 await Get.to(() => AddTaskPage());

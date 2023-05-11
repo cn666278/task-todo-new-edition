@@ -65,10 +65,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   List pages = [
-    EntryPoint(),
-    Calendar(),
     AllTask(),
+    Calendar(),
     DemoPage(title: "3"),
+    EntryPoint(),
   ];
 
   @override
@@ -105,11 +105,11 @@ class _HomePageState extends State<HomePage> {
           label: "Tag",
           icon: SvgIcon.tag,
           // icon: SvgIcon.favorite,
-          count: 3,
         ),
         NavigationItemModel(
-          label: "user",
-          icon: SvgIcon.user,
+          label: "Report",
+          icon: SvgIcon.clipboard,
+          count: 3,
         ),
       ],
     ),
@@ -175,7 +175,6 @@ class _HomePageState extends State<HomePage> {
                     ));
               }
 
-              // TODO ??? Weekly? Montly?
               if (task.date == DateFormat.yMd().format(_selectedDate)) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
