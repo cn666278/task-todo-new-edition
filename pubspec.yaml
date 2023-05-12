@@ -52,6 +52,8 @@ dependencies:
   mysql_utils:
   rive: ^0.9.1
   flutter_svg: ^1.1.6
+  flutter_slidable:
+#  flutter_slidable: 0.5.3
 
 dev_dependencies:
   flutter_test:

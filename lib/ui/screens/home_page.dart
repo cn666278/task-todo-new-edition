@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,7 @@ import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_slidable.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           _showTasks(),
         ],
       ),
-    bottomNavigationBar: BuildNavigation(
+      bottomNavigationBar: BuildNavigation(
       currentIndex: currentIndex,
       onTap: onIndexChanged, // 切换tab事件
       items: [
@@ -296,6 +298,19 @@ class _HomePageState extends State<HomePage> {
             clr: Colors.red[400]!,
             context: context,
           ),
+          // SizedBox(
+          //   height: 22,
+          // ),
+          // _bottomSheetButton(
+          //   label: "Tag",
+          //   onTap: () {
+          //     // TODO -- Add warning message to avoid wrong deletion
+          //     // _taskController.delete(task); // Tag
+          //     Get.back();
+          //   },
+          //   clr: Colors.orange[400]!,
+          //   context: context,
+          // ),
           SizedBox(
             height: 22,
           ),

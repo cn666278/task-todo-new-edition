@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,7 @@ import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_slidable.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
@@ -67,7 +69,7 @@ class _CalendarPageState extends State<CalendarPage> {
   List pages = [
     AllTask(),
     Calendar(),
-    DemoPage(title: "3"),
+    TaskSlidable(),
     EntryPoint(),
   ];
 
@@ -134,10 +136,8 @@ class _CalendarPageState extends State<CalendarPage> {
         return ListView.builder(
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
-              // print(_taskController.taskList.length);
               Task task = _taskController.taskList[index]; // pass an instance
               // Tasks display logic by Date
-              print(task.toJson());
               // used to format weekly date
               // ref:
               // 1. https://www.jianshu.com/p/00ccb0fbdb42
@@ -176,7 +176,6 @@ class _CalendarPageState extends State<CalendarPage> {
                     ));
               }
 
-              // TODO ??? Weekly? Montly?
               if (task.date == DateFormat.yMd().format(_selectedDate)) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
@@ -221,32 +220,6 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                     ));
               }
-              // TODO -- Monthly task remind(Wrong)
-              // else if (task.repeat == 'Monthly' && monthlyTime == DateFormat.MMMM().format(_selectedDate)) {
-              //   DateTime date =
-              //   DateFormat.jm().parse(task.startTime.toString());
-              //   var myTime = DateFormat("HH:mm").format(date);
-              //   notifyHelper.repeatWeeklyNotification(
-              //       int.parse(myTime.toString().split(":")[0]), // hours
-              //       int.parse(myTime.toString().split(":")[1]), // minutes
-              //       task);
-              //   return AnimationConfiguration.staggeredList(
-              //       position: index,
-              //       child: SlideAnimation(
-              //         child: FadeInAnimation(
-              //           child: Row(
-              //             children: [
-              //               GestureDetector(
-              //                 onTap: () {
-              //                   _showBottomSheet(context, task);
-              //                 },
-              //                 child: TaskTile(task),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ));
-              // }
               else {
                 return Container(); // cannot find any match date
               }
