@@ -80,22 +80,22 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           color: Colors.grey,
                         )),
                   )),
-                  SizedBox(
-                    width: 14,
-                  ),
-                  Expanded(
-                      child: MyInputField(
-                    title: "End Time",
-                    hint: _endTime,
-                    widget: IconButton(
-                        onPressed: () {
-                          _getTimeFromUser(isStartTime: false);
-                        },
-                        icon: const Icon(
-                          Icons.access_time_rounded,
-                          color: Colors.grey,
-                        )),
-                  )),
+                  // SizedBox(
+                  //   width: 14,
+                  // ),
+                  // Expanded(
+                  //     child: MyInputField(
+                  //   title: "End Time",
+                  //   hint: _endTime,
+                  //   widget: IconButton(
+                  //       onPressed: () {
+                  //         _getTimeFromUser(isStartTime: false);
+                  //       },
+                  //       icon: const Icon(
+                  //         Icons.access_time_rounded,
+                  //         color: Colors.grey,
+                  //       )),
+                  // )),
                 ],
               ),
               MyInputField(
@@ -182,11 +182,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _validateDate() {
-    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+    if (_titleController.text.isNotEmpty) {
       _addTaskToDb();
       _taskController.getTasks();
       Get.back();
-    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
+    } else if (_titleController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required. ",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,

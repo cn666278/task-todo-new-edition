@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
           icon: SvgIcon.calendar,
         ),
         NavigationItemModel(
-          label: "Tag",
+          label: "Highlight",
           icon: SvgIcon.tag,
           // icon: SvgIcon.favorite,
         ),

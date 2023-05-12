@@ -4,7 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_slidable.dart';
 
 /* This file used for the tasks list UI design */
 class TaskTile extends StatelessWidget {
@@ -51,25 +50,27 @@ class TaskTile extends StatelessWidget {
         // ),
 
         // The end action pane is the one at the right or the bottom side.
-        endActionPane: const ActionPane(
+        endActionPane: ActionPane(
           motion: ScrollMotion(),
           children: [
             SlidableAction(
               // An action can be bigger than the others.
               flex: 2,
-              onPressed: doNothing,
-              backgroundColor: Color(0xFF7BC043),
+              onPressed: starTask,
+              backgroundColor: Colors.pinkAccent,
+              // backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
-              icon: Icons.archive,
-              label: 'Archive',
+              icon: Icons.star,
+              label: 'Star',
+              borderRadius: BorderRadius.circular(16),
             ),
-            SlidableAction(
-              onPressed: doNothing,
-              backgroundColor: Color(0xFF0392CF),
-              foregroundColor: Colors.white,
-              icon: Icons.save,
-              label: 'Save',
-            ),
+            // SlidableAction(
+            //   onPressed: doNothing,
+            //   backgroundColor: Color(0xFF0392CF),
+            //   foregroundColor: Colors.white,
+            //   icon: Icons.save,
+            //   label: 'Save',
+            // ),
           ],
         ),
 
@@ -150,6 +151,9 @@ class TaskTile extends StatelessWidget {
       ),
     );
   }
+
+  // TODO -- starTask()
+  void starTask(BuildContext context) {}
 
   /* 控制TASK LIST 卡片颜色 */
   _getBGClr(int no) {

@@ -104,7 +104,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             icon: SvgIcon.calendar,
           ),
           NavigationItemModel(
-            label: "Tag",
+            label: "Highlight",
             icon: SvgIcon.tag,
           ),
           NavigationItemModel(
