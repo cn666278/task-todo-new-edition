@@ -27,7 +27,6 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
-  String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   int _selectedRemind = 5; // initial value
   List<int> reminderList = [
@@ -94,22 +93,6 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                         widget: IconButton(
                             onPressed: () {
                               _getTimeFromUser(isStartTime: true);
-                            },
-                            icon: const Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.grey,
-                            )),
-                      )),
-                  SizedBox(
-                    width: 14,
-                  ),
-                  Expanded(
-                      child: MyInputField(
-                        title: "End Time",
-                        hint: _endTime,
-                        widget: IconButton(
-                            onPressed: () {
-                              _getTimeFromUser(isStartTime: false);
                             },
                             icon: const Icon(
                               Icons.access_time_rounded,
@@ -242,11 +225,11 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
           title: _titleController.text,
           date: DateFormat.yMd().format(_selectedDate),
           startTime: _startTime,
-          endTime: _endTime,
           remind: _selectedRemind,
           repeat: _selectedRepeat,
           color: _selectedColor,
-          isCompleted: 0,
+          isCompleted: false,
+          isStar: false,
         )
     );
     print("My id is " + "$value");
@@ -365,10 +348,6 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     } else if (isStartTime == true) {
       setState(() {
         _startTime = formattedTime;
-      });
-    } else if (isStartTime == false) {
-      setState(() {
-        _endTime = formattedTime;
       });
     }
   }

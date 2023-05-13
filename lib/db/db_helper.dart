@@ -49,8 +49,8 @@ class DBHelper {
         conn.query(
             "CREATE TABLE $_tableName (id int PRIMARY KEY AUTO_INCREMENT,"
                 " title varchar(255), note varchar(255), date varchar(255),"
-                " startTime varchar(50),endTime varchar(50), remind int,"
-                " `repeat` varchar(50), color int, isCompleted int);"
+                " startTime varchar(50), remind int,"
+                " `repeat` varchar(50), color int, isCompleted boolean, isStar boolean);"
         );
         // conn.close();
       });
@@ -66,17 +66,18 @@ class DBHelper {
       // TODO ??? IMPROVE THESE CODES
       conn.query(
         // 'INSERT INTO tasks (title, note) values (?, ?)', [task.title!, task.note!],
-        'INSERT INTO $_tableName (title, note, isCompleted, date, startTime, endTime, color, remind, `repeat`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO $_tableName (title, note, isCompleted, date, startTime, color, remind, `repeat`, isStar) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [
           task.title!,
           task.note!,
           task.isCompleted!,
           task.date!,
           task.startTime!,
-          task.endTime!,
+          // task.endTime!,
           task.color!,
           task.remind!,
           task.repeat!,
+          task.isStar!,
         ],
       );
       return 0; //???
@@ -145,7 +146,17 @@ class DBHelper {
             UPDATE $_tableName
             SET isCompleted = ?
             WHERE id = ?
-          ''', [1, id]);
+          ''', [true, id]);
+    });
+  }
+
+  static markStar(int id) async {
+    return await _db.getConnection().then((conn) {
+      conn.query('''
+            UPDATE $_tableName
+            SET isStar = ?
+            WHERE id = ?
+          ''', [true, id]);
     });
   }
 }

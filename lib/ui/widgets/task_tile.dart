@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/theme.dart';
 
 /* This file used for the tasks list UI design */
 class TaskTile extends StatelessWidget {
   final Task? task;
+
   TaskTile(this.task);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(bottom: 12),
       child: Slidable(
@@ -81,22 +84,43 @@ class TaskTile extends StatelessWidget {
           //  width: SizeConfig.screenWidth * 0.78,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: _getBGClr(task?.color??0),
+            color: _getBGClr(task?.color ?? 0),
           ),
           child: Row(children: [
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    task?.title??"",
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
+                  task!.isStar!
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              task?.title ?? "",
+                              style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          task?.title ?? "",
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
                   SizedBox(
                     height: 12,
                   ),
@@ -110,19 +134,21 @@ class TaskTile extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Text(
-                        "${task!.startTime} - ${task!.endTime}",
+                        // "${task!.startTime} - ${task!.endTime}",
+                        "${task!.startTime}",
                         style: GoogleFonts.lato(
                           textStyle:
-                          TextStyle(fontSize: 13, color: Colors.grey[100]),
+                              TextStyle(fontSize: 13, color: Colors.grey[100]),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 12),
                   Text(
-                    task?.note??"",
+                    task?.note ?? "",
                     style: GoogleFonts.lato(
-                      textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
+                      textStyle:
+                          TextStyle(fontSize: 15, color: Colors.grey[100]),
                     ),
                   ),
                 ],
@@ -153,9 +179,13 @@ class TaskTile extends StatelessWidget {
   }
 
   // TODO -- starTask()
-  void starTask(BuildContext context) {}
+  // TODO -- Star -> unStar animate
+  void starTask(BuildContext context) {
+    final taskController = Get.put(TaskController());
+    taskController.markTaskStar(task!.id!); // mark star
+  }
 
-  /* 控制TASK LIST 卡片颜色 */
+  /* Control the color of TASK LIST */
   _getBGClr(int no) {
     switch (no) {
       case 0:

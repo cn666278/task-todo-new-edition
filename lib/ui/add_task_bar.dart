@@ -21,7 +21,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
-  String _endTime = "9:30 PM";
+  // String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   int _selectedRemind = 5; // initial value
   List<int> reminderList = [
@@ -55,7 +55,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.calendar_today_outlined,
                     color: Colors.grey,
                   ),
@@ -102,7 +102,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 title: "Remind",
                 hint: "$_selectedRemind minutes early",
                 widget: DropdownButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_down,
                     color: Colors.grey,
                   ),
@@ -130,9 +130,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
               ),
               MyInputField(
                 title: "Repeat",
-                hint: "$_selectedRepeat",
+                hint: _selectedRepeat,
                 widget: DropdownButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_down,
                     color: Colors.grey,
                   ),
@@ -154,13 +154,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       value: value,
                       child: Text(
                         value!,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     );
                   }).toList(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
@@ -191,7 +191,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: pinkClr,
-          icon: Icon(Icons.warning_amber_rounded,
+          icon: const Icon(Icons.warning_amber_rounded,
           color: Colors.red,
           ));
     }
@@ -205,11 +205,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
           title: _titleController.text,
           date: DateFormat.yMd().format(_selectedDate),
           startTime: _startTime,
-          endTime: _endTime,
+          // endTime: _endTime,
           remind: _selectedRemind,
           repeat: _selectedRepeat,
           color: _selectedColor,
-          isCompleted: 0,
+          isCompleted: false,
+          isStar: false,
         )
     );
     print("My id is " + "$value");
@@ -223,7 +224,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           "Color",
           style: titleStyle,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8.0,
         ),
         // Wrap widget can help put things in horizontal line
@@ -254,7 +255,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   // we want to show the selected color with tick only,
                   // other should be blank (empty Container)
                   child: _selectedColor == index
-                      ? Icon(
+                      ? const Icon(
                           Icons.done,
                           color: Colors.white,
                           size: 16,
@@ -296,7 +297,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         //     "images/header.png"
         //   ),
         // ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         )
       ],
@@ -304,15 +305,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _getDateFromUser() async {
-    DateTime? _pickerDate = await showDatePicker(
+    DateTime? pickerDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2050));
 
-    if (_pickerDate != null) {
+    if (pickerDate != null) {
       setState(() {
-        _selectedDate = _pickerDate;
+        _selectedDate = pickerDate;
         print(_selectedDate);
       });
     } else {
@@ -322,18 +323,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   _getTimeFromUser({required bool isStartTime}) async {
     var pickedTime = await _showTimepicker();
-    String _formatedTime = pickedTime.format(context);
+    String formatedTime = pickedTime.format(context);
     if (pickedTime == null) {
       print("Time canceled");
     } else if (isStartTime == true) {
       setState(() {
-        _startTime = _formatedTime;
-      });
-    } else if (isStartTime == false) {
-      setState(() {
-        _endTime = _formatedTime;
+        _startTime = formatedTime;
       });
     }
+    // else if (isStartTime == false) {
+    //   setState(() {
+    //     _endTime = formatedTime;
+    //   });
+    // }
   }
 
   _showTimepicker() {
