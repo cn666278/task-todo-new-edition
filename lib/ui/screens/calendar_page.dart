@@ -75,15 +75,24 @@ class _CalendarPageState extends State<CalendarPage> {
       appBar: _appBar(),
       backgroundColor: context.theme.backgroundColor,
       // using for the two columns on the top to show Time, date and add task bar
-      body: Column(
-        children: [
-          _addTaskBar(),
-          _addDateBar(),
-          SizedBox(
-            height: 10,
-          ),
-          _showTasks(),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.4), BlendMode.dstATop),
+              image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+            )),
+        child: Column(
+          children: [
+            _addTaskBar(),
+            _addDateBar(),
+            SizedBox(
+              height: 10,
+            ),
+            _showTasks(),
+          ],
+        ),
       ),
       bottomNavigationBar: BuildNavigation(
         currentIndex: currentIndex,

@@ -58,6 +58,7 @@ class TaskTile extends StatelessWidget {
           children: [
             SlidableAction(
               // An action can be bigger than the others.
+              autoClose: true,
               flex: 2,
               onPressed: task!.isStar! ? undoStarTask : starTask,
               backgroundColor:

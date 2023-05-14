@@ -42,7 +42,11 @@ class _AllTaskPageState extends State<AllTaskPage> {
   void onIndexChanged(int index) {
     setState(() {
       currentIndex = index;
-      Get.to(pages[index]);
+      // [GETX] WARNING, consider using: "Get.to(() => Page())" instead of "Get.to(Page())".
+      // Using a widget function instead of a widget fully
+      // guarantees that the widget and its controllers
+      // will be removed from memory when they are no longer used.
+      Get.to(() => pages[index]);
     });
   }
 
@@ -73,19 +77,28 @@ class _AllTaskPageState extends State<AllTaskPage> {
       appBar: _appBar(),
       backgroundColor: context.theme.backgroundColor,
       // using for the two columns on the top to show Time, date and add task bar
-      body: Column(
-        children: [
-          _addTaskBar(),
-          // _addDateBar(),
-          const SizedBox(
-            height: 10,
-          ),
-          CategoryList(),
-          const SizedBox(
-            height: 10,
-          ),
-          _showTasks(),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4), BlendMode.dstATop),
+          image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+        )),
+        child: Column(
+          children: [
+            _addTaskBar(),
+            // _addDateBar(),
+            const SizedBox(
+              height: 10,
+            ),
+            CategoryList(),
+            const SizedBox(
+              height: 10,
+            ),
+            _showTasks(),
+          ],
+        ),
       ),
       bottomNavigationBar: BuildNavigation(
         currentIndex: currentIndex,
@@ -209,8 +222,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
                         ),
                       ),
                     ));
-              }
-              else {
+              } else {
                 return Container(); // cannot find any match date
               }
             });
@@ -239,24 +251,24 @@ class _AllTaskPageState extends State<AllTaskPage> {
           Spacer(),
           task.isCompleted == true
               ? _bottomSheetButton(
-            label: "Undo Completed",
-            onTap: () {
-              _taskController.undoTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: Colors.green,
-            context: context,
-          )
+                  label: "Undo Completed",
+                  onTap: () {
+                    _taskController.undoTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: Colors.green,
+                  context: context,
+                )
               : _bottomSheetButton(
-            label: "Task Completed",
-            // TODO -- Add warning message to avoid wrong selection
-            onTap: () {
-              _taskController.markTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: primaryClr,
-            context: context,
-          ),
+                  label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
+                  onTap: () {
+                    _taskController.markTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
