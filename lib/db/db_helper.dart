@@ -169,4 +169,14 @@ class DBHelper {
           ''', [true, id]);
     });
   }
+
+  static undoStar(int id) async {
+    return await _db.getConnection().then((conn) {
+      conn.query('''
+            UPDATE $_tableName
+            SET isStar = ?
+            WHERE id = ?
+          ''', [false, id]);
+    });
+  }
 }

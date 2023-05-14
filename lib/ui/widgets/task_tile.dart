@@ -59,12 +59,13 @@ class TaskTile extends StatelessWidget {
             SlidableAction(
               // An action can be bigger than the others.
               flex: 2,
-              onPressed: starTask,
-              backgroundColor: Colors.pinkAccent,
+              onPressed: task!.isStar! ? undoStarTask : starTask,
+              backgroundColor:
+                  task!.isStar! ? Colors.red[400]! : Colors.green[400]!,
               // backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
-              icon: Icons.star,
-              label: 'Star',
+              icon: task!.isStar! ? Icons.star_border : Icons.star,
+              label: task!.isStar! ? 'Undo Star' : 'Star',
               borderRadius: BorderRadius.circular(16),
             ),
             // SlidableAction(
@@ -183,6 +184,11 @@ class TaskTile extends StatelessWidget {
   void starTask(BuildContext context) {
     final taskController = Get.put(TaskController());
     taskController.markTaskStar(task!.id!); // mark star
+  }
+
+  void undoStarTask(BuildContext context) {
+    final taskController = Get.put(TaskController());
+    taskController.undoTaskStar(task!.id!); // mark star
   }
 
   /* Control the color of TASK LIST */

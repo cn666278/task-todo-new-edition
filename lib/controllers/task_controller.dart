@@ -49,6 +49,11 @@ class TaskController extends GetxController {
     getTasks(); // update the current new task list
   }
 
+  void undoTaskStar(int id) async {
+    await DBHelper.undoStar(id);
+    getTasks(); // update the current new task list
+  }
+
   // get all the data from table
   void getTaskDetails(Task task) async{
     // todo edit the dunction query()
