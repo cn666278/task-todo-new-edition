@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 // We need statefull widget because we are gonna change some state on our category
 class CategoryList extends StatefulWidget {
@@ -12,7 +12,7 @@ class CategoryList extends StatefulWidget {
 class _CategoryListState extends State<CategoryList> {
   // by default first item will be selected
   int selectedIndex = 0;
-  List categories = ['All', 'To do', 'Completed', 'Closed'];
+  List categories = ['All', 'To do', 'Completed'];
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,6 @@ class _CategoryListState extends State<CategoryList> {
                 // get to do task
               } else if (selectedIndex == 2) {
                 // get completed task
-              } else if(selectedIndex == 3) {
-                // get closed task
               } else{
                 print("error with selectedIndex:");
                 print(selectedIndex);

@@ -23,7 +23,7 @@ class TaskController extends GetxController {
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     // print(tasks);
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-    print(taskList);
+    // print(taskList);
   }
 
   void delete(Task task) async {
@@ -39,6 +39,11 @@ class TaskController extends GetxController {
     getTasks(); // update the current new task list
   }
 
+  void undoTaskCompleted(int id) async {
+    await DBHelper.undoCompleted(id);
+    getTasks(); // update the current new task list
+  }
+
   void markTaskStar(int id) async {
     await DBHelper.markStar(id);
     getTasks(); // update the current new task list
@@ -48,8 +53,33 @@ class TaskController extends GetxController {
   void getTaskDetails(Task task) async{
     // todo edit the dunction query()
     List<Map<String, dynamic>> taskDetail = await DBHelper.queryTaskDetail(task);
-    // print(taskDetail);
     taskDetailList.assignAll(taskDetail.map((data) => Task.fromJson(data)).toList());
-    print(taskDetailList);
+    // print(taskDetailList);
+  }
+
+  int getTotalTask(Task task){
+    var res = 0;
+    // TODO -- get total tasks
+    // for(int i = 0; i < task.length; i++){
+    //   if(task[i].todos != null){
+    //     res += task[i].id.length;
+    //   }
+    // }
+    return res;
+  }
+
+  int getTotalCompletedTask(Task task){
+    var res = 0;
+    // TODO -- get total completed tasks
+    // for(int i = 0; i < task.length; i++){
+    //   if(task[i].todos != null){
+    //     for(int j = 0; j < task[i].todos!.length; j++){
+    //       if(task[i].todos![j]['isCompleted'] == true){
+    //         res += 1;
+    //       }
+    //     }
+    //   }
+    // }
+    return res;
   }
 }

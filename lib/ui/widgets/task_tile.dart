@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 /* This file used for the tasks list UI design */
 class TaskTile extends StatelessWidget {
@@ -163,7 +163,7 @@ class TaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task!.isCompleted == 1 ? "COMPLETED" : "TODO",
+                task!.isCompleted == true ? "COMPLETED" : "TODO",
                 style: GoogleFonts.lato(
                   textStyle: TextStyle(
                       fontSize: 10,

@@ -1,18 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:rive/rive.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
-import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
-import 'package:todo_app_new_edition/ui/screens/demo.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
-import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
-import 'package:todo_app_new_edition/ui/widgets/btm_nav_item.dart';
 import 'package:todo_app_new_edition/ui/widgets/menu_btn.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_bar.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({super.key});

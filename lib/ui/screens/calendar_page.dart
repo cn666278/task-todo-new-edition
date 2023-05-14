@@ -1,12 +1,10 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
-import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
@@ -14,17 +12,14 @@ import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
-import 'package:todo_app_new_edition/ui/screens/demo.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_slidable.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -234,9 +229,7 @@ class _CalendarPageState extends State<CalendarPage> {
     Get.bottomSheet(Container(
       padding: EdgeInsets.only(top: 4),
       // judge the BottomSheet height by the variable: isCompleted 0/1
-      height: task.isCompleted == 1
-          ? MediaQuery.of(context).size.height * 0.24
-          : MediaQuery.of(context).size.height * 0.32,
+      height: MediaQuery.of(context).size.height * 0.32,
       color: Get.isDarkMode ? darkGreyClr : Colors.white,
       child: Column(
         children: [
@@ -249,8 +242,16 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           Spacer(),
-          task.isCompleted == 1
-              ? Container()
+          task.isCompleted == true
+              ? _bottomSheetButton(
+            label: "Undo Completed",
+            onTap: () {
+              _taskController.undoTaskCompleted(task.id!); // UPDATE
+              Get.back();
+            },
+            clr: Colors.green,
+            context: context,
+          )
               : _bottomSheetButton(
             label: "Task Completed",
             // TODO -- Add warning message to avoid wrong selection
@@ -276,7 +277,6 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
           _bottomSheetButton(
             label: "Details",
-            // TODO --- jump to Details page
             onTap: () async {
               await Get.to(() => TaskDetailPage(task: task));
               _taskController.getTasks();

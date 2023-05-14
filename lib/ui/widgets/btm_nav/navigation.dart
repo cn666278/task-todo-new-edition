@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/icon.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 
 class BuildNavigation extends StatelessWidget {
@@ -20,9 +21,9 @@ class BuildNavigation extends StatelessWidget {
     var ws = <Widget>[];
     var theme = Theme.of(context).bottomNavigationBarTheme;
     for (var i = 0; i < items.length; i++) {
-      var labelStyle = currentIndex == i
-          ? theme.selectedLabelStyle
-          : theme.unselectedLabelStyle;
+      // var labelStyle = currentIndex == i
+      //     ? theme.selectedLabelStyle
+      //     : theme.unselectedLabelStyle;
       var color = currentIndex == i
           ? theme.selectedItemColor
           : theme.unselectedItemColor;
@@ -83,7 +84,8 @@ class BuildNavigation extends StatelessWidget {
                 style: GoogleFonts.lato(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: bluishClr,
+                  // color: Colors.black,
                 ),
               ),
             ],

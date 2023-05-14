@@ -1,6 +1,5 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,17 +13,14 @@ import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar_page.dart';
 import 'package:todo_app_new_edition/ui/screens/demo.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_slidable.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -82,12 +78,12 @@ class _HomePageState extends State<HomePage> {
       // using for the two columns on the top to show Time, date and add task bar
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.fill,
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop),
-              image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
-          )
-        ),
+            image: DecorationImage(
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4), BlendMode.dstATop),
+          image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+        )),
         child: Column(
           children: [
             _addTaskBar(),
@@ -100,41 +96,41 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BuildNavigation(
-      currentIndex: currentIndex,
-      onTap: onIndexChanged, // 切换tab事件
-      items: [
-        NavigationItemModel(
-          label: "All Task",
-          icon: SvgIcon.layout,
-          // icon: SvgIcon.clipboard,
-        ),
-        NavigationItemModel(
-          label: "Calendar",
-          icon: SvgIcon.calendar,
-        ),
-        NavigationItemModel(
-          label: "Highlight",
-          icon: SvgIcon.tag,
-          // icon: SvgIcon.favorite,
-        ),
-        NavigationItemModel(
-          label: "Report",
-          icon: SvgIcon.clipboard,
-          count: 3,
-        ),
-      ],
-    ),
-    floatingActionButton: FloatingActionButton(
-      backgroundColor: menuIconColor,
-      onPressed: () {
-        Get.to(() => const AddTaskPage());
-      },
-      // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
-      child: const Icon(Icons.add_circle_rounded, size: 50),
-    ),
-    // float button
-    floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
+        currentIndex: currentIndex,
+        onTap: onIndexChanged, // 切换tab事件
+        items: [
+          NavigationItemModel(
+            label: "All Task",
+            icon: SvgIcon.layout,
+            // icon: SvgIcon.clipboard,
+          ),
+          NavigationItemModel(
+            label: "Calendar",
+            icon: SvgIcon.calendar,
+          ),
+          NavigationItemModel(
+            label: "Highlight",
+            icon: SvgIcon.tag,
+            // icon: SvgIcon.favorite,
+          ),
+          NavigationItemModel(
+            label: "Report",
+            icon: SvgIcon.clipboard,
+            count: 3,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: menuIconColor,
+        onPressed: () {
+          Get.to(() => const AddTaskPage());
+        },
+        // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
+        child: const Icon(Icons.add_circle_rounded, size: 50),
+      ),
+      // float button
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
     );
   }
 
@@ -147,16 +143,18 @@ class _HomePageState extends State<HomePage> {
               // print(_taskController.taskList.length);
               Task task = _taskController.taskList[index]; // pass an instance
               // Tasks display logic by Date
-              print(task.toJson());
+              // print(task.toJson());
               // used to format weekly date
               // ref:
               // 1. https://www.jianshu.com/p/00ccb0fbdb42
               // 2. https://api.flutter.dev/flutter/intl/DateFormat-class.html
-              DateTime weeklyDate = DateFormat.yMd().parse(task.date.toString());
+              DateTime weeklyDate =
+                  DateFormat.yMd().parse(task.date.toString());
               var weeklyTime = DateFormat("EEEE").format(weeklyDate);
 
               // monthly date format
-              DateTime monthlyDate = DateFormat.yMd().parse(task.date.toString());
+              DateTime monthlyDate =
+                  DateFormat.yMd().parse(task.date.toString());
               var monthlyTime = DateFormat("MMMM").format(monthlyDate);
 
               // Daily task remind
@@ -205,9 +203,10 @@ class _HomePageState extends State<HomePage> {
                     ));
               }
               // Weekly task remind
-              else if (task.repeat == 'Weekly' && weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
+              else if (task.repeat == 'Weekly' &&
+                  weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.repeatWeeklyNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -230,32 +229,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ));
               }
-              // TODO -- Monthly task remind(Wrong)
-              // else if (task.repeat == 'Monthly' && monthlyTime == DateFormat.MMMM().format(_selectedDate)) {
-              //   DateTime date =
-              //   DateFormat.jm().parse(task.startTime.toString());
-              //   var myTime = DateFormat("HH:mm").format(date);
-              //   notifyHelper.repeatWeeklyNotification(
-              //       int.parse(myTime.toString().split(":")[0]), // hours
-              //       int.parse(myTime.toString().split(":")[1]), // minutes
-              //       task);
-              //   return AnimationConfiguration.staggeredList(
-              //       position: index,
-              //       child: SlideAnimation(
-              //         child: FadeInAnimation(
-              //           child: Row(
-              //             children: [
-              //               GestureDetector(
-              //                 onTap: () {
-              //                   _showBottomSheet(context, task);
-              //                 },
-              //                 child: TaskTile(task),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ));
-              // }
               else {
                 return Container(); // cannot find any match date
               }
@@ -270,9 +243,7 @@ class _HomePageState extends State<HomePage> {
     Get.bottomSheet(Container(
       padding: EdgeInsets.only(top: 4),
       // judge the BottomSheet height by the variable: isCompleted 0/1
-      height: task.isCompleted == 1
-          ? MediaQuery.of(context).size.height * 0.24
-          : MediaQuery.of(context).size.height * 0.32,
+      height: MediaQuery.of(context).size.height * 0.32,
       color: Get.isDarkMode ? darkGreyClr : Colors.white,
       child: Column(
         children: [
@@ -285,8 +256,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Spacer(),
-          task.isCompleted == 1
-              ? Container()
+          task.isCompleted == true
+              ? _bottomSheetButton(
+                  label: "Undo Completed",
+                  onTap: () {
+                    _taskController.undoTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: Colors.green,
+                  context: context,
+                )
               : _bottomSheetButton(
                   label: "Task Completed",
                   // TODO -- Add warning message to avoid wrong selection
@@ -307,25 +286,11 @@ class _HomePageState extends State<HomePage> {
             clr: Colors.red[400]!,
             context: context,
           ),
-          // SizedBox(
-          //   height: 22,
-          // ),
-          // _bottomSheetButton(
-          //   label: "Tag",
-          //   onTap: () {
-          //     // TODO -- Add warning message to avoid wrong deletion
-          //     // _taskController.delete(task); // Tag
-          //     Get.back();
-          //   },
-          //   clr: Colors.orange[400]!,
-          //   context: context,
-          // ),
           SizedBox(
             height: 22,
           ),
           _bottomSheetButton(
             label: "Details",
-            // TODO --- jump to Details page
             onTap: () async {
               await Get.to(() => TaskDetailPage(task: task));
               _taskController.getTasks();
@@ -371,7 +336,7 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Text(
             label,
-            // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
+            // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
                 isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),

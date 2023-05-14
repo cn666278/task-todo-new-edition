@@ -150,6 +150,16 @@ class DBHelper {
     });
   }
 
+  static undoCompleted(int id) async {
+    return await _db.getConnection().then((conn) {
+      conn.query('''
+            UPDATE $_tableName
+            SET isCompleted = ?
+            WHERE id = ?
+          ''', [false, id]);
+    });
+  }
+
   static markStar(int id) async {
     return await _db.getConnection().then((conn) {
       conn.query('''
