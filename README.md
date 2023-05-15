@@ -20,7 +20,7 @@ A new Flutter project.
 5. Running the project   
 
 ### Prototype (GUI design)
-[Prototype design using Figma](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
+[![N|Solid](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
 
 ### Database
 `Sqflite` is a lightweight relational database, similar to `SQLite` in iOS and Android  
@@ -64,3 +64,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## README.md References:
+1. [Shopify-flutter-demo/README.md design](https://github.com/mehulmk/Shopify-flutter-demo/tree/main)
