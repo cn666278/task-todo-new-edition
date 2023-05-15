@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
@@ -18,6 +19,7 @@ import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/category_list.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
+import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
@@ -29,15 +31,14 @@ class AllTaskPage extends StatefulWidget {
 }
 
 class _AllTaskPageState extends State<AllTaskPage> {
-  DateTime _selectedDate = DateTime.now();
-
   var db = new Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
-
-  // TODO -- NEW ADDED for menu bar
-  final PageController pageController = PageController();
   int currentIndex = 0;
+
+  // by default first item will be selected
+  int selectedIndex = 0;
+  List categories = ['All', 'To do', 'Completed'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -46,7 +47,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
       // Using a widget function instead of a widget fully
       // guarantees that the widget and its controllers
       // will be removed from memory when they are no longer used.
-      Get.to(() => pages[index]);
+      Get.to(pages[index]);
     });
   }
 
@@ -92,11 +93,59 @@ class _AllTaskPageState extends State<AllTaskPage> {
             const SizedBox(
               height: 10,
             ),
-            CategoryList(),
+            // CategoryList(),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+              height: 30,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) =>
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                          left: kDefaultPadding,
+                          // At end item it add extra 20 right  padding
+                          right:
+                          index == categories.length - 1 ? kDefaultPadding : 0,
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                        decoration: BoxDecoration(
+                          color: index == selectedIndex
+                              ? primaryClr.withOpacity(0.95)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          categories[index],
+                          style: GoogleFonts.lato(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color:
+                            index == selectedIndex ? Colors.white : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
-            _showTasks(),
+            // TODO -- Category logic
+            selectedIndex == 0
+                ? _showTasks()
+                : selectedIndex == 1
+                    ? _showTodoTasks()
+                    : selectedIndex == 2
+                        ? _showCompletedTasks()
+                        : null,
           ],
         ),
       ),
@@ -143,22 +192,8 @@ class _AllTaskPageState extends State<AllTaskPage> {
         return ListView.builder(
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
-              // print(_taskController.taskList.length);
               Task task = _taskController.taskList[index]; // pass an instance
-              // Tasks display logic by Date
-              DateTime weeklyDate =
-                  DateFormat.yMd().parse(task.date.toString());
-              var weeklyTime = DateFormat("EEEE").format(weeklyDate);
-
-              // Daily task remind
-              if (task.repeat == "Daily") {
-                DateTime date =
-                    DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                notifyHelper.scheduledNotification(
-                    int.parse(myTime.toString().split(":")[0]), // hours
-                    int.parse(myTime.toString().split(":")[1]), // minutes
-                    task);
+              if (task != null) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -175,10 +210,22 @@ class _AllTaskPageState extends State<AllTaskPage> {
                         ),
                       ),
                     ));
+              } else {
+                return Container(); // cannot find any match date
               }
+            });
+      }),
+    );
+  }
 
-              // TODO ??? Weekly? Montly?
-              if (task.date == DateFormat.yMd().format(_selectedDate)) {
+  _showTodoTasks() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+            itemBuilder: (_, index) {
+              Task task = _taskController.taskList[index]; // pass an instance
+              if (task.isCompleted == false) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -195,17 +242,22 @@ class _AllTaskPageState extends State<AllTaskPage> {
                         ),
                       ),
                     ));
+              } else {
+                return Container(); // cannot find any match date
               }
-              // Weekly task remind
-              else if (task.repeat == 'Weekly' &&
-                  weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
-                DateTime date =
-                    DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                notifyHelper.repeatWeeklyNotification(
-                    int.parse(myTime.toString().split(":")[0]), // hours
-                    int.parse(myTime.toString().split(":")[1]), // minutes
-                    task);
+            });
+      }),
+    );
+  }
+
+  _showCompletedTasks() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+            itemBuilder: (_, index) {
+              Task task = _taskController.taskList[index]; // pass an instance
+              if (task.isCompleted == true) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(

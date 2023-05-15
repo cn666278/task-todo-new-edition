@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app_new_edition/ui/add_task_bar.dart';
+import 'package:todo_app_new_edition/ui/screens/all_task_page.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
@@ -9,6 +13,7 @@ class CategoryList extends StatefulWidget {
   _CategoryListState createState() => _CategoryListState();
 }
 
+// TODO -- DELETED NO USED ANY MORE
 class _CategoryListState extends State<CategoryList> {
   // by default first item will be selected
   int selectedIndex = 0;
@@ -26,17 +31,6 @@ class _CategoryListState extends State<CategoryList> {
           onTap: () {
             setState(() {
               selectedIndex = index;
-              // TODO -- Category logic
-              if (selectedIndex == 0) {
-                // get all task
-              } else if (selectedIndex == 1) {
-                // get to do task
-              } else if (selectedIndex == 2) {
-                // get completed task
-              } else{
-                print("error with selectedIndex:");
-                print(selectedIndex);
-              }
             });
           },
           child: Container(
