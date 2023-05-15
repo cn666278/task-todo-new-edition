@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
 import 'package:todo_app_new_edition/ui/screens/all_task_page.dart';
-import 'package:todo_app_new_edition/ui/theme.dart';
 import 'package:todo_app_new_edition/ui/widgets/menu_btn.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_bar.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 
 class AllTask extends StatefulWidget {
   const AllTask({super.key});
