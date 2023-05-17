@@ -9,10 +9,10 @@ import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
 /* This file used for the tasks list UI design */
-class TaskTile extends StatelessWidget {
+class GreyTaskTile extends StatelessWidget {
   final Task? task;
 
-  TaskTile(this.task);
+  GreyTaskTile(this.task, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class TaskTile extends StatelessWidget {
               flex: 2,
               onPressed: task!.isStar! ? undoStarTask : starTask,
               backgroundColor:
-                  task!.isStar! ? Colors.red[400]! : Colors.green[400]!,
+              task!.isStar! ? Colors.red[400]! : Colors.green[400]!,
               // backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
               icon: task!.isStar! ? Icons.star_border : Icons.star,
@@ -95,34 +95,34 @@ class TaskTile extends StatelessWidget {
                 children: [
                   task!.isStar!
                       ? Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              task?.title ?? "",
-                              style: GoogleFonts.lato(
-                                textStyle: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          task?.title ?? "",
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        task?.title ?? "",
+                        style: GoogleFonts.lato(
+                          textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
+                      ),
+                    ],
+                  )
+                      : Text(
+                    task?.title ?? "",
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
                   SizedBox(
                     height: 12,
                   ),
@@ -140,7 +140,7 @@ class TaskTile extends StatelessWidget {
                         "${task!.startTime} - ${task!.date}",
                         style: GoogleFonts.lato(
                           textStyle:
-                              TextStyle(fontSize: 13, color: Colors.grey[100]),
+                          TextStyle(fontSize: 13, color: Colors.grey[100]),
                         ),
                       ),
                     ],
@@ -150,7 +150,7 @@ class TaskTile extends StatelessWidget {
                     task?.note ?? "",
                     style: GoogleFonts.lato(
                       textStyle:
-                          TextStyle(fontSize: 15, color: Colors.grey[100]),
+                      TextStyle(fontSize: 15, color: Colors.grey[100]),
                     ),
                   ),
                 ],
@@ -196,15 +196,15 @@ class TaskTile extends StatelessWidget {
   _getBGClr(int no) {
     switch (no) {
       case 0:
-        return bluishClr;
+        return bluishClr.withBlue(150);
       case 1:
-        return pinkClr;
+        return pinkClr.withBlue(110).withOpacity(0.9);
       case 2:
-        return yellowClr;
+        return yellowClr?.withBlue(100);
       case 3:
-        return deepOrange;
+        return deepOrange.withBlue(80);
       default:
-        return bluishClr;
+        return bluishClr.withBlue(150);
     }
   }
 }

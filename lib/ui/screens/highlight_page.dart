@@ -15,6 +15,7 @@ import 'package:todo_app_new_edition/ui/screens/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
+import 'package:todo_app_new_edition/ui/widgets/grey_task_tile.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
@@ -36,7 +37,7 @@ class _HighlightPageState extends State<HighlightPage> {
 
   // by default first item will be selected
   int selectedIndex = 0;
-  List categories = ['All', 'To do', 'Completed'];
+  List categories = ['To do', 'Completed', 'All'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -134,11 +135,11 @@ class _HighlightPageState extends State<HighlightPage> {
             ),
             // Category logic
             selectedIndex == 0
-                ? _showAllStarTasks()
-                : selectedIndex == 1
                 ? _showTodoStarTasks()
-                : selectedIndex == 2
+                : selectedIndex == 1
                 ? _showCompletedStarTasks()
+                : selectedIndex == 2
+                ? _showAllStarTasks()
                 : null,
           ],
         ),
@@ -168,8 +169,9 @@ class _HighlightPageState extends State<HighlightPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: menuIconColor,
-        onPressed: () {
-          Get.to(() => const AddTaskPage());
+        onPressed: () async {
+          await Get.to(() => const AddTaskPage());
+          _taskController.getTasks();
         },
         child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
@@ -261,7 +263,7 @@ class _HighlightPageState extends State<HighlightPage> {
                               onTap: () {
                                 _showBottomSheet(context, task);
                               },
-                              child: TaskTile(task),
+                              child: GreyTaskTile(task),
                             )
                           ],
                         ),

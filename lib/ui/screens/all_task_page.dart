@@ -17,6 +17,7 @@ import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/category_list.dart';
+import 'package:todo_app_new_edition/ui/widgets/grey_task_tile.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
@@ -38,7 +39,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
 
   // by default first item will be selected
   int selectedIndex = 0;
-  List categories = ['All', 'To do', 'Completed'];
+  List categories = ['To do', 'Completed', 'All'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -100,39 +101,38 @@ class _AllTaskPageState extends State<AllTaskPage> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
-                itemBuilder: (context, index) =>
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(
-                          left: kDefaultPadding,
-                          // At end item it add extra 20 right  padding
-                          right:
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      left: kDefaultPadding,
+                      // At end item it add extra 20 right  padding
+                      right:
                           index == categories.length - 1 ? kDefaultPadding : 0,
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                        decoration: BoxDecoration(
-                          color: index == selectedIndex
-                              ? primaryClr.withOpacity(0.95)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          categories[index],
-                          style: GoogleFonts.lato(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color:
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    decoration: BoxDecoration(
+                      color: index == selectedIndex
+                          ? primaryClr.withOpacity(0.95)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      categories[index],
+                      style: GoogleFonts.lato(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color:
                             index == selectedIndex ? Colors.white : Colors.grey,
-                          ),
-                        ),
                       ),
                     ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(
@@ -140,11 +140,11 @@ class _AllTaskPageState extends State<AllTaskPage> {
             ),
             // TODO -- Category logic
             selectedIndex == 0
-                ? _showTasks()
+                ? _showTodoTasks()
                 : selectedIndex == 1
-                    ? _showTodoTasks()
+                    ? _showCompletedTasks()
                     : selectedIndex == 2
-                        ? _showCompletedTasks()
+                        ? _showTasks()
                         : null,
           ],
         ),
@@ -174,8 +174,9 @@ class _AllTaskPageState extends State<AllTaskPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: menuIconColor,
-        onPressed: () {
-          Get.to(() => const AddTaskPage());
+        onPressed: () async {
+          await Get.to(() => const AddTaskPage());
+          _taskController.getTasks();
         },
         // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),
@@ -268,7 +269,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
                               onTap: () {
                                 _showBottomSheet(context, task);
                               },
-                              child: TaskTile(task),
+                              child: GreyTaskTile(task),
                             )
                           ],
                         ),

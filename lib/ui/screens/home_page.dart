@@ -122,8 +122,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: menuIconColor,
-        onPressed: () {
-          Get.to(() => const AddTaskPage());
+        onPressed: () async {
+          await Get.to(() => const AddTaskPage());
+          _taskController.getTasks();
         },
         // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),

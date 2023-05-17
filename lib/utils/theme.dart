@@ -10,12 +10,14 @@ const Color shadowColorLight = Color(0xFF4A5367);
 const Color shadowColorDark = Colors.black;
 const Color menuIconColor = Color(0xFF5C78FF);
 const Color bluishClr = Color(0xFF4e5ae8);
-const Color yellowClr = Color(0xFFFFB746);
+// const Color yellowClr = Color(0xFFFFB759);
 const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = bluishClr;
 const Color darkGreyClr = Color(0xFF121212);
 const Color deepOrange = Colors.deepOrange;
+// Color? yellowClr = Colors.green[500];
+Color? yellowClr = Colors.amber[700];
 Color darkHeaderClr = const Color(0xFF424242);
 
 class Themes {
