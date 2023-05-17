@@ -5,6 +5,7 @@ import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/onboding/onboding_screen.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/home_page.dart';
 import 'package:todo_app_new_edition/ui/widgets/side_menu.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.dark,
       themeMode: ThemeServices().theme,
 
-      home: EntryPoint(),
+      home: Calendar(),
       // home: HomePage(),
       // TODO -- When need to add the login function, uncomment this
       // home: OnbodingScreen(), // login page

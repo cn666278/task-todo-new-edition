@@ -12,7 +12,7 @@ import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/demo.dart';
+import 'package:todo_app_new_edition/ui/screens/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -67,8 +67,8 @@ class _AllTaskPageState extends State<AllTaskPage> {
   List pages = [
     AllTask(),
     Calendar(),
-    DemoPage(title: "3"),
-    EntryPoint(),
+    Highlight(),
+    EntryPoint(), // ReportPage(),
   ];
 
   @override

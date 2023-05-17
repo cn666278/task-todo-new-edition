@@ -1,4 +1,3 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -18,28 +17,26 @@ import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
+import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
-class CalendarPage extends StatefulWidget {
-  const CalendarPage({Key? key}) : super(key: key);
+class HighlightPage extends StatefulWidget {
+  const HighlightPage({Key? key}) : super(key: key);
 
   @override
-  State<CalendarPage> createState() => _CalendarPageState();
+  State<HighlightPage> createState() => _HighlightPageState();
 }
 
-// update from 2023/02/09
-class _CalendarPageState extends State<CalendarPage> {
-  DateTime _selectedDate = DateTime.now();
-
-  // TODO ???
+class _HighlightPageState extends State<HighlightPage> {
   var db = new Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
-
-  // TODO -- NEW ADDED for menu bar
-  final PageController pageController = PageController();
   int currentIndex = 0;
+
+  // by default first item will be selected
+  int selectedIndex = 0;
+  List categories = ['All', 'To do', 'Completed'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -70,7 +67,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Calendar Page");
+    print("Highlight Page");
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: context.theme.backgroundColor,
@@ -86,11 +83,63 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Column(
           children: [
             _addTaskBar(),
-            _addDateBar(),
-            SizedBox(
+            // _addDateBar(),
+            const SizedBox(
               height: 10,
             ),
-            _showTasks(),
+            // CategoryList(),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+              height: 30,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) =>
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                          left: kDefaultPadding,
+                          // At end item it add extra 20 right  padding
+                          right:
+                          index == categories.length - 1 ? kDefaultPadding : 0,
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                        decoration: BoxDecoration(
+                          color: index == selectedIndex
+                              ? primaryClr.withOpacity(0.95)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          categories[index],
+                          style: GoogleFonts.lato(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color:
+                            index == selectedIndex ? Colors.white : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            // Category logic
+            selectedIndex == 0
+                ? _showAllStarTasks()
+                : selectedIndex == 1
+                ? _showTodoStarTasks()
+                : selectedIndex == 2
+                ? _showCompletedStarTasks()
+                : null,
           ],
         ),
       ),
@@ -101,7 +150,6 @@ class _CalendarPageState extends State<CalendarPage> {
           NavigationItemModel(
             label: "All Task",
             icon: SvgIcon.layout,
-            // icon: SvgIcon.clipboard,
           ),
           NavigationItemModel(
             label: "Calendar",
@@ -110,8 +158,6 @@ class _CalendarPageState extends State<CalendarPage> {
           NavigationItemModel(
             label: "Highlight",
             icon: SvgIcon.tag,
-            // icon: SvgIcon.favorite,
-            count: 3,
           ),
           NavigationItemModel(
             label: "Report",
@@ -125,7 +171,6 @@ class _CalendarPageState extends State<CalendarPage> {
         onPressed: () {
           Get.to(() => const AddTaskPage());
         },
-        // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
       // float button
@@ -134,34 +179,14 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  _showTasks() {
+  _showAllStarTasks() {
     return Expanded(
       child: Obx(() {
         return ListView.builder(
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              // Tasks display logic by Date
-              // used to format weekly date
-              // ref:
-              // 1. https://www.jianshu.com/p/00ccb0fbdb42
-              // 2. https://api.flutter.dev/flutter/intl/DateFormat-class.html
-              DateTime weeklyDate = DateFormat.yMd().parse(task.date.toString());
-              var weeklyTime = DateFormat("EEEE").format(weeklyDate);
-
-              // monthly date format
-              DateTime monthlyDate = DateFormat.yMd().parse(task.date.toString());
-              var monthlyTime = DateFormat("MMMM").format(monthlyDate);
-
-              // Daily task remind
-              if (task.repeat == "Daily") {
-                DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                notifyHelper.scheduledNotification(
-                    int.parse(myTime.toString().split(":")[0]), // hours
-                    int.parse(myTime.toString().split(":")[1]), // minutes
-                    task);
+              if (task.isStar == true) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -178,9 +203,22 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                       ),
                     ));
+              } else {
+                return Container(); // cannot find any match date
               }
+            });
+      }),
+    );
+  }
 
-              if (task.date == DateFormat.yMd().format(_selectedDate)) {
+  _showTodoStarTasks() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+            itemBuilder: (_, index) {
+              Task task = _taskController.taskList[index]; // pass an instance
+              if (task.isCompleted == false && task.isStar == true) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -197,16 +235,22 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                       ),
                     ));
+              } else {
+                return Container(); // cannot find any match date
               }
-              // Weekly task remind
-              else if (task.repeat == 'Weekly' && weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
-                DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                notifyHelper.repeatWeeklyNotification(
-                    int.parse(myTime.toString().split(":")[0]), // hours
-                    int.parse(myTime.toString().split(":")[1]), // minutes
-                    task);
+            });
+      }),
+    );
+  }
+
+  _showCompletedStarTasks() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+            itemBuilder: (_, index) {
+              Task task = _taskController.taskList[index]; // pass an instance
+              if (task.isCompleted == true && task.isStar == true) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -223,8 +267,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                       ),
                     ));
-              }
-              else {
+              } else {
                 return Container(); // cannot find any match date
               }
             });
@@ -331,49 +374,11 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Center(
           child: Text(
             label,
-            // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
+            // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
             isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
-      ),
-    );
-  }
-
-  // Calendar function
-  // rebuilt the Container() in _addDateBar
-  _addDateBar() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20, left: 20),
-      child: DatePicker(
-        DateTime.now(),
-        height: 95,
-        width: 80,
-        initialSelectedDate: DateTime.now(),
-        selectionColor: primaryClr,
-        selectedTextColor: Colors.white,
-        // Date
-        dateTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
-        ),
-        // Day
-        dayTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-        ),
-        // Month
-        monthTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[400]),
-        ),
-        onDateChange: (date) {
-          setState(() {
-            _selectedDate = date;
-          });
-        },
       ),
     );
   }
@@ -393,20 +398,20 @@ class _CalendarPageState extends State<CalendarPage> {
               children: [
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
-                  DateFormat.yMMMd().format(DateTime.now()),
+                  DateFormat.yMMMEd().format(DateTime.now()),
                   style: subHeadingStyle,
                 ),
                 Text(
-                  "Today",
+                  "Star Task",
                   style: headingStyle,
                 ),
               ],
             ),
           ),
           MyButton(
-              label: "+ Add Task",
+            // Star Task progress design display
+              label: " Progress",
               onTap: () async {
-                // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
                 await Get.to(() => AddTaskPage());
                 _taskController.getTasks();
               }) // Get.to: jump to a new page
@@ -421,7 +426,7 @@ class _CalendarPageState extends State<CalendarPage> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
-          // TODO -- Logic for theme change
+          // Logic for theme change
           ThemeServices().switchTheme();
           notifyHelper.displayNotification(
             title: "Theme changed",
@@ -440,17 +445,6 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
       ),
       actions: [
-        // Icon(
-        //   Icons.person,
-        //   // Icon color should change according to the Theme Mode
-        //   color: Get.isDarkMode ? Colors.white : Colors.black,
-        // ),
-        // 头像png控件
-        // CircleAvatar(
-        //   backgroundImage: AssetImage(
-        //     "images/header.png"
-        //   ),
-        // ),
         SizedBox(
           width: 20,
         )
