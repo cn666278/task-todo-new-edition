@@ -3,7 +3,6 @@ import 'package:mysql1/mysql1.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 
-
 class TaskController extends GetxController {
   @override
   void onReady() {
@@ -18,8 +17,14 @@ class TaskController extends GetxController {
     return await DBHelper.insert(task!);
   }
 
+  void updateTask({Task? task}) async {
+    print("update task detail");
+    await DBHelper.updateTaskDetail(task!);
+    getTasks(); // ?
+  }
+
   // get all the data from table
-  void getTasks() async{
+  void getTasks() async {
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     // print(tasks);
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
@@ -55,14 +60,16 @@ class TaskController extends GetxController {
   }
 
   // get all the data from table
-  void getTaskDetails(Task task) async{
+  void getTaskDetails(Task task) async {
     // todo edit the dunction query()
-    List<Map<String, dynamic>> taskDetail = await DBHelper.queryTaskDetail(task);
-    taskDetailList.assignAll(taskDetail.map((data) => Task.fromJson(data)).toList());
+    List<Map<String, dynamic>> taskDetail =
+        await DBHelper.queryTaskDetail(task);
+    taskDetailList
+        .assignAll(taskDetail.map((data) => Task.fromJson(data)).toList());
     // print(taskDetailList);
   }
 
-  int getTotalTask(Task task){
+  int getTotalTask(Task task) {
     var res = 0;
     // TODO -- get total tasks
     // for(int i = 0; i < task.length; i++){
@@ -73,7 +80,7 @@ class TaskController extends GetxController {
     return res;
   }
 
-  int getTotalCompletedTask(Task task){
+  int getTotalCompletedTask(Task task) {
     var res = 0;
     // TODO -- get total completed tasks
     // for(int i = 0; i < task.length; i++){

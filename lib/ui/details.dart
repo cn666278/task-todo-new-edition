@@ -5,7 +5,6 @@ import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/widgets/update_button.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
@@ -14,6 +13,7 @@ import 'package:todo_app_new_edition/utils/theme.dart';
 class TaskDetailPage extends StatefulWidget {
   // TODO : ? How to pass this task to outside of this method TaskDetailPage() ?
   final Task task;
+
   const TaskDetailPage({Key? key, required this.task}) : super(key: key);
 
   @override
@@ -21,7 +21,6 @@ class TaskDetailPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailPage> {
-
   late Task? task = widget.task; // todo how to get the task?
   final TaskController _taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
@@ -35,44 +34,54 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     15,
     20,
   ];
-  String _selectedRepeat = "None"; // default value
+  String _selectedRepeat = "None";
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
   int _selectedColor = 0;
 
-
   @override
   Widget build(BuildContext context) {
+    _selectedColor = task!.color!;
     return Scaffold(
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(context),
       body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.task, color: _getBGClr(task?.color??0)),
-                    const SizedBox(width: 5,),
-                    Text(
-                      task!.title!,
-                      style: headingStyle,
-                    ),
-                  ],
-                ),
-                _colorPalette(),
-              ],
-            ),
-              MyInputField(title: "Title", hint: task!.title!, controller: _titleController,),
-              MyInputField(title: "Note", hint: task!.note!, controller: _noteController,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.task, color: _getBGClr(task?.color ?? 0)),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        task!.title!,
+                        style: headingStyle,
+                      ),
+                    ],
+                  ),
+                  // _colorPalette(),
+                ],
+              ),
+              MyInputField(
+                title: "Title",
+                hint: task!.title!,
+                controller: _titleController,
+              ),
+              MyInputField(
+                title: "Note",
+                hint: task!.note!,
+                controller: _noteController,
+              ),
               MyInputField(
                 title: "Date",
-                hint: DateFormat.yMd().format(_selectedDate),
+                hint: task!.date!,
                 widget: IconButton(
                   icon: Icon(
                     Icons.calendar_today_outlined,
@@ -88,24 +97,24 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                 children: [
                   Expanded(
                       child: MyInputField(
-                        title: "Start Time",
-                        hint: _startTime,
-                        widget: IconButton(
-                            onPressed: () {
-                              _getTimeFromUser(isStartTime: true);
-                            },
-                            icon: const Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.grey,
-                            )),
-                      )),
+                    title: "Start Time",
+                    hint: task!.startTime!,
+                    widget: IconButton(
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: true);
+                        },
+                        icon: const Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        )),
+                  )),
                 ],
               ),
               MyInputField(
                 title: "Remind",
-                hint: "$_selectedRemind minutes early",
+                hint: "${task!.remind!} minutes early",
                 widget: DropdownButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_down,
                     color: Colors.grey,
                   ),
@@ -120,10 +129,11 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                     setState(() {
                       _selectedRemind =
                           int.parse(newValue!); // saved the selected time
+                      task?.remind = _selectedRemind;
                     });
                   },
                   items:
-                  reminderList.map<DropdownMenuItem<String>>((int value) {
+                      reminderList.map<DropdownMenuItem<String>>((int value) {
                     return DropdownMenuItem<String>(
                       value: value.toString(),
                       child: Text(value.toString()),
@@ -133,9 +143,9 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
               ),
               MyInputField(
                 title: "Repeat",
-                hint: "$_selectedRepeat",
+                hint: task!.repeat!,
                 widget: DropdownButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_down,
                     color: Colors.grey,
                   ),
@@ -149,10 +159,11 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedRepeat = newValue!; // saved the selected value
+                      task?.repeat = _selectedRepeat;
                     });
                   },
                   items:
-                  repeatList.map<DropdownMenuItem<String>>((String? value) {
+                      repeatList.map<DropdownMenuItem<String>>((String? value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
@@ -163,7 +174,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                   }).toList(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
@@ -171,9 +182,11 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _colorPalette(),
+                  Container(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: UpdateButton(label: "Update", onTap: () => _validateDate()),
+                    child: UpdateButton(
+                        label: " Update", onTap: () => _validateDate()),
                   ),
                 ],
               )
@@ -201,38 +214,38 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
   }
 
   _validateDate() {
-    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
-      // TODO -- CHANGE TO EDIT / UPDATE Function
-      _addTaskToDb();
-      _taskController.getTasks();
-      Get.back();
-    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
-      Get.snackbar("Required", "All fields are required. ",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-          colorText: pinkClr,
-          icon: Icon(Icons.warning_amber_rounded,
-            color: Colors.red,
-          ));
-    }
+    _updateTaskToDb();
+    _taskController.getTasks();
+    Get.back();
   }
 
-  /* Add task to database */
-  _addTaskToDb() async{
-    int value = await _taskController.addTask(
+  /* Update task to database */
+  _updateTaskToDb() {
+    _taskController.updateTask(
         task: Task(
-          note: _noteController.text,
-          title: _titleController.text,
-          date: DateFormat.yMd().format(_selectedDate),
-          startTime: _startTime,
-          remind: _selectedRemind,
-          repeat: _selectedRepeat,
-          color: _selectedColor,
-          isCompleted: false,
-          isStar: false,
-        )
-    );
-    print("My id is " + "$value");
+      id: task?.id,
+      title:
+          _titleController.text.isEmpty ? task?.title : _titleController.text,
+      note: _noteController.text.isEmpty ? task?.note : _noteController.text,
+      date: task?.date,
+      startTime: task?.startTime,
+      remind: task?.remind,
+      repeat: task?.repeat,
+      color: task?.color,
+      // title: _titleController.text,
+      // note: _noteController.text,
+      // date: task?.date == DateFormat.yMd().format(_selectedDate)
+      //     ? task?.date
+      //     : DateFormat.yMd().format(_selectedDate),
+      // startTime: _startTime == _startTime ? task?.startTime : _startTime,
+      // remind:
+      //     _selectedRemind == _selectedRemind ? task?.remind : _selectedRemind,
+      // repeat:
+      //     _selectedRepeat == _selectedRepeat ? task?.repeat : _selectedRepeat,
+      // color: _selectedColor == _selectedColor ? task?.color : _selectedColor,
+      isCompleted: task?.isCompleted,
+      isStar: task?.isStar,
+    ));
   }
 
   _colorPalette() {
@@ -247,7 +260,8 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
         //   height: 8.0,
         // ),
         // Wrap widget can help put things in horizontal line
-        Wrap( // used for the horizontal layout
+        Wrap(
+          // used for the horizontal layout
           children: List<Widget>.generate(4, (int index) {
             return GestureDetector(
               // make the color selectable
@@ -255,7 +269,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                 setState(() {
                   // use setState() to trigger the result
                   _selectedColor = index; // save the index color
-                  print("color index:$index");
+                  task?.color = _selectedColor;
                 });
               },
               child: Padding(
@@ -263,22 +277,22 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                 child: CircleAvatar(
                   radius: 14,
                   backgroundColor:
-                  // add more colors here
-                  index == 0
-                      ? primaryClr
-                      : index == 1
-                      ? pinkClr
-                      : index == 2
-                      ? yellowClr
-                      : Colors.deepOrange,
+                      // add more colors here
+                      index == 0
+                          ? primaryClr
+                          : index == 1
+                              ? pinkClr
+                              : index == 2
+                                  ? yellowClr
+                                  : Colors.deepOrange,
                   // we want to show the selected color with tick only,
                   // other should be blank (empty Container)
                   child: _selectedColor == index
                       ? Icon(
-                    Icons.done,
-                    color: Colors.white,
-                    size: 16,
-                  )
+                          Icons.done,
+                          color: Colors.white,
+                          size: 16,
+                        )
                       : Container(),
                 ),
               ),
@@ -291,7 +305,8 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
 
   _appBar(BuildContext context) {
     return AppBar(
-      elevation: 0, // eliminate the shadow of header banner
+      elevation: 0,
+      // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
@@ -304,6 +319,11 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
           color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
+      title: const Text(
+        "Task Details",
+        style: TextStyle(color: Colors.black),
+      ),
+      centerTitle: true,
       actions: [
         Icon(
           Icons.person,
@@ -333,7 +353,8 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     if (_pickerDate != null) {
       setState(() {
         _selectedDate = _pickerDate;
-        print(_selectedDate);
+        task?.date = DateFormat.yMd().format(_pickerDate);
+        // print(_selectedDate);
       });
     } else {
       print("it is null or something went wrong");
@@ -348,6 +369,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     } else if (isStartTime == true) {
       setState(() {
         _startTime = formattedTime;
+        task?.startTime = _startTime;
       });
     }
   }

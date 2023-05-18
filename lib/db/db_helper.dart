@@ -48,17 +48,15 @@ class DBHelper {
       _db.getConnection().then((conn) {
         conn.query(
             "CREATE TABLE $_tableName (id int PRIMARY KEY AUTO_INCREMENT,"
-                " title varchar(255), note varchar(255), date varchar(255),"
-                " startTime varchar(50), remind int,"
-                " `repeat` varchar(50), color int, isCompleted boolean, isStar boolean);"
-        );
+            " title varchar(255), note varchar(255), date varchar(255),"
+            " startTime varchar(50), remind int,"
+            " `repeat` varchar(50), color int, isCompleted boolean, isStar boolean);");
         // conn.close();
       });
     } catch (e) {
       print(e); // print the error
     }
   }
-
 
   static Future<int> insert(Task task) async {
     // Insert some data
@@ -84,17 +82,49 @@ class DBHelper {
     });
   }
 
+  // static updateTaskDetail(Task task) async {
+  //   return await _db.getConnection().then((conn) {
+  //     conn.query('''
+  //           UPDATE $_tableName
+  //           SET color = ?
+  //           WHERE id = ?
+  //         ''', [task.color, task.id]);
+  //   });
+  // }
+
+  static updateTaskDetail(Task task) async {
+    print("update task detail function called");
+
+    return await _db.getConnection().then((conn) async {
+      var row = await db.update(
+        table: 'tasks',
+        updateData: {
+          'title': task.title,
+          'note': task.note,
+          'date': task.date,
+          'startTime': task.startTime,
+          'color': task.color,
+          'remind': task.remind,
+          'repeat': task.repeat,
+          'isStar': task.isStar,
+          'isCompleted': task.isCompleted,
+        },
+        where: {'id': task.id},
+      );
+      print(row);
+    });
+  }
+
   static Future<List<Map<String, dynamic>>> query() async {
     print("query function called");
 
     return await _db.getConnection().then((conn) async {
-      var row = await db
-          .query('SELECT * FROM $_tableName');
+      var row = await db.query('SELECT * FROM $_tableName');
       // print(row.toMap());
 
       // using the api [mysql_utils] to convert the type of row to List<dynamic>
-      List<Map<String, dynamic>> list = List<Map<String, dynamic>>.from(
-          row.rows);
+      List<Map<String, dynamic>> list =
+          List<Map<String, dynamic>>.from(row.rows);
       return list;
     });
   }
@@ -128,7 +158,8 @@ class DBHelper {
       print(row);
 
       // using the api [mysql_utils] to convert the type of row to List<dynamic>
-      List<Map<String, dynamic>> detail = List<Map<String, dynamic>>.from(row.values);
+      List<Map<String, dynamic>> detail =
+          List<Map<String, dynamic>>.from(row.values);
       return detail;
     });
   }
