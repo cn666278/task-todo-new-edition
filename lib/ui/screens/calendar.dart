@@ -141,51 +141,6 @@ class _CalendarState extends State<Calendar>
         ],
       ),
 
-      // TODO --DELETE( old menu bar with no Page jump)
-      // bottomNavigationBar: Transform.translate(
-      //   offset: Offset(0, 100 * animation.value),
-      //   child: SafeArea(
-      //     child: Container(
-      //       padding:
-      //       const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
-      //       margin: const EdgeInsets.symmetric(horizontal: 24),
-      //       decoration: BoxDecoration(
-      //         color: backgroundColor2.withOpacity(0.8),
-      //         borderRadius: const BorderRadius.all(Radius.circular(24)),
-      //         boxShadow: [
-      //           BoxShadow(
-      //             color: backgroundColor2.withOpacity(0.3),
-      //             offset: const Offset(0, 20),
-      //             blurRadius: 20,
-      //           ),
-      //         ],
-      //       ),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           ...List.generate(
-      //             bottomNavItems.length,
-      //                 (index) {
-      //               Menu navBar = bottomNavItems[index];
-      //               return BtmNavItem(
-      //                 navBar: navBar,
-      //                 press: () {
-      //                   RiveUtils.changeSMIBoolState(navBar.rive.status!);
-      //                   updateSelectedBtmNav(navBar);
-      //                 },
-      //                 riveOnInit: (artboard) {
-      //                   navBar.rive.status = RiveUtils.getRiveInput(artboard,
-      //                       stateMachineName: navBar.rive.stateMachineName);
-      //                 },
-      //                 selectedNav: selectedBottonNav,
-      //               );
-      //             },
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

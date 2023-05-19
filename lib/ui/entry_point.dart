@@ -139,18 +139,6 @@ class _EntryPointState extends State<EntryPoint>
               },
             ),
           ),
-          // TODO -- Something wrong with the PageView(will overwrite the menu botton)
-          // PageView(
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   controller: pageController,
-          //   onPageChanged: onIndexChanged,
-          //   children: const [
-          //     HomePage(),
-          //     AddTaskPage(),
-          //     DemoPage(title: "chat"),
-          //     DemoPage(title: "user"),
-          //   ],
-          // ),
         ],
       ),
       // bottomNavigationBar: BuildNavigation(

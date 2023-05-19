@@ -400,7 +400,7 @@ class _HighlightPageState extends State<HighlightPage> {
               children: [
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
-                  DateFormat.yMMMEd().format(DateTime.now()),
+                  DateFormat.EEEE().format(DateTime.now()),
                   style: subHeadingStyle,
                 ),
                 Text(
@@ -412,11 +412,11 @@ class _HighlightPageState extends State<HighlightPage> {
           ),
           MyButton(
             // Star Task progress design display
-              label: " Progress",
+              label: "StarProgress",
               onTap: () async {
-                await Get.to(() => AddTaskPage());
+                // await Get.to(() => AddTaskPage());
                 _taskController.getTasks();
-              }) // Get.to: jump to a new page
+              })
         ],
       ),
     );
@@ -426,26 +426,26 @@ class _HighlightPageState extends State<HighlightPage> {
     return AppBar(
       elevation: 0, // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
-      leading: GestureDetector(
-        onTap: () {
-          // Logic for theme change
-          ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-            title: "Theme changed",
-            body: Get.isDarkMode
-                ? "Activated Light Theme"
-                : "Activated Dark Theme",
-          );
-          // notifyHelper.scheduledNotification();
-        },
-        child: Icon(
-          // Day and moon icon should change according to the Theme Mode
-          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
-          size: 20,
-          // Icon color should change according to the Theme Mode
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
-      ),
+      // leading: GestureDetector(
+      //   onTap: () {
+      //     // Logic for theme change
+      //     ThemeServices().switchTheme();
+      //     notifyHelper.displayNotification(
+      //       title: "Theme changed",
+      //       body: Get.isDarkMode
+      //           ? "Activated Light Theme"
+      //           : "Activated Dark Theme",
+      //     );
+      //     // notifyHelper.scheduledNotification();
+      //   },
+      //   child: Icon(
+      //     // Day and moon icon should change according to the Theme Mode
+      //     Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
+      //     size: 20,
+      //     // Icon color should change according to the Theme Mode
+      //     color: Get.isDarkMode ? Colors.white : Colors.black,
+      //   ),
+      // ),
       actions: [
         SizedBox(
           width: 20,

@@ -406,7 +406,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
               children: [
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
-                  DateFormat.yMMMEd().format(DateTime.now()),
+                  DateFormat.MMMEd().format(DateTime.now()),
                   style: subHeadingStyle,
                 ),
                 Text(
@@ -433,26 +433,26 @@ class _AllTaskPageState extends State<AllTaskPage> {
     return AppBar(
       elevation: 0, // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
-      leading: GestureDetector(
-        onTap: () {
-          // TODO -- Logic for theme change
-          ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-            title: "Theme changed",
-            body: Get.isDarkMode
-                ? "Activated Light Theme"
-                : "Activated Dark Theme",
-          );
-          // notifyHelper.scheduledNotification();
-        },
-        child: Icon(
-          // Day and moon icon should change according to the Theme Mode
-          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
-          size: 20,
-          // Icon color should change according to the Theme Mode
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
-      ),
+      // leading: GestureDetector(
+      //   onTap: () {
+      //     // TODO -- Logic for theme change
+      //     ThemeServices().switchTheme();
+      //     notifyHelper.displayNotification(
+      //       title: "Theme changed",
+      //       body: Get.isDarkMode
+      //           ? "Activated Light Theme"
+      //           : "Activated Dark Theme",
+      //     );
+      //     // notifyHelper.scheduledNotification();
+      //   },
+      //   child: Icon(
+      //     // Day and moon icon should change according to the Theme Mode
+      //     Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
+      //     size: 20,
+      //     // Icon color should change according to the Theme Mode
+      //     color: Get.isDarkMode ? Colors.white : Colors.black,
+      //   ),
+      // ),
       actions: [
         // Icon(
         //   Icons.person,
