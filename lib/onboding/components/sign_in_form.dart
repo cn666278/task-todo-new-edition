@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
-import 'package:todo_app_new_edition/ui/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 
 
 class SignInForm extends StatefulWidget {

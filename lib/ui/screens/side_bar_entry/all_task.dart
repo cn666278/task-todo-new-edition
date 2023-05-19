@@ -18,8 +18,6 @@ class AllTask extends StatefulWidget {
 class _AllTaskState extends State<AllTask>
     with SingleTickerProviderStateMixin {
   bool isSideBarOpen = false;
-
-  Menu selectedBottonNav = bottomNavItems.first;
   Menu selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
@@ -32,14 +30,6 @@ class _AllTaskState extends State<AllTask>
       currentIndex = index;
     });
     pageController.jumpToPage(index);
-  }
-
-  void updateSelectedBtmNav(Menu menu) {
-    if (selectedBottonNav != menu) {
-      setState(() {
-        selectedBottonNav = menu;
-      });
-    }
   }
 
   late AnimationController _animationController;

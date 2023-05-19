@@ -10,10 +10,10 @@ import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
-import 'package:todo_app_new_edition/ui/entry_point.dart';
-import 'package:todo_app_new_edition/ui/screens/all_task.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -33,8 +33,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDate = DateTime.now();
 
-  // TODO ???
-  var db = new Mysql();
+  var db = Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
 
@@ -126,7 +125,6 @@ class _HomePageState extends State<HomePage> {
           await Get.to(() => const AddTaskPage());
           _taskController.getTasks();
         },
-        // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
       // float button
@@ -242,7 +240,7 @@ class _HomePageState extends State<HomePage> {
   * */
   _showBottomSheet(BuildContext context, Task task) {
     Get.bottomSheet(Container(
-      padding: EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(top: 4),
       // judge the BottomSheet height by the variable: isCompleted 0/1
       height: MediaQuery.of(context).size.height * 0.32,
       color: Get.isDarkMode ? darkGreyClr : Colors.white,
@@ -256,7 +254,7 @@ class _HomePageState extends State<HomePage> {
               color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           task.isCompleted == true
               ? _bottomSheetButton(
                   label: "Undo Completed",
@@ -287,7 +285,7 @@ class _HomePageState extends State<HomePage> {
             clr: Colors.red[400]!,
             context: context,
           ),
-          SizedBox(
+          const SizedBox(
             height: 22,
           ),
           _bottomSheetButton(
@@ -301,7 +299,7 @@ class _HomePageState extends State<HomePage> {
             // set as ture
             context: context,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],
@@ -319,7 +317,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
         height: 55,
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
@@ -360,12 +358,12 @@ class _HomePageState extends State<HomePage> {
         selectedTextColor: Colors.white,
         // Date
         dateTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         // Day
         dayTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         // Month
@@ -412,8 +410,7 @@ class _HomePageState extends State<HomePage> {
           MyButton(
               label: "+ Add Task",
               onTap: () async {
-                // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
-                await Get.to(() => AddTaskPage());
+                await Get.to(() => const AddTaskPage());
                 _taskController.getTasks();
               }) // Get.to: jump to a new page
         ],
@@ -427,7 +424,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
-          // TODO -- Logic for theme change
+          // Logic for theme change
           ThemeServices().switchTheme();
           notifyHelper.displayNotification(
             title: "Theme changed",

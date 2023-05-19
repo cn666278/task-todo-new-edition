@@ -9,10 +9,10 @@ import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
-import 'package:todo_app_new_edition/ui/entry_point.dart';
-import 'package:todo_app_new_edition/ui/screens/all_task.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -32,12 +32,11 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _selectedDate = DateTime.now();
 
-  // TODO ???
-  var db = new Mysql();
+  var db = Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
 
-  // TODO -- NEW ADDED for menu bar
+  // NEW ADDED for menu bar
   final PageController pageController = PageController();
   int currentIndex = 0;
 
@@ -50,7 +49,6 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification(); // initialize
@@ -126,7 +124,6 @@ class _CalendarPageState extends State<CalendarPage> {
           await Get.to(() => const AddTaskPage());
           _taskController.getTasks();
         },
-        // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
       // float button
@@ -332,7 +329,7 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Center(
           child: Text(
             label,
-            // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
+            // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
             isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
@@ -355,12 +352,12 @@ class _CalendarPageState extends State<CalendarPage> {
         selectedTextColor: Colors.white,
         // Date
         dateTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         // Day
         dayTextStyle: GoogleFonts.lato(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         // Month
@@ -422,7 +419,7 @@ class _CalendarPageState extends State<CalendarPage> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
-          // TODO -- Logic for theme change
+          // Logic for theme change
           ThemeServices().switchTheme();
           notifyHelper.displayNotification(
             title: "Theme changed",

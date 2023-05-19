@@ -9,14 +9,13 @@ import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
-import 'package:todo_app_new_edition/ui/entry_point.dart';
-import 'package:todo_app_new_edition/ui/screens/all_task.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/widgets/category_list.dart';
 import 'package:todo_app_new_edition/ui/widgets/grey_task_tile.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
@@ -96,7 +95,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             ),
             // CategoryList(),
             Container(
-              margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+              margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
               height: 30,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -138,7 +137,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             const SizedBox(
               height: 10,
             ),
-            // TODO -- Category logic
+            // Category logic
             selectedIndex == 0
                 ? _showTodoTasks()
                 : selectedIndex == 1
@@ -151,7 +150,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
       ),
       bottomNavigationBar: BuildNavigation(
         currentIndex: currentIndex,
-        onTap: onIndexChanged, // 切换tab事件
+        onTap: onIndexChanged, // tab switch event
         items: [
           NavigationItemModel(
             label: "All Task",
@@ -168,7 +167,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
           NavigationItemModel(
             label: "Report",
             icon: SvgIcon.clipboard,
-            count: 3,
+            // count: 3,
           ),
         ],
       ),
@@ -178,7 +177,6 @@ class _AllTaskPageState extends State<AllTaskPage> {
           await Get.to(() => const AddTaskPage());
           _taskController.getTasks();
         },
-        // TODO FIND OUT HOW TO CHANGE THE ADD Button to purple color
         child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
       // float button
@@ -382,7 +380,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
         child: Center(
           child: Text(
             label,
-            // TODO copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
+            // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
                 isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
@@ -420,7 +418,6 @@ class _AllTaskPageState extends State<AllTaskPage> {
               // TODO Task progress design display
               label: " Progress",
               onTap: () async {
-                // TODO !!! IMPORTANT FOR HOMEPAGE DISPLAY
                 await Get.to(() => AddTaskPage());
                 _taskController.getTasks();
               }) // Get.to: jump to a new page
@@ -435,7 +432,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
       backgroundColor: context.theme.backgroundColor,
       // leading: GestureDetector(
       //   onTap: () {
-      //     // TODO -- Logic for theme change
+      //     // Logic for theme change
       //     ThemeServices().switchTheme();
       //     notifyHelper.displayNotification(
       //       title: "Theme changed",

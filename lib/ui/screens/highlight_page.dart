@@ -7,11 +7,10 @@ import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
-import 'package:todo_app_new_edition/services/theme_services.dart';
-import 'package:todo_app_new_edition/ui/entry_point.dart';
-import 'package:todo_app_new_edition/ui/screens/all_task.dart';
-import 'package:todo_app_new_edition/ui/screens/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -30,7 +29,7 @@ class HighlightPage extends StatefulWidget {
 }
 
 class _HighlightPageState extends State<HighlightPage> {
-  var db = new Mysql();
+  var db = Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
   int currentIndex = 0;
@@ -48,7 +47,6 @@ class _HighlightPageState extends State<HighlightPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification(); // initialize
@@ -90,7 +88,7 @@ class _HighlightPageState extends State<HighlightPage> {
             ),
             // CategoryList(),
             Container(
-              margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+              margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
               height: 30,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -110,7 +108,7 @@ class _HighlightPageState extends State<HighlightPage> {
                           right:
                           index == categories.length - 1 ? kDefaultPadding : 0,
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                         decoration: BoxDecoration(
                           color: index == selectedIndex
                               ? primaryClr.withOpacity(0.95)
@@ -146,7 +144,7 @@ class _HighlightPageState extends State<HighlightPage> {
       ),
       bottomNavigationBar: BuildNavigation(
         currentIndex: currentIndex,
-        onTap: onIndexChanged, // 切换tab事件
+        onTap: onIndexChanged, // tab switch event
         items: [
           NavigationItemModel(
             label: "All Task",
@@ -281,7 +279,7 @@ class _HighlightPageState extends State<HighlightPage> {
   * */
   _showBottomSheet(BuildContext context, Task task) {
     Get.bottomSheet(Container(
-      padding: EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(top: 4),
       // judge the BottomSheet height by the variable: isCompleted 0/1
       height: MediaQuery.of(context).size.height * 0.32,
       color: Get.isDarkMode ? darkGreyClr : Colors.white,
@@ -295,7 +293,7 @@ class _HighlightPageState extends State<HighlightPage> {
               color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           task.isCompleted == true
               ? _bottomSheetButton(
             label: "Undo Completed",
@@ -326,7 +324,7 @@ class _HighlightPageState extends State<HighlightPage> {
             clr: Colors.red[400]!,
             context: context,
           ),
-          SizedBox(
+          const SizedBox(
             height: 22,
           ),
           _bottomSheetButton(
@@ -340,7 +338,7 @@ class _HighlightPageState extends State<HighlightPage> {
             // set as ture
             context: context,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],
@@ -358,7 +356,7 @@ class _HighlightPageState extends State<HighlightPage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
         height: 55,
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: BoxDecoration(
@@ -426,26 +424,6 @@ class _HighlightPageState extends State<HighlightPage> {
     return AppBar(
       elevation: 0, // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
-      // leading: GestureDetector(
-      //   onTap: () {
-      //     // Logic for theme change
-      //     ThemeServices().switchTheme();
-      //     notifyHelper.displayNotification(
-      //       title: "Theme changed",
-      //       body: Get.isDarkMode
-      //           ? "Activated Light Theme"
-      //           : "Activated Dark Theme",
-      //     );
-      //     // notifyHelper.scheduledNotification();
-      //   },
-      //   child: Icon(
-      //     // Day and moon icon should change according to the Theme Mode
-      //     Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
-      //     size: 20,
-      //     // Icon color should change according to the Theme Mode
-      //     color: Get.isDarkMode ? Colors.white : Colors.black,
-      //   ),
-      // ),
       actions: [
         SizedBox(
           width: 20,
