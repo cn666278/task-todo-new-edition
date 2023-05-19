@@ -25,17 +25,6 @@ class _EntryPointState extends State<EntryPoint>
 
   late SMIBool isMenuOpenInput;
 
-  // TODO -- NEW ADDED
-  final PageController pageController = PageController();
-  int currentIndex = 0;
-
-  void onIndexChanged(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-    pageController.jumpToPage(index);
-  }
-
   void updateSelectedBtmNav(Menu menu) {
     if (selectedBottonNav != menu) {
       setState(() {
@@ -141,84 +130,6 @@ class _EntryPointState extends State<EntryPoint>
           ),
         ],
       ),
-      // bottomNavigationBar: BuildNavigation(
-      //   currentIndex: currentIndex,
-      //   items: [
-      //     NavigationItemModel(
-      //       label: "home",
-      //       icon: SvgIcon.layout,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "map",
-      //       icon: SvgIcon.marker,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "chat",
-      //       icon: SvgIcon.chat,
-      //       count: 3,
-      //     ),
-      //     NavigationItemModel(
-      //       label: "user",
-      //       icon: SvgIcon.user,
-      //     ),
-      //   ],
-      //   onTap: onIndexChanged, // 切换tab事件
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Get.to(() => const AddTaskPage());
-      //   },
-      //   child: const Icon(Icons.add_circle_rounded, size: 50),
-      // ),
-      // // float button
-      // floatingActionButtonLocation:
-      //     FloatingActionButtonLocation.centerDocked, // 浮动按钮 停靠在底部中间位置
-
-      // TODO --DELETE( old menu bar with no Page jump)
-      // bottomNavigationBar: Transform.translate(
-      //   offset: Offset(0, 100 * animation.value),
-      //   child: SafeArea(
-      //     child: Container(
-      //       padding:
-      //       const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
-      //       margin: const EdgeInsets.symmetric(horizontal: 24),
-      //       decoration: BoxDecoration(
-      //         color: backgroundColor2.withOpacity(0.8),
-      //         borderRadius: const BorderRadius.all(Radius.circular(24)),
-      //         boxShadow: [
-      //           BoxShadow(
-      //             color: backgroundColor2.withOpacity(0.3),
-      //             offset: const Offset(0, 20),
-      //             blurRadius: 20,
-      //           ),
-      //         ],
-      //       ),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           ...List.generate(
-      //             bottomNavItems.length,
-      //                 (index) {
-      //               Menu navBar = bottomNavItems[index];
-      //               return BtmNavItem(
-      //                 navBar: navBar,
-      //                 press: () {
-      //                   RiveUtils.changeSMIBoolState(navBar.rive.status!);
-      //                   updateSelectedBtmNav(navBar);
-      //                 },
-      //                 riveOnInit: (artboard) {
-      //                   navBar.rive.status = RiveUtils.getRiveInput(artboard,
-      //                       stateMachineName: navBar.rive.stateMachineName);
-      //                 },
-      //                 selectedNav: selectedBottonNav,
-      //               );
-      //             },
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

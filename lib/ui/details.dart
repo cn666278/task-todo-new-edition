@@ -35,7 +35,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
     20,
   ];
   String _selectedRepeat = "None";
-  List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
+  List<String> repeatList = ["None", "Daily", "Weekly"];
   int _selectedColor = 0;
 
   @override

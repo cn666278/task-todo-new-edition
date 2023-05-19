@@ -24,16 +24,16 @@ class _CalendarState extends State<Calendar>
 
   late SMIBool isMenuOpenInput;
 
-  // TODO -- NEW ADDED
-  final PageController pageController = PageController();
-  int currentIndex = 0;
 
-  void onIndexChanged(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-    pageController.jumpToPage(index);
-  }
+  // final PageController pageController = PageController();
+  // int currentIndex = 0;
+
+  // void onIndexChanged(int index) {
+  //   setState(() {
+  //     currentIndex = index;
+  //   });
+  //   pageController.jumpToPage(index);
+  // }
 
   void updateSelectedBtmNav(Menu menu) {
     if (selectedBottonNav != menu) {
