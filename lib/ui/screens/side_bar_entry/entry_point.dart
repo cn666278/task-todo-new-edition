@@ -99,7 +99,7 @@ class _EntryPointState extends State<EntryPoint>
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             left: isSideBarOpen ? 220 : 0,
-            top: 16,
+            top: 8,
             child: MenuBtn(
               press: () {
                 isMenuOpenInput.value = !isMenuOpenInput.value;

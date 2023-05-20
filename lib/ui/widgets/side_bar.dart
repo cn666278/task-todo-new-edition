@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
+import 'package:todo_app_new_edition/ui/screens/home_page.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
 
 import 'info_card.dart';
@@ -14,6 +20,23 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   Menu selectedSideMenu = sidebarMenus.first;
+  int currentIndex = 0;
+
+  void onIndexChanged(int index) {
+    setState(() {
+      currentIndex = index;
+      Get.to(pages[index]);
+    });
+  }
+
+  List pages = [
+    const HomePage(),
+    const AllTask(),
+    const Calendar(),
+    const Highlight(),
+    const EntryPoint(), // ReportPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,6 +55,7 @@ class _SideBarState extends State<SideBar> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const InfoCard(
+                // todo -- add the TABLE - User
                 name: "Chen Nuo",
                 bio: "Student",
               ),
@@ -53,6 +77,8 @@ class _SideBarState extends State<SideBar> {
                   RiveUtils.changeSMIBoolState(menu.rive.status!);
                   setState(() {
                     selectedSideMenu = menu;
+                    // todo -- index ?
+                    // onIndexChanged(index);
                   });
                 },
                 riveOnInit: (artboard) {
@@ -72,6 +98,32 @@ class _SideBarState extends State<SideBar> {
                 ),
               ),
               ...sidebarMenus2
+                  .map((menu) => SideMenu(
+                menu: menu,
+                selectedMenu: selectedSideMenu,
+                press: () {
+                  RiveUtils.changeSMIBoolState(menu.rive.status!);
+                  setState(() {
+                    selectedSideMenu = menu;
+                  });
+                },
+                riveOnInit: (artboard) {
+                  menu.rive.status = RiveUtils.getRiveInput(artboard,
+                      stateMachineName: menu.rive.stateMachineName);
+                },
+              ))
+                  .toList(),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
+                child: Text(
+                  "Theme Mode".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(color: Colors.white70),
+                ),
+              ),
+              ...sidebarMenus3
                   .map((menu) => SideMenu(
                 menu: menu,
                 selectedMenu: selectedSideMenu,

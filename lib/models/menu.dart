@@ -54,6 +54,16 @@ List<Menu> sidebarMenus2 = [
   ),
 ];
 
+List<Menu> sidebarMenus3 = [
+  Menu(
+    title: "Profile",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "USER",
+        stateMachineName: "USER_Interactivity"),
+  ),
+];
+
 List<Menu> bottomNavItems = [
   Menu(
     title: "Chat",

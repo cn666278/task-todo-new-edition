@@ -7,6 +7,7 @@ import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
+import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
@@ -422,9 +423,31 @@ class _HighlightPageState extends State<HighlightPage> {
 
   _appBar() {
     return AppBar(
-      elevation: 0, // eliminate the shadow of header banner
+      elevation: 0,
+      // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
       actions: [
+        IconButton(
+            onPressed: () {
+              // Logic for theme change
+              ThemeServices().switchTheme();
+              notifyHelper.displayNotification(
+                title: "Theme changed",
+                body: Get.isDarkMode
+                    ? "Activated Light Theme"
+                    : "Activated Dark Theme",
+              );
+              notifyHelper.scheduledNotification();
+            },
+            icon: Icon(
+              // Day and moon icon should change according to the Theme Mode
+              Get.isDarkMode
+                  ? Icons.wb_sunny_outlined
+                  : Icons.nightlight_rounded,
+              size: 20,
+              // Icon color should change according to the Theme Mode
+              color: Get.isDarkMode ? Colors.white : Colors.black,
+            )),
         SizedBox(
           width: 20,
         )

@@ -415,40 +415,31 @@ class _CalendarPageState extends State<CalendarPage> {
 
   _appBar() {
     return AppBar(
-      elevation: 0, // eliminate the shadow of header banner
+      elevation: 0,
+      // eliminate the shadow of header banner
       backgroundColor: context.theme.backgroundColor,
-      leading: GestureDetector(
-        onTap: () {
-          // Logic for theme change
-          ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-            title: "Theme changed",
-            body: Get.isDarkMode
-                ? "Activated Light Theme"
-                : "Activated Dark Theme",
-          );
-          // notifyHelper.scheduledNotification();
-        },
-        child: Icon(
-          // Day and moon icon should change according to the Theme Mode
-          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_rounded,
-          size: 20,
-          // Icon color should change according to the Theme Mode
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
-      ),
       actions: [
-        // Icon(
-        //   Icons.person,
-        //   // Icon color should change according to the Theme Mode
-        //   color: Get.isDarkMode ? Colors.white : Colors.black,
-        // ),
-        // 头像png控件
-        // CircleAvatar(
-        //   backgroundImage: AssetImage(
-        //     "images/header.png"
-        //   ),
-        // ),
+        IconButton(
+            onPressed: () {
+              // Logic for theme change
+              ThemeServices().switchTheme();
+              notifyHelper.displayNotification(
+                title: "Theme changed",
+                body: Get.isDarkMode
+                    ? "Activated Light Theme"
+                    : "Activated Dark Theme",
+              );
+              notifyHelper.scheduledNotification();
+            },
+            icon: Icon(
+              // Day and moon icon should change according to the Theme Mode
+              Get.isDarkMode
+                  ? Icons.wb_sunny_outlined
+                  : Icons.nightlight_rounded,
+              size: 20,
+              // Icon color should change according to the Theme Mode
+              color: Get.isDarkMode ? Colors.white : Colors.black,
+            )),
         SizedBox(
           width: 20,
         )
