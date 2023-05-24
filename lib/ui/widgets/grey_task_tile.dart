@@ -146,13 +146,13 @@ class GreyTaskTile extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 12),
-                  Text(
-                    task?.note ?? "",
-                    style: GoogleFonts.lato(
-                      textStyle:
-                      TextStyle(fontSize: 15, color: Colors.grey[100]),
-                    ),
-                  ),
+                  // Text(
+                  //   task?.note ?? "",
+                  //   style: GoogleFonts.lato(
+                  //     textStyle:
+                  //     TextStyle(fontSize: 15, color: Colors.grey[100]),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 
 class MenuBtn extends StatelessWidget {
@@ -16,10 +17,10 @@ class MenuBtn extends StatelessWidget {
           margin: const EdgeInsets.only(left: 12),
           height: 40,
           width: 40,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Get.isDarkMode ? Colors.black : Colors.white,
             shape: BoxShape.circle,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 offset: Offset(0, 3),
@@ -28,7 +29,9 @@ class MenuBtn extends StatelessWidget {
             ],
           ),
           child: RiveAnimation.asset(
-            "assets/RiveAssets/menu_button.riv",
+            Get.isDarkMode
+                ? "assets/RiveAssets/dark_menu_button.riv"
+                : "assets/RiveAssets/menu_button.riv",
             onInit: riveOnInit,
           ),
         ),

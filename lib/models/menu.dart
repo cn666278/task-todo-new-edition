@@ -16,6 +16,13 @@ List<Menu> sidebarMenus = [
         stateMachineName: "HOME_interactivity"),
   ),
   Menu(
+    title: "My day",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "TIMER",
+        stateMachineName: "TIMER_Interactivity"),
+  ),
+  Menu(
     title: "Search",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
@@ -29,21 +36,14 @@ List<Menu> sidebarMenus = [
         artboard: "LIKE/STAR",
         stateMachineName: "STAR_Interactivity"),
   ),
+];
+List<Menu> sidebarMenus2 = [
   Menu(
     title: "Help",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
-  ),
-];
-List<Menu> sidebarMenus2 = [
-  Menu(
-    title: "History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
   ),
   Menu(
     title: "Notifications",

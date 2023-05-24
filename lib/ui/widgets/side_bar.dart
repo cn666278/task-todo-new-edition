@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
+import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/screens/home_page.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
@@ -32,8 +33,8 @@ class _SideBarState extends State<SideBar> {
   List pages = [
     const HomePage(),
     const AllTask(),
-    const Calendar(),
     const Highlight(),
+    const Calendar(),
     const EntryPoint(), // ReportPage(),
   ];
 
@@ -56,7 +57,7 @@ class _SideBarState extends State<SideBar> {
             children: [
               const InfoCard(
                 // todo -- add the TABLE - User
-                name: "Chen Nuo",
+                name: "XMUM",
                 bio: "Student",
               ),
               Padding(
@@ -71,26 +72,38 @@ class _SideBarState extends State<SideBar> {
               ),
               ...sidebarMenus
                   .map((menu) => SideMenu(
-                menu: menu,
-                selectedMenu: selectedSideMenu,
-                press: () {
-                  RiveUtils.changeSMIBoolState(menu.rive.status!);
-                  setState(() {
-                    selectedSideMenu = menu;
-                    // todo -- index ?
-                    // onIndexChanged(index);
-                  });
-                },
-                riveOnInit: (artboard) {
-                  menu.rive.status = RiveUtils.getRiveInput(artboard,
-                      stateMachineName: menu.rive.stateMachineName);
-                },
-              ))
+                        menu: menu,
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(menu.rive.status!);
+                          setState(() {
+                            int index;
+                            selectedSideMenu = menu;
+                            if (selectedSideMenu.title == "Home") {
+                              index = 0;
+                            } else if (selectedSideMenu.title == "Search") {
+                              // todo -- search page
+                              index = 1;
+                            } else if (selectedSideMenu.title == "Favorites") {
+                              index = 2;
+                            } else if (selectedSideMenu.title == "My day") {
+                              index = 3;
+                            } else {
+                              index = -1;
+                            }
+                            onIndexChanged(index);
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ))
                   .toList(),
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
                 child: Text(
-                  "History".toUpperCase(),
+                  "My day".toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
@@ -99,19 +112,19 @@ class _SideBarState extends State<SideBar> {
               ),
               ...sidebarMenus2
                   .map((menu) => SideMenu(
-                menu: menu,
-                selectedMenu: selectedSideMenu,
-                press: () {
-                  RiveUtils.changeSMIBoolState(menu.rive.status!);
-                  setState(() {
-                    selectedSideMenu = menu;
-                  });
-                },
-                riveOnInit: (artboard) {
-                  menu.rive.status = RiveUtils.getRiveInput(artboard,
-                      stateMachineName: menu.rive.stateMachineName);
-                },
-              ))
+                        menu: menu,
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(menu.rive.status!);
+                          setState(() {
+                            selectedSideMenu = menu;
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ))
                   .toList(),
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
@@ -125,19 +138,23 @@ class _SideBarState extends State<SideBar> {
               ),
               ...sidebarMenus3
                   .map((menu) => SideMenu(
-                menu: menu,
-                selectedMenu: selectedSideMenu,
-                press: () {
-                  RiveUtils.changeSMIBoolState(menu.rive.status!);
-                  setState(() {
-                    selectedSideMenu = menu;
-                  });
-                },
-                riveOnInit: (artboard) {
-                  menu.rive.status = RiveUtils.getRiveInput(artboard,
-                      stateMachineName: menu.rive.stateMachineName);
-                },
-              ))
+                        menu: menu,
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(menu.rive.status!);
+                          setState(() {
+                            selectedSideMenu = menu;
+                            Get.defaultDialog(
+                              title: "ASB",
+                              middleText: "Hello",
+                            );
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ))
                   .toList(),
             ],
           ),
