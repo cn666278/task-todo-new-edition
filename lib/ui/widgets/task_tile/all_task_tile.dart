@@ -9,10 +9,10 @@ import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
 /* This file used for the tasks list UI design */
-class GreyTaskTile extends StatelessWidget {
+class AllTaskTile extends StatelessWidget {
   final Task? task;
 
-  GreyTaskTile(this.task, {super.key});
+  AllTaskTile(this.task);
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class GreyTaskTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  // SizedBox(height: 12),
                   // Text(
                   //   task?.note ?? "",
                   //   style: GoogleFonts.lato(
@@ -196,15 +196,15 @@ class GreyTaskTile extends StatelessWidget {
   _getBGClr(int no) {
     switch (no) {
       case 0:
-        return bluishClr.withBlue(150);
+        return bluishClr;
       case 1:
-        return pinkClr.withBlue(110).withOpacity(0.9);
+        return pinkClr;
       case 2:
-        return yellowClr?.withBlue(100);
+        return yellowClr;
       case 3:
-        return deepOrange.withBlue(80);
+        return deepOrange;
       default:
-        return bluishClr.withBlue(150);
+        return bluishClr;
     }
   }
 }

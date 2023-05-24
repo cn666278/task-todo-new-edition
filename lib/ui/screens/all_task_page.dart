@@ -16,9 +16,10 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/widgets/grey_task_tile.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_tile.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_tile/all_task_tile.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_tile/grey_task_tile.dart';
+import 'package:todo_app_new_edition/ui/widgets/task_tile/task_tile.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
@@ -203,7 +204,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
                               onTap: () {
                                 _showBottomSheet(context, task);
                               },
-                              child: TaskTile(task),
+                              child: AllTaskTile(task),
                             )
                           ],
                         ),
