@@ -61,7 +61,7 @@ class TaskController extends GetxController {
 
   // get all the data from table
   void getTaskDetails(Task task) async {
-    // todo edit the dunction query()
+    // todo edit the function query()
     List<Map<String, dynamic>> taskDetail =
         await DBHelper.queryTaskDetail(task);
     taskDetailList
@@ -69,25 +69,21 @@ class TaskController extends GetxController {
     // print(taskDetailList);
   }
 
-
-  Future<int> getTotalTask() async {
-    int res = 0;
-    // TODO -- get total tasks
+  // get total tasks
+  Future<double> getTotalTask() async {
+    double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
       res += 1;
     }
-    print("Total Task:");
-    print(res);
     return res;
   }
 
 
-
-  Future<int> getTotalCompletedTask() async {
-    int res = 0;
-    // TODO -- get total completed tasks
+  // TODO -- get total completed tasks
+  Future<double> getTotalCompletedTask() async {
+    double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
@@ -95,8 +91,17 @@ class TaskController extends GetxController {
         res += 1;
       }
     }
-    print("Completed Task:");
-    print(res);
     return res;
   }
+
+  Future<int> getTotalCompletedProgress() async {
+    int totalProgress = 0;
+    double comp = await getTotalCompletedTask();
+    double total = await getTotalTask();
+    // use toInt() but not as int
+    // totalProgress = ((comp / total) * 100) as int; // wrong
+    totalProgress = ((comp / total) * 100).toInt();
+    return totalProgress;
+  }
+
 }

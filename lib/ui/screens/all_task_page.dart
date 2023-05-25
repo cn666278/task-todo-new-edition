@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
@@ -418,6 +419,24 @@ class _AllTaskPageState extends State<AllTaskPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // margin left
               children: [
+                // todo ? StepProgressIndicator
+                // StepProgressIndicator(
+                //   totalSteps: 100,
+                //   currentStep: 90,
+                //   // currentStep: homeCtrl.isTodoEmpty(task) ? 0 : homeCtrl.getDoneTodo(task),
+                //   size: 5,
+                //   padding: 0,
+                //   selectedGradientColor: LinearGradient(
+                //     begin: Alignment.topLeft,
+                //     end: Alignment.bottomRight,
+                //     colors: [Colors.blueAccent.withOpacity(0.5),Colors.blueAccent],
+                //   ),
+                //   unselectedGradientColor: const LinearGradient(
+                //     begin: Alignment.topLeft,
+                //     end: Alignment.bottomRight,
+                //     colors: [Colors.white, Colors.white],
+                //   ),
+                // ),
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
                   DateFormat.MMMEd().format(DateTime.now()),
@@ -442,11 +461,11 @@ class _AllTaskPageState extends State<AllTaskPage> {
               borderWidth: 5.0,
               // getTotalTask is type of Future<int> so we have to use FutureBuilder
               center: FutureBuilder<int>(
-                future: _taskController.getTotalTask(),
+                future: _taskController.getTotalCompletedProgress(),
                 builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                   int result = snapshot.data ?? 0;
                   return Text(
-                    result.toString(),
+                    result.toString() + "%",
                     style: const TextStyle(
                       color: bluishClr,
                       fontSize: 14.0,
