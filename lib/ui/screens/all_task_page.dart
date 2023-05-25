@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
@@ -23,6 +24,7 @@ import 'package:todo_app_new_edition/ui/widgets/task_tile/task_tile.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
+import "dart:io";
 
 class AllTaskPage extends StatefulWidget {
   const AllTaskPage({Key? key}) : super(key: key);
@@ -90,6 +92,18 @@ class _AllTaskPageState extends State<AllTaskPage> {
         child: Column(
           children: [
             _addTaskBar(),
+            // Container(
+            //   width: double.infinity,
+            //   height: 15,
+            //   padding: EdgeInsets.symmetric(horizontal: 24.0),
+            //   child: LiquidLinearProgressIndicator(
+            //     backgroundColor: Colors.white,
+            //     valueColor: AlwaysStoppedAnimation(Colors.pink),
+            //     borderColor: Colors.red,
+            //     borderWidth: 5.0,
+            //     direction: Axis.horizontal,
+            //   ),
+            // ),
             // _addDateBar(),
             const SizedBox(
               height: 10,
@@ -115,7 +129,8 @@ class _AllTaskPageState extends State<AllTaskPage> {
                       right:
                           index == categories.length - 1 ? kDefaultPadding : 0,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                     decoration: BoxDecoration(
                       color: index == selectedIndex
                           ? primaryClr.withOpacity(0.95)
@@ -415,13 +430,40 @@ class _AllTaskPageState extends State<AllTaskPage> {
               ],
             ),
           ),
-          MyButton(
-              // TODO Task progress design display
-              label: " Progress",
-              onTap: () async {
-                await Get.to(() => AddTaskPage());
-                _taskController.getTasks();
-              }) // Get.to: jump to a new page
+          SizedBox(
+            width: 65,
+            height: 65,
+            child: LiquidCircularProgressIndicator(
+              value: 0.6,
+              backgroundColor: Colors.white,
+              valueColor: AlwaysStoppedAnimation(bluishClr.withOpacity(0.5)),
+              // valueColor: AlwaysStoppedAnimation(Colors.blueAccent[400]!),
+              borderColor: bluishClr,
+              borderWidth: 5.0,
+              // getTotalTask is type of Future<int> so we have to use FutureBuilder
+              center: FutureBuilder<int>(
+                future: _taskController.getTotalTask(),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  int result = snapshot.data ?? 0;
+                  return Text(
+                    result.toString(),
+                    style: const TextStyle(
+                      color: bluishClr,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          // MyButton(
+          //     // TODO Task progress design display
+          //     label: " Progress",
+          //     onTap: () async {
+          //       await Get.to(() => AddTaskPage());
+          //       _taskController.getTasks();
+          //     })
         ],
       ),
     );

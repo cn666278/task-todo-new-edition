@@ -69,29 +69,34 @@ class TaskController extends GetxController {
     // print(taskDetailList);
   }
 
-  int getTotalTask(Task task) {
-    var res = 0;
+
+  Future<int> getTotalTask() async {
+    int res = 0;
     // TODO -- get total tasks
-    // for(int i = 0; i < task.length; i++){
-    //   if(task[i].todos != null){
-    //     res += task[i].id.length;
-    //   }
-    // }
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    for (int i = 0; i < taskList.length; i++) {
+      res += 1;
+    }
+    print("Total Task:");
+    print(res);
     return res;
   }
 
-  int getTotalCompletedTask(Task task) {
-    var res = 0;
+
+
+  Future<int> getTotalCompletedTask() async {
+    int res = 0;
     // TODO -- get total completed tasks
-    // for(int i = 0; i < task.length; i++){
-    //   if(task[i].todos != null){
-    //     for(int j = 0; j < task[i].todos!.length; j++){
-    //       if(task[i].todos![j]['isCompleted'] == true){
-    //         res += 1;
-    //       }
-    //     }
-    //   }
-    // }
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    for (int i = 0; i < taskList.length; i++) {
+      if (taskList[i].isCompleted == true) {
+        res += 1;
+      }
+    }
+    print("Completed Task:");
+    print(res);
     return res;
   }
 }
