@@ -13,6 +13,7 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/report.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -32,7 +33,6 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _selectedDate = DateTime.now();
 
-  var db = Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
 
@@ -63,7 +63,7 @@ class _CalendarPageState extends State<CalendarPage> {
     AllTask(),
     Calendar(),
     Highlight(),
-    EntryPoint(), // ReportPage(),
+    Report(),
   ];
 
   @override

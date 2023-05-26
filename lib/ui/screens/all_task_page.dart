@@ -15,6 +15,7 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/report.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
@@ -35,7 +36,6 @@ class AllTaskPage extends StatefulWidget {
 }
 
 class _AllTaskPageState extends State<AllTaskPage> {
-  var db = new Mysql();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
   int currentIndex = 0;
@@ -57,7 +57,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // implement initState
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification(); // initialize
@@ -72,7 +72,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
     AllTask(),
     Calendar(),
     Highlight(),
-    EntryPoint(), // ReportPage(),
+    Report(),
   ];
 
   @override
