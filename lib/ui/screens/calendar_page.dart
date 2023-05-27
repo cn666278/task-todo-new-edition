@@ -147,10 +147,6 @@ class _CalendarPageState extends State<CalendarPage> {
               DateTime weeklyDate = DateFormat.yMd().parse(task.date.toString());
               var weeklyTime = DateFormat("EEEE").format(weeklyDate);
 
-              // monthly date format
-              DateTime monthlyDate = DateFormat.yMd().parse(task.date.toString());
-              var monthlyTime = DateFormat("MMMM").format(monthlyDate);
-
               // Daily task remind
               if (task.repeat == "Daily") {
                 DateTime date =

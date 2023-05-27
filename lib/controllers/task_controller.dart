@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/task.dart';
@@ -78,12 +79,27 @@ class TaskController extends GetxController {
     return res;
   }
 
-  Future<double> getOneDayCompletedTask() async {
+  Future<double> getOneDayTask() async {
+    DateTime today = DateTime.now();
     double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].isCompleted == true) {
+      if (taskList[i].date == DateFormat.yMd().format(today)) {
+        res += 1;
+      }
+    }
+    return res;
+  }
+
+  Future<double> getOneDayCompletedTask() async {
+    DateTime today = DateTime.now();
+    double res = 0;
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    for (int i = 0; i < taskList.length; i++) {
+      if (taskList[i].date == DateFormat.yMd().format(today) &&
+          taskList[i].isCompleted == true) {
         res += 1;
       }
     }
@@ -112,5 +128,4 @@ class TaskController extends GetxController {
     totalProgress = ((comp / total) * 100).toInt();
     return totalProgress;
   }
-
 }

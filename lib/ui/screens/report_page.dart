@@ -57,8 +57,8 @@ class _ReportPageState extends State<ReportPage> {
 
   Future<void> _fetchOneDayTaskStats() async {
     try {
-      double totalResult = await _taskController.getTotalTask();
-      double completedResult = await _taskController.getTotalCompletedTask();
+      double totalResult = await _taskController.getOneDayTask();
+      double completedResult = await _taskController.getOneDayCompletedTask();
 
       setState(() {
         totalTask = totalResult.toInt();
@@ -119,6 +119,7 @@ class _ReportPageState extends State<ReportPage> {
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
     _fetchAllTaskStats();
+
     // setState(() {
     //   _taskController.getTasks();
     //   print("Initialize");
@@ -171,6 +172,7 @@ class _ReportPageState extends State<ReportPage> {
                   onTap: () {
                     setState(() {
                       selectedIndex = index;
+                      switchFunc();
                     });
                   },
                   child: Container(
@@ -366,14 +368,6 @@ class _ReportPageState extends State<ReportPage> {
           ],
         )
       ],
-    );
-  }
-
-  _showTodoTasks() {
-    return Expanded(
-      child: Obx(() {
-        return Container();
-      }),
     );
   }
 
