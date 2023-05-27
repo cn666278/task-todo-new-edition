@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
-import 'package:todo_app_new_edition/db/db_helper.dart';
-import 'package:todo_app_new_edition/models/mysql.dart';
-import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
-import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
-import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/details.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_tile/all_task_tile.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_tile/grey_task_tile.dart';
-import 'package:todo_app_new_edition/ui/widgets/task_tile/task_tile.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
@@ -42,7 +32,7 @@ class _ReportPageState extends State<ReportPage> {
 
   // by default first item will be selected
   int selectedIndex = 0;
-  List<String> categories = ['To do', 'Completed', 'All'];
+  List<String> categories = ['All', '1 day', '7 day', '1 month'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -51,16 +41,74 @@ class _ReportPageState extends State<ReportPage> {
     });
   }
 
-  void updateTotalTaskNum(int num) {
-    setState(() {
-      totalTask = num;
-    });
+  Future<void> _fetchAllTaskStats() async {
+    try {
+      double totalResult = await _taskController.getTotalTask();
+      double completedResult = await _taskController.getTotalCompletedTask();
+
+      setState(() {
+        totalTask = totalResult.toInt();
+        completedTask = completedResult.toInt();
+      });
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
-  void updateCompletedTaskNum(int num) {
-    setState(() {
-      completedTask = num;
-    });
+  Future<void> _fetchOneDayTaskStats() async {
+    try {
+      double totalResult = await _taskController.getTotalTask();
+      double completedResult = await _taskController.getTotalCompletedTask();
+
+      setState(() {
+        totalTask = totalResult.toInt();
+        completedTask = completedResult.toInt();
+      });
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  Future<void> _fetchSevenDaysTaskStats() async {
+    try {
+      double totalResult = await _taskController.getTotalTask();
+      double completedResult = await _taskController.getTotalCompletedTask();
+
+      setState(() {
+        totalTask = totalResult.toInt();
+        completedTask = completedResult.toInt();
+      });
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  Future<void> _fetchOneMonthTaskStats() async {
+    try {
+      double totalResult = await _taskController.getTotalTask();
+      double completedResult = await _taskController.getTotalCompletedTask();
+
+      setState(() {
+        totalTask = totalResult.toInt();
+        completedTask = completedResult.toInt();
+      });
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  void switchFunc(){
+    if (selectedIndex == 0) {
+      _fetchAllTaskStats();
+    } else if (selectedIndex == 1) {
+      _fetchOneDayTaskStats();
+    } else if (selectedIndex == 2) {
+      _fetchSevenDaysTaskStats();
+    } else if (selectedIndex == 3) {
+      _fetchOneMonthTaskStats();
+    } else {
+      print("error");
+    }
   }
 
   @override
@@ -70,10 +118,11 @@ class _ReportPageState extends State<ReportPage> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
-    setState(() {
-      _taskController.getTasks();
-      print("Initialize");
-    });
+    _fetchAllTaskStats();
+    // setState(() {
+    //   _taskController.getTasks();
+    //   print("Initialize");
+    // });
   }
 
   List pages = [
@@ -87,24 +136,8 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     print("Report Task Page");
 
-    // todo -- something wrong with the .then (repeat get value)
-    // use then function but not async and await
-    _taskController.getTotalTask().then((double result) {
-      updateTotalTaskNum(result.toInt());
-      // totalTask = result.toInt();
-    }).catchError((error) {
-      print('Error: $error'); // error handler
-    });
-
-    _taskController.getTotalCompletedTask().then((double result) {
-      updateCompletedTaskNum(result.toInt());
-      // print(completedTask);
-    }).catchError((error) {
-      print('Error: $error'); // error handler
-    });
-
-    var liveTasks = totalTask - completedTask;
-    print(liveTasks);
+    var todoTasks = totalTask - completedTask;
+    print(todoTasks);
     var percent = (completedTask / totalTask * 100).toStringAsFixed(0);
     print(percent);
 
@@ -172,14 +205,7 @@ class _ReportPageState extends State<ReportPage> {
             const SizedBox(
               height: 10,
             ),
-            // Category logic
-            // selectedIndex == 0
-            //     ? _showTodoTasks()
-            //     : selectedIndex == 1
-            //     ? _showCompletedTasks()
-            //     : selectedIndex == 2
-            //     ? _showTasks()
-            //     : null,
+
             // buildStepProgressIndicator(),
             Expanded(
               child: SingleChildScrollView(
@@ -191,20 +217,22 @@ class _ReportPageState extends State<ReportPage> {
                     // ),
                     Padding(
                       // padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                      padding: EdgeInsets.only(top: 10,left: 35,right: 45,bottom: 10),
+                      padding: EdgeInsets.only(
+                          top: 10, left: 35, right: 45, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildStatus(Colors.green, liveTasks, 'Live Tasks'),
-                          _buildStatus(Colors.orange, completedTask, 'Completed'),
-                          _buildStatus(Colors.blue, totalTask, 'Total'),
+                          _buildStatus(Colors.green, todoTasks, 'Todo Tasks'),
+                          _buildStatus(
+                              Colors.orange, completedTask, 'Completed Tasks'),
+                          _buildStatus(Colors.blue, totalTask, 'Total Tasks'),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 40.0),
                     SizedBox(
-                      width: 150.0,
-                      height: 150.0,
+                      width: 180.0,
+                      height: 180.0,
                       child: CircularStepProgressIndicator(
                         totalSteps: totalTask == 0 ? 1 : totalTask,
                         currentStep: completedTask,
@@ -241,7 +269,6 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -342,6 +369,15 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
+  _showTodoTasks() {
+    return Expanded(
+      child: Obx(() {
+        return Container();
+      }),
+    );
+  }
+
+
   _addTaskBar() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -373,7 +409,6 @@ class _ReportPageState extends State<ReportPage> {
               value: 0.6,
               backgroundColor: Colors.white,
               valueColor: AlwaysStoppedAnimation(bluishClr.withOpacity(0.5)),
-              // valueColor: AlwaysStoppedAnimation(Colors.blueAccent[400]!),
               borderColor: bluishClr,
               borderWidth: 5.0,
               // getTotalTask is type of Future<int> so we have to use FutureBuilder
@@ -393,13 +428,6 @@ class _ReportPageState extends State<ReportPage> {
               ),
             ),
           ),
-          // MyButton(
-          //     // TODO Task progress design display
-          //     label: " Progress",
-          //     onTap: () async {
-          //       await Get.to(() => AddTaskPage());
-          //       _taskController.getTasks();
-          //     })
         ],
       ),
     );
@@ -439,3 +467,4 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 }
+

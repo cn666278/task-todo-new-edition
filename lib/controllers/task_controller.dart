@@ -74,14 +74,23 @@ class TaskController extends GetxController {
     double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    res = taskList.length.toDouble();
+    return res;
+  }
+
+  Future<double> getOneDayCompletedTask() async {
+    double res = 0;
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
-      res += 1;
+      if (taskList[i].isCompleted == true) {
+        res += 1;
+      }
     }
     return res;
   }
 
-
-  // TODO -- get total completed tasks
+  // get total completed tasks
   Future<double> getTotalCompletedTask() async {
     double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
