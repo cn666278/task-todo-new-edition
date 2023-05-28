@@ -32,7 +32,7 @@ class _ReportPageState extends State<ReportPage> {
 
   // by default first item will be selected
   int selectedIndex = 0;
-  List<String> categories = ['All', '1 day', '7 day', '1 month'];
+  List<String> categories = ['All', '1 day', '7 day', 'This Month'];
 
   void onIndexChanged(int index) {
     setState(() {
@@ -71,8 +71,8 @@ class _ReportPageState extends State<ReportPage> {
 
   Future<void> _fetchSevenDaysTaskStats() async {
     try {
-      double totalResult = await _taskController.getTotalTask();
-      double completedResult = await _taskController.getTotalCompletedTask();
+      double totalResult = await _taskController.getSevenDaysTasks();
+      double completedResult = await _taskController.getSevenDaysCompletedTasks();
 
       setState(() {
         totalTask = totalResult.toInt();
@@ -85,8 +85,8 @@ class _ReportPageState extends State<ReportPage> {
 
   Future<void> _fetchOneMonthTaskStats() async {
     try {
-      double totalResult = await _taskController.getTotalTask();
-      double completedResult = await _taskController.getTotalCompletedTask();
+      double totalResult = await _taskController.getThisMonthTasks();
+      double completedResult = await _taskController.getMonthCompletedTasks();
 
       setState(() {
         totalTask = totalResult.toInt();

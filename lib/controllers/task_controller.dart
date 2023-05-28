@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mysql1/mysql1.dart';
 import 'package:todo_app_new_edition/db/db_helper.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 
@@ -21,7 +20,7 @@ class TaskController extends GetxController {
   void updateTask({Task? task}) async {
     print("update task detail");
     await DBHelper.updateTaskDetail(task!);
-    getTasks(); // ?
+    getTasks();
   }
 
   // get all the data from table
@@ -79,30 +78,55 @@ class TaskController extends GetxController {
     return res;
   }
 
+  // get total tasks today
   Future<double> getOneDayTask() async {
     DateTime today = DateTime.now();
-    double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-    for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].date == DateFormat.yMd().format(today)) {
-        res += 1;
-      }
-    }
+    double res = taskList
+        .where((task) => task.date == DateFormat.yMd().format(today))
+        .length
+        .toDouble();
+
+    // using .where() to simplify the codes below:
+    // double res = 0;
+    // List<Map<String, dynamic>> tasks = await DBHelper.query();
+    // taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    // for (int i = 0; i < taskList.length; i++) {
+    //   if (taskList[i].date == DateFormat.yMd().format(today)) {
+    //     res += 1;
+    //   }
+    // }
     return res;
   }
 
-  Future<double> getOneDayCompletedTask() async {
+  // get total tasks under 7 days (started from today)
+  Future<double> getSevenDaysTasks() async {
+    DateTime today = DateTime.now();
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    double res = taskList
+        .where((task) =>
+            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today))
+        .length
+        .toDouble();
+    return res;
+  }
+
+  // get total tasks under same month (same as today)
+  Future<double> getThisMonthTasks() async {
     DateTime today = DateTime.now();
     double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+
     for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].date == DateFormat.yMd().format(today) &&
-          taskList[i].isCompleted == true) {
+      DateTime taskDate = DateFormat.yMd().parse(taskList[i].date!);
+      if (isWithinSameMonth(taskDate, today)) {
         res += 1;
       }
     }
+
     return res;
   }
 
@@ -117,6 +141,61 @@ class TaskController extends GetxController {
       }
     }
     return res;
+  }
+
+  // get total completed tasks today
+  Future<double> getOneDayCompletedTask() async {
+    DateTime today = DateTime.now();
+    double res = 0;
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    for (int i = 0; i < taskList.length; i++) {
+      if (taskList[i].date == DateFormat.yMd().format(today) &&
+          taskList[i].isCompleted == true) {
+        res += 1;
+      }
+    }
+    return res;
+  }
+
+  // get total completed tasks under 7 days (started from today)
+  Future<double> getSevenDaysCompletedTasks() async {
+    DateTime today = DateTime.now();
+    double res = taskList
+        .where((task) =>
+            task.isCompleted! &&
+            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today))
+        .length
+        .toDouble();
+
+    return res;
+  }
+
+  // get total completed tasks under same month (same as today)
+  Future<double> getMonthCompletedTasks() async {
+    DateTime today = DateTime.now();
+    double res = 0;
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+
+    for (int i = 0; i < taskList.length; i++) {
+      DateTime taskDate = DateFormat.yMd().parse(taskList[i].date!);
+      if (taskList[i].isCompleted! && isWithinSameMonth(taskDate, today)) {
+        res += 1;
+      }
+    }
+
+    return res;
+  }
+
+  // judge logic
+  bool isWithinSameMonth(DateTime taskDate, DateTime today) {
+    return taskDate.month == today.month && taskDate.year == today.year;
+  }
+
+  bool isWithinSevenDays(DateTime taskDate, DateTime today) {
+    Duration difference = today.difference(taskDate);
+    return difference.inDays <= 6;
   }
 
   Future<int> getTotalCompletedProgress() async {
