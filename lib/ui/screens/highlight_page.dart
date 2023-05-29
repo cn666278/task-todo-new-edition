@@ -163,7 +163,6 @@ class _HighlightPageState extends State<HighlightPage> {
           NavigationItemModel(
             label: "Report",
             icon: SvgIcon.clipboard,
-            count: 3,
           ),
         ],
       ),

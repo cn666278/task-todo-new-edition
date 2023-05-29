@@ -109,12 +109,10 @@ class _CalendarPageState extends State<CalendarPage> {
             label: "Highlight",
             icon: SvgIcon.tag,
             // icon: SvgIcon.favorite,
-            count: 3,
           ),
           NavigationItemModel(
             label: "Report",
             icon: SvgIcon.clipboard,
-            count: 3,
           ),
         ],
       ),

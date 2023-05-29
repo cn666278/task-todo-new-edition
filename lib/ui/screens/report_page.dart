@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
@@ -23,12 +22,16 @@ class ReportPage extends StatefulWidget {
   State<ReportPage> createState() => _ReportPageState();
 }
 
-class _ReportPageState extends State<ReportPage> {
+class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   final _taskController = Get.put(TaskController());
   var notifyHelper;
   int currentIndex = 0;
   int totalTask = 0;
   int completedTask = 0;
+  bool isCircular = true;
+  ColorTween _colorTween = ColorTween(begin: bluishClr, end: Colors.green);
+  double _rotation = 0.0;
+  late AnimationController _controller;
 
   // by default first item will be selected
   int selectedIndex = 0;
@@ -72,7 +75,8 @@ class _ReportPageState extends State<ReportPage> {
   Future<void> _fetchSevenDaysTaskStats() async {
     try {
       double totalResult = await _taskController.getSevenDaysTasks();
-      double completedResult = await _taskController.getSevenDaysCompletedTasks();
+      double completedResult =
+          await _taskController.getSevenDaysCompletedTasks();
 
       setState(() {
         totalTask = totalResult.toInt();
@@ -97,7 +101,7 @@ class _ReportPageState extends State<ReportPage> {
     }
   }
 
-  void switchFunc(){
+  void switchFunc() {
     if (selectedIndex == 0) {
       _fetchAllTaskStats();
     } else if (selectedIndex == 1) {
@@ -119,11 +123,16 @@ class _ReportPageState extends State<ReportPage> {
     notifyHelper.initializeNotification(); // initialize
     notifyHelper.requestIOSPermissions();
     _fetchAllTaskStats();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+  }
 
-    // setState(() {
-    //   _taskController.getTasks();
-    //   print("Initialize");
-    // });
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   List pages = [
@@ -138,9 +147,9 @@ class _ReportPageState extends State<ReportPage> {
     print("Report Task Page");
 
     var todoTasks = totalTask - completedTask;
-    print(todoTasks);
+    // print(todoTasks);
     var percent = (completedTask / totalTask * 100).toStringAsFixed(0);
-    print(percent);
+    // print(percent);
 
     return Scaffold(
       appBar: _appBar(),
@@ -217,54 +226,87 @@ class _ReportPageState extends State<ReportPage> {
                     //   padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 4.0),
                     //   child: const Divider(thickness: 2),
                     // ),
+                    SizedBox(
+                      width: 180.0,
+                      height: 180.0,
+                      child: isCircular
+                          ? CircularStepProgressIndicator(
+                              selectedColor: bluishClr,
+                              totalSteps: totalTask == 0 ? 1 : totalTask,
+                              currentStep: completedTask,
+                              width: 150,
+                              stepSize: 9,
+                              roundedCap: (_, isSelected) => isSelected,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${totalTask == 0 ? 0 : percent} %',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 1.0),
+                                  const Text(
+                                    "Efficiency",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          : CircularStepProgressIndicator(
+                              totalSteps: totalTask == 0 ? 1 : totalTask,
+                              currentStep: completedTask,
+                              stepSize: 20,
+                              selectedColor: Colors.green,
+                              unselectedColor: Colors.grey[200],
+                              padding: 0,
+                              selectedStepSize: 22,
+                              roundedCap: (_, __) => true,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${totalTask == 0 ? 0 : percent} %',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 1.0),
+                                  const Text(
+                                    "Efficiency",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                    ),
+                    SizedBox(height: 20.0),
                     Padding(
                       // padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                       padding: EdgeInsets.only(
                           top: 10, left: 35, right: 45, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: [
-                          _buildStatus(Colors.green, todoTasks, 'Todo Tasks'),
                           _buildStatus(
-                              Colors.orange, completedTask, 'Completed Tasks'),
+                              isCircular
+                                  ? bluishClr
+                                  : Colors.green,
+                              completedTask,
+                              'Completed Tasks'),
+                          _buildStatus(Colors.grey, todoTasks, 'Todo Tasks'),
                           _buildStatus(Colors.blue, totalTask, 'Total Tasks'),
                         ],
-                      ),
-                    ),
-                    SizedBox(height: 40.0),
-                    SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: CircularStepProgressIndicator(
-                        totalSteps: totalTask == 0 ? 1 : totalTask,
-                        currentStep: completedTask,
-                        stepSize: 20,
-                        selectedColor: Colors.green,
-                        unselectedColor: Colors.grey[200],
-                        padding: 0,
-                        selectedStepSize: 22,
-                        roundedCap: (_, __) => true,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${totalTask == 0 ? 0 : percent} %',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            const SizedBox(height: 1.0),
-                            const Text(
-                              "Efficiency",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
-                              ),
-                            )
-                          ],
-                        ),
                       ),
                     ),
                   ],
@@ -293,7 +335,6 @@ class _ReportPageState extends State<ReportPage> {
           NavigationItemModel(
             label: "Report",
             icon: SvgIcon.clipboard,
-            // count: 3,
           ),
         ],
       ),
@@ -311,66 +352,86 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
-  StepProgressIndicator buildStepProgressIndicator() {
-    return StepProgressIndicator(
-      totalSteps: 100,
-      currentStep: 90,
-      // currentStep: homeCtrl.isTodoEmpty(task) ? 0 : homeCtrl.getDoneTodo(task),
-      size: 5,
-      padding: 0,
-      selectedGradientColor: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.blueAccent.withOpacity(0.5), Colors.blueAccent],
-      ),
-      unselectedGradientColor: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.white, Colors.white],
-      ),
-    );
-  }
+  Widget _buildStatus(Color color, int number, String text) {
+    IconData? iconData;
 
-  Row _buildStatus(Color color, int number, String text) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 10.0,
-          width: 10.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              width: 2,
-              color: color,
-            ),
+    if (text.contains('Completed Tasks')) {
+      iconData = Icons.check_circle;
+    } else if (text.contains('Todo Tasks')) {
+      iconData = Icons.list_alt;
+    } else if (text.contains('Total Tasks')) {
+      iconData = Icons.assignment;
+    }
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        color: color,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        iconData,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                      SizedBox(width: 8.0),
+                      Text(
+                        // first line text
+                        text.split(' ')[0], // first line text
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8.0),
+                  Container(),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '$number', // second line text
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Text(
+                    text.split(' ')[1], // second line text
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-        SizedBox(width: 5.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '$number',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
-            ),
-            SizedBox(height: 2.0),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Colors.grey,
-              ),
-            )
-          ],
-        )
-      ],
+      ),
     );
   }
 
+  void _toggleStyle() {
+    setState(() {
+      isCircular = !isCircular;
+    });
+  }
 
   _addTaskBar() {
     return Container(
@@ -396,29 +457,43 @@ class _ReportPageState extends State<ReportPage> {
               ],
             ),
           ),
-          SizedBox(
-            width: 65,
-            height: 65,
-            child: LiquidCircularProgressIndicator(
-              value: 0.6,
-              backgroundColor: Colors.white,
-              valueColor: AlwaysStoppedAnimation(bluishClr.withOpacity(0.5)),
-              borderColor: bluishClr,
-              borderWidth: 5.0,
-              // getTotalTask is type of Future<int> so we have to use FutureBuilder
-              center: FutureBuilder<int>(
-                future: _taskController.getTotalCompletedProgress(),
-                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                  int result = snapshot.data ?? 0;
-                  return Text(
-                    result.toString() + "%",
-                    style: const TextStyle(
-                      color: bluishClr,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  );
-                },
+
+          AnimatedContainer(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            decoration: BoxDecoration(
+              color: _colorTween.evaluate(_controller),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            transform: Matrix4.rotationZ(_rotation),
+            child: IconButton(
+              onPressed: () {
+                if (_controller.status == AnimationStatus.completed) {
+                  _controller.reverse();
+                  _toggleStyle();
+                } else {
+                  _controller.forward();
+                }
+                setState(() {
+                  _colorTween = _colorTween ==
+                          ColorTween(begin: bluishClr, end: Colors.green)
+                      ? ColorTween(begin: Colors.green, end: bluishClr)
+                      : ColorTween(begin: bluishClr, end: Colors.green);
+                  _rotation = _rotation == 0.0 ? 0.5 : 0.0;
+                });
+              },
+              icon: Icon(
+                Icons.swap_horizontal_circle,
+                size: 50,
+                color: Colors.white,
               ),
             ),
           ),
@@ -461,4 +536,3 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 }
-

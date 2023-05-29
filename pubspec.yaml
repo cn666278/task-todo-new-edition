@@ -56,6 +56,7 @@ dependencies:
 #  flutter_slidable: 0.5.3
   liquid_progress_indicator:
   step_progress_indicator:
+#  flutter_progress_button: '^1.0.0'
 
 dev_dependencies:
   flutter_test:

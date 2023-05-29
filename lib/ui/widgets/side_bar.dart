@@ -31,7 +31,7 @@ class _SideBarState extends State<SideBar> {
   }
 
   List pages = [
-    const HomePage(),
+    const EntryPoint(),
     const AllTask(),
     const Highlight(),
     const Calendar(),
@@ -145,8 +145,8 @@ class _SideBarState extends State<SideBar> {
                           setState(() {
                             selectedSideMenu = menu;
                             Get.defaultDialog(
-                              title: "ASB",
-                              middleText: "Hello",
+                              title: "Developer",
+                              middleText: "Chen Nuo",
                             );
                           });
                         },
