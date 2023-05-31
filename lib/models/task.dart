@@ -3,14 +3,14 @@ class Task {
   int? id; // id in database
   String? title;
   String? note;
-  bool? isCompleted;
+  int? isCompleted;
   String? date;
   String? startTime;
   // String? endTime;
   int? color;
   int? remind;
   String? repeat;
-  bool? isStar;
+  int? isStar;
 
   Task({
     this.id,

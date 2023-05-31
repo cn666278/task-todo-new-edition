@@ -136,7 +136,7 @@ class TaskController extends GetxController {
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].isCompleted == true) {
+      if (taskList[i].isCompleted == 1) {
         res += 1;
       }
     }
@@ -151,7 +151,7 @@ class TaskController extends GetxController {
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
       if (taskList[i].date == DateFormat.yMd().format(today) &&
-          taskList[i].isCompleted == true) {
+          taskList[i].isCompleted == 1) {
         res += 1;
       }
     }
@@ -163,7 +163,7 @@ class TaskController extends GetxController {
     DateTime today = DateTime.now();
     double res = taskList
         .where((task) =>
-            task.isCompleted! &&
+            task.isCompleted == 1 &&
             isWithinSevenDays(DateFormat.yMd().parse(task.date!), today))
         .length
         .toDouble();
@@ -180,7 +180,7 @@ class TaskController extends GetxController {
 
     for (int i = 0; i < taskList.length; i++) {
       DateTime taskDate = DateFormat.yMd().parse(taskList[i].date!);
-      if (taskList[i].isCompleted! && isWithinSameMonth(taskDate, today)) {
+      if (taskList[i].isCompleted == 1 && isWithinSameMonth(taskDate, today)) {
         res += 1;
       }
     }

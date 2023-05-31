@@ -243,7 +243,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           Spacer(),
-          task.isCompleted == true
+          task.isCompleted == 1
               ? _bottomSheetButton(
             label: "Undo Completed",
             onTap: () {

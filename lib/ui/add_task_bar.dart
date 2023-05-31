@@ -209,8 +209,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
           remind: _selectedRemind,
           repeat: _selectedRepeat,
           color: _selectedColor,
-          isCompleted: false,
-          isStar: false,
+          isCompleted: 0,
+          isStar: 0,
         )
     );
     print("My id is " + "$value");

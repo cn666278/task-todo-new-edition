@@ -60,13 +60,13 @@ class AllTaskTile extends StatelessWidget {
               // An action can be bigger than the others.
               autoClose: true,
               flex: 2,
-              onPressed: task!.isStar! ? undoStarTask : starTask,
+              onPressed: task!.isStar == 1 ? undoStarTask : starTask,
               backgroundColor:
-              task!.isStar! ? Colors.red[400]! : Colors.green[400]!,
+              task!.isStar == 1 ? Colors.red[400]! : Colors.green[400]!,
               // backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
-              icon: task!.isStar! ? Icons.star_border : Icons.star,
-              label: task!.isStar! ? 'Undo Star' : 'Star',
+              icon: task!.isStar == 1 ? Icons.star_border : Icons.star,
+              label: task!.isStar == 1 ? 'Undo Star' : 'Star',
               borderRadius: BorderRadius.circular(16),
             ),
             // SlidableAction(
@@ -93,7 +93,7 @@ class AllTaskTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  task!.isStar!
+                  task!.isStar == 1
                       ? Row(
                     children: [
                       Icon(
@@ -165,9 +165,9 @@ class AllTaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task!.isCompleted == true ? "COMPLETED" : "TODO",
+                task!.isCompleted == 1 ? "COMPLETED" : "TODO",
                 style: GoogleFonts.lato(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),

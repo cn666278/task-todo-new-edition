@@ -187,7 +187,7 @@ class _HighlightPageState extends State<HighlightPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isStar == true) {
+              if (task.isStar == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -219,7 +219,7 @@ class _HighlightPageState extends State<HighlightPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isCompleted == false && task.isStar == true) {
+              if (task.isCompleted == 0 && task.isStar == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -251,7 +251,7 @@ class _HighlightPageState extends State<HighlightPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isCompleted == true && task.isStar == true) {
+              if (task.isCompleted == 1 && task.isStar == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -295,7 +295,7 @@ class _HighlightPageState extends State<HighlightPage> {
             ),
           ),
           const Spacer(),
-          task.isCompleted == true
+          task.isCompleted == 1
               ? _bottomSheetButton(
             label: "Undo Completed",
             onTap: () {
@@ -409,9 +409,10 @@ class _HighlightPageState extends State<HighlightPage> {
               ],
             ),
           ),
+          // todo step indicator: x Star tasks(x in total)
           MyButton(
             // Star Task progress design display
-              label: "StarProgress",
+              label: "x Star tasks(x in total)",
               onTap: () async {
                 // await Get.to(() => AddTaskPage());
                 _taskController.getTasks();

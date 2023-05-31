@@ -237,7 +237,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isCompleted == false) {
+              if (task.isCompleted == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -269,7 +269,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isCompleted == true) {
+              if (task.isCompleted == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -313,7 +313,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             ),
           ),
           Spacer(),
-          task.isCompleted == true
+          task.isCompleted == 1
               ? _bottomSheetButton(
                   label: "Undo Completed",
                   onTap: () {

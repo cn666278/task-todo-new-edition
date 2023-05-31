@@ -24,34 +24,6 @@ class GreyTaskTile extends StatelessWidget {
         // Specify a key if the Slidable is dismissible.
         key: const ValueKey(0),
 
-        // The start action pane is the one at the left or the top side.
-        // startActionPane: ActionPane(
-        //   // A motion is a widget used to control how the pane animates.
-        //   motion: const ScrollMotion(),
-        //
-        //   // A pane can dismiss the Slidable.
-        //   dismissible: DismissiblePane(onDismissed: () {}),
-        //
-        //   // All actions are defined in the children parameter.
-        //   children: const [
-        //     // A SlidableAction can have an icon and/or a label.
-        //     SlidableAction(
-        //       onPressed: doNothing,
-        //       backgroundColor: Color(0xFFFE4A49),
-        //       foregroundColor: Colors.white,
-        //       icon: Icons.delete,
-        //       label: 'Delete',
-        //     ),
-        //     SlidableAction(
-        //       onPressed: doNothing,
-        //       backgroundColor: Color(0xFF21B7CA),
-        //       foregroundColor: Colors.white,
-        //       icon: Icons.share,
-        //       label: 'Share',
-        //     ),
-        //   ],
-        // ),
-
         // The end action pane is the one at the right or the bottom side.
         endActionPane: ActionPane(
           motion: ScrollMotion(),
@@ -60,13 +32,13 @@ class GreyTaskTile extends StatelessWidget {
               // An action can be bigger than the others.
               autoClose: true,
               flex: 2,
-              onPressed: task!.isStar! ? undoStarTask : starTask,
+              onPressed: task!.isStar == 1 ? undoStarTask : starTask,
               backgroundColor:
-              task!.isStar! ? Colors.red[400]! : Colors.green[400]!,
+              task!.isStar == 1 ? Colors.red[400]! : Colors.green[400]!,
               // backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
-              icon: task!.isStar! ? Icons.star_border : Icons.star,
-              label: task!.isStar! ? 'Undo Star' : 'Star',
+              icon: task!.isStar == 1  ? Icons.star_border : Icons.star,
+              label: task!.isStar == 1 ? 'Undo Star' : 'Star',
               borderRadius: BorderRadius.circular(16),
             ),
             // SlidableAction(
@@ -93,7 +65,7 @@ class GreyTaskTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  task!.isStar!
+                  task!.isStar == 1
                       ? Row(
                     children: [
                       Icon(
@@ -165,7 +137,7 @@ class GreyTaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task!.isCompleted == true ? "COMPLETED" : "TODO",
+                task!.isCompleted == 1 ? "COMPLETED" : "TODO",
                 style: GoogleFonts.lato(
                   textStyle: TextStyle(
                       fontSize: 10,
