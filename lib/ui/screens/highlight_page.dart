@@ -189,6 +189,26 @@ class _HighlightPageState extends State<HighlightPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
+
+              // reminder logic
+              if (task.repeat == "Daily") {
+                DateTime date =
+                    DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.scheduledNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
+              } else if (task.repeat == 'Weekly') {
+                DateTime date =
+                    DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.repeatWeeklyNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
+              }
+
               if (task.isStar == 1) {
                 return AnimationConfiguration.staggeredList(
                     position: index,

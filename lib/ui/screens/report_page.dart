@@ -335,13 +335,15 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
           ),
         ],
       ),
+      // TODO - WE DONT NEED THE ADD TASK IN REPORT PAGE
       floatingActionButton: FloatingActionButton(
         backgroundColor: menuIconColor,
         onPressed: () async {
-          await Get.to(() => const AddTaskPage());
+          // await Get.to(() => const AddTaskPage());
           _taskController.getTasks();
         },
-        child: const Icon(Icons.add_circle_rounded, size: 50),
+        child: const Icon(Icons.update_sharp, size: 35),
+        // child: const Icon(Icons.add_circle_rounded, size: 50),
       ),
       // float button
       floatingActionButtonLocation:

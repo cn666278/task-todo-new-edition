@@ -125,7 +125,8 @@ class NotifyHelper {
     if (payload == "Theme Changed") {
       print("Nothing navigate to");
     } else {
-      // TODO -- SENT TO A NEW PAGE [ERROR!!!]
+      // TODO -- SENT TO A TASK DETAIL PAGE
+      print('notification payload: $payload');
       Get.to(() => NotifiedPage(label:payload));
     }
   }
