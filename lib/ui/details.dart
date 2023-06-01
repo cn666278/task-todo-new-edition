@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
-import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/input_field.dart';
 import 'package:todo_app_new_edition/ui/widgets/update_button.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
@@ -11,7 +10,6 @@ import 'package:todo_app_new_edition/utils/theme.dart';
 // Details page
 // convert StatelessWidget to StatefulWidget by Alt + ENTER
 class TaskDetailPage extends StatefulWidget {
-  // TODO : ? How to pass this task to outside of this method TaskDetailPage() ?
   final Task task;
 
   const TaskDetailPage({Key? key, required this.task}) : super(key: key);
@@ -45,7 +43,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(context),
       body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +81,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                 title: "Date",
                 hint: task!.date!,
                 widget: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.calendar_today_outlined,
                     color: Colors.grey,
                   ),
@@ -168,7 +166,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                       value: value,
                       child: Text(
                         value!,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     );
                   }).toList(),
@@ -232,17 +230,6 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
       remind: task?.remind,
       repeat: task?.repeat,
       color: task?.color,
-      // title: _titleController.text,
-      // note: _noteController.text,
-      // date: task?.date == DateFormat.yMd().format(_selectedDate)
-      //     ? task?.date
-      //     : DateFormat.yMd().format(_selectedDate),
-      // startTime: _startTime == _startTime ? task?.startTime : _startTime,
-      // remind:
-      //     _selectedRemind == _selectedRemind ? task?.remind : _selectedRemind,
-      // repeat:
-      //     _selectedRepeat == _selectedRepeat ? task?.repeat : _selectedRepeat,
-      // color: _selectedColor == _selectedColor ? task?.color : _selectedColor,
       isCompleted: task?.isCompleted,
       isStar: task?.isStar,
     ));
@@ -288,7 +275,7 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
                   // we want to show the selected color with tick only,
                   // other should be blank (empty Container)
                   child: _selectedColor == index
-                      ? Icon(
+                      ? const Icon(
                           Icons.done,
                           color: Colors.white,
                           size: 16,
@@ -324,22 +311,6 @@ class _TaskDetailsPageState extends State<TaskDetailPage> {
         style: TextStyle(color: Colors.black),
       ),
       centerTitle: true,
-      actions: [
-        Icon(
-          Icons.person,
-          // Icon color should change according to the Theme Mode
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-        ),
-        // 头像png控件
-        // CircleAvatar(
-        //   backgroundImage: AssetImage(
-        //     "images/header.png"
-        //   ),
-        // ),
-        SizedBox(
-          width: 20,
-        )
-      ],
     );
   }
 

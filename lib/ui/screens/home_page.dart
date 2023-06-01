@@ -82,7 +82,9 @@ class _HomePageState extends State<HomePage> {
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.4), BlendMode.dstATop),
-          image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
         )),
         child: Column(
           children: [
@@ -228,8 +230,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ));
-              }
-              else {
+              } else {
                 return Container(); // cannot find any match date
               }
             });
@@ -435,7 +436,6 @@ class _HomePageState extends State<HomePage> {
                     ? "Activated Light Theme"
                     : "Activated Dark Theme",
               );
-              notifyHelper.scheduledNotification();
             },
             icon: Icon(
               // Day and moon icon should change according to the Theme Mode

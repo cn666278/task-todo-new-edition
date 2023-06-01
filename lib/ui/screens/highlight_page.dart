@@ -76,11 +76,13 @@ class _HighlightPageState extends State<HighlightPage> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.fill,
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4), BlendMode.dstATop),
-              image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
-            )),
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4), BlendMode.dstATop),
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
+        )),
         child: Column(
           children: [
             _addTaskBar(),
@@ -95,39 +97,39 @@ class _HighlightPageState extends State<HighlightPage> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
-                itemBuilder: (context, index) =>
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(
-                          left: kDefaultPadding,
-                          // At end item it add extra 20 right  padding
-                          right:
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      left: kDefaultPadding,
+                      // At end item it add extra 20 right  padding
+                      right:
                           index == categories.length - 1 ? kDefaultPadding : 0,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                        decoration: BoxDecoration(
-                          color: index == selectedIndex
-                              ? primaryClr.withOpacity(0.95)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          categories[index],
-                          style: GoogleFonts.lato(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color:
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    decoration: BoxDecoration(
+                      color: index == selectedIndex
+                          ? primaryClr.withOpacity(0.95)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      categories[index],
+                      style: GoogleFonts.lato(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color:
                             index == selectedIndex ? Colors.white : Colors.grey,
-                          ),
-                        ),
                       ),
                     ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(
@@ -137,10 +139,10 @@ class _HighlightPageState extends State<HighlightPage> {
             selectedIndex == 0
                 ? _showTodoStarTasks()
                 : selectedIndex == 1
-                ? _showCompletedStarTasks()
-                : selectedIndex == 2
-                ? _showAllStarTasks()
-                : null,
+                    ? _showCompletedStarTasks()
+                    : selectedIndex == 2
+                        ? _showAllStarTasks()
+                        : null,
           ],
         ),
       ),
@@ -176,7 +178,7 @@ class _HighlightPageState extends State<HighlightPage> {
       ),
       // float button
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
+          FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
     );
   }
 
@@ -297,24 +299,24 @@ class _HighlightPageState extends State<HighlightPage> {
           const Spacer(),
           task.isCompleted == 1
               ? _bottomSheetButton(
-            label: "Undo Completed",
-            onTap: () {
-              _taskController.undoTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: Colors.green,
-            context: context,
-          )
+                  label: "Undo Completed",
+                  onTap: () {
+                    _taskController.undoTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: Colors.green,
+                  context: context,
+                )
               : _bottomSheetButton(
-            label: "Task Completed",
-            // TODO -- Add warning message to avoid wrong selection
-            onTap: () {
-              _taskController.markTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: primaryClr,
-            context: context,
-          ),
+                  label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
+                  onTap: () {
+                    _taskController.markTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
@@ -365,8 +367,8 @@ class _HighlightPageState extends State<HighlightPage> {
             width: 2,
             color: isClose == true
                 ? Get.isDarkMode
-                ? Colors.grey[600]!
-                : Colors.grey[350]!
+                    ? Colors.grey[600]!
+                    : Colors.grey[350]!
                 : clr,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -377,7 +379,7 @@ class _HighlightPageState extends State<HighlightPage> {
             label,
             // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
-            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
@@ -411,7 +413,7 @@ class _HighlightPageState extends State<HighlightPage> {
           ),
           // todo step indicator: x Star tasks(x in total)
           MyButton(
-            // Star Task progress design display
+              // Star Task progress design display
               label: "x Star tasks(x in total)",
               onTap: () async {
                 // await Get.to(() => AddTaskPage());
@@ -438,7 +440,6 @@ class _HighlightPageState extends State<HighlightPage> {
                     ? "Activated Light Theme"
                     : "Activated Dark Theme",
               );
-              notifyHelper.scheduledNotification();
             },
             icon: Icon(
               // Day and moon icon should change according to the Theme Mode

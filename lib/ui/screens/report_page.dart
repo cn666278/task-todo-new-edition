@@ -161,8 +161,9 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.4), BlendMode.dstATop),
-          // todo -- change another image or empty image
-          image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
         )),
         child: Column(
           children: [
@@ -298,12 +299,8 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
                           top: 10, left: 35, right: 45, bottom: 10),
                       child: Column(
                         children: [
-                          _buildStatus(
-                              isCircular
-                                  ? bluishClr
-                                  : Colors.green,
-                              completedTask,
-                              'Completed Tasks'),
+                          _buildStatus(isCircular ? bluishClr : Colors.green,
+                              completedTask, 'Completed Tasks'),
                           _buildStatus(Colors.grey, todoTasks, 'Todo Tasks'),
                           _buildStatus(Colors.blue, totalTask, 'Total Tasks'),
                         ],
@@ -410,7 +407,9 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     text.split(' ')[1], // second line text
                     style: TextStyle(
@@ -518,7 +517,6 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
                     ? "Activated Light Theme"
                     : "Activated Dark Theme",
               );
-              notifyHelper.scheduledNotification();
             },
             icon: Icon(
               // Day and moon icon should change according to the Theme Mode

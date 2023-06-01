@@ -29,9 +29,11 @@ class MenuBtn extends StatelessWidget {
             ],
           ),
           child: RiveAnimation.asset(
-            Get.isDarkMode
-                ? "assets/RiveAssets/dark_menu_button.riv"
-                : "assets/RiveAssets/menu_button.riv",
+            // todo -- error in dark mode
+            "assets/RiveAssets/menu_button.riv",
+            // Get.isDarkMode
+            //     ? "assets/RiveAssets/dark_menu_button.riv"
+            //     : "assets/RiveAssets/menu_button.riv",
             onInit: riveOnInit,
           ),
         ),

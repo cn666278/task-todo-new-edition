@@ -84,7 +84,9 @@ class _AllTaskPageState extends State<AllTaskPage> {
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.4), BlendMode.dstATop),
-          image: Image.asset("assets/Backgrounds/colorful_bg.png").image,
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
         )),
         child: Column(
           children: [
@@ -237,7 +239,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
             itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
               Task task = _taskController.taskList[index]; // pass an instance
-              if (task.isCompleted == 1) {
+              if (task.isCompleted == 0) {
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -500,7 +502,6 @@ class _AllTaskPageState extends State<AllTaskPage> {
                     ? "Activated Light Theme"
                     : "Activated Dark Theme",
               );
-              notifyHelper.scheduledNotification();
             },
             icon: Icon(
               // Day and moon icon should change according to the Theme Mode

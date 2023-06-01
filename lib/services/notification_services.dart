@@ -180,23 +180,6 @@ class NotifyHelper {
     );
   }
 
-  scheduledMonthlyNotification(int hour, int minute, Task task) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        task.id!.toInt(),
-        task.title,
-        task.note,
-        _convertTime(hour, minute),
-        const NotificationDetails(
-            android: AndroidNotificationDetails(
-                'your channel id', 'your channel name')),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime, // edit this
-        payload: "${task.title}|"+"${task.note}|"
-    );
-  }
-
 
   Future<void> repeatWeeklyNotification(int hour, int minute, Task task) async {
     const AndroidNotificationDetails androidNotificationDetails =

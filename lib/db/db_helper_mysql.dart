@@ -4,6 +4,9 @@ import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 
 /* link to database using MySQL
+* not used so far
+* we need to have the Server for it
+* replace to sqflite currently
 * */
 class DBHelper {
   static final Mysql _db = Mysql(); // database instance object
