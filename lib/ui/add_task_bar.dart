@@ -31,7 +31,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     20,
   ];
   String _selectedRepeat = "None"; // default value
-  List<String> repeatList = ["None", "Daily", "Weekly"];
+  List<String> repeatList = ["None", "Once", "Daily", "Weekly"];
   int _selectedColor = 0;
 
   @override

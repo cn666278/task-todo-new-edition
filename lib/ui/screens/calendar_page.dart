@@ -76,11 +76,13 @@ class _CalendarPageState extends State<CalendarPage> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.fill,
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4), BlendMode.dstATop),
-              image: Get.isDarkMode ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image : Image.asset("assets/Backgrounds/colorful_bg.png").image,
-            )),
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4), BlendMode.dstATop),
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
+        )),
         child: Column(
           children: [
             _addTaskBar(),
@@ -126,7 +128,7 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
       // float button
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
+          FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
     );
   }
 
@@ -142,15 +144,27 @@ class _CalendarPageState extends State<CalendarPage> {
               // ref:
               // 1. https://www.jianshu.com/p/00ccb0fbdb42
               // 2. https://api.flutter.dev/flutter/intl/DateFormat-class.html
-              DateTime weeklyDate = DateFormat.yMd().parse(task.date.toString());
+              DateTime weeklyDate =
+                  DateFormat.yMd().parse(task.date.toString());
               var weeklyTime = DateFormat("EEEE").format(weeklyDate);
 
-              // Daily task remind
-              if (task.repeat == "Daily") {
+              // Once task remind
+              if (task.repeat == "Once") {
                 DateTime date =
                 DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
+              }
+
+              // Daily task remind
+              if (task.repeat == "Daily") {
+                DateTime date =
+                    DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.createDailyReminder(
                     int.parse(myTime.toString().split(":")[0]), // hours
                     int.parse(myTime.toString().split(":")[1]), // minutes
                     task);
@@ -191,9 +205,10 @@ class _CalendarPageState extends State<CalendarPage> {
                     ));
               }
               // Weekly task remind
-              else if (task.repeat == 'Weekly' && weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
+              else if (task.repeat == 'Weekly' &&
+                  weeklyTime == DateFormat.EEEE().format(_selectedDate)) {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.repeatWeeklyNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -215,8 +230,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                       ),
                     ));
-              }
-              else {
+              } else {
                 return Container(); // cannot find any match date
               }
             });
@@ -245,24 +259,24 @@ class _CalendarPageState extends State<CalendarPage> {
           Spacer(),
           task.isCompleted == 1
               ? _bottomSheetButton(
-            label: "Undo Completed",
-            onTap: () {
-              _taskController.undoTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: Colors.green,
-            context: context,
-          )
+                  label: "Undo Completed",
+                  onTap: () {
+                    _taskController.undoTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: Colors.green,
+                  context: context,
+                )
               : _bottomSheetButton(
-            label: "Task Completed",
-            // TODO -- Add warning message to avoid wrong selection
-            onTap: () {
-              _taskController.markTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: primaryClr,
-            context: context,
-          ),
+                  label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
+                  onTap: () {
+                    _taskController.markTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
@@ -313,8 +327,8 @@ class _CalendarPageState extends State<CalendarPage> {
             width: 2,
             color: isClose == true
                 ? Get.isDarkMode
-                ? Colors.grey[600]!
-                : Colors.grey[350]!
+                    ? Colors.grey[600]!
+                    : Colors.grey[350]!
                 : clr,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -325,7 +339,7 @@ class _CalendarPageState extends State<CalendarPage> {
             label,
             // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
-            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),

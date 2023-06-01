@@ -7,12 +7,15 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/ui/notified_page.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 
 class NotifyHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
   get selectNotificationSubject => null;
+  Set<int> notifiedTasks = {};
+
 
   initializeNotification() async {
     // _configureLocalTimeZone();
@@ -67,7 +70,9 @@ class NotifyHelper {
     );
   }
 
+
   // TODO - BUG? TimeZone ERROR
+  // single reminder
   scheduledNotification(int hour, int minute, Task task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         task.id!.toInt(),
@@ -85,6 +90,42 @@ class NotifyHelper {
         payload: "${task.title}|"+"${task.note}|"
     );
   }
+
+  Future<void> createDailyReminder(int hour, int minute, Task task) async {
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+        'your channel id', 'your channel name',
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics
+    );
+
+    // 获取当前时间
+    var now = tz.TZDateTime.now(tz.local);
+    // 设置每天晚上7点提醒
+    var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    if (scheduledDate.isBefore(now)) {
+      // 如果当前时间已经过了晚上7点，则将提醒时间设为明天的晚上7点
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      task.id!.toInt(),
+      task.title,
+      task.note,
+      scheduledDate,
+      platformChannelSpecifics,
+      payload: "${task.title}|${task.note}",
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+      androidAllowWhileIdle: true,
+    );
+  }
+
 
   tz.TZDateTime _convertTime(int hour, int minutes){
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
@@ -125,9 +166,10 @@ class NotifyHelper {
     if (payload == "Theme Changed") {
       print("Nothing navigate to");
     } else {
-      // TODO -- SENT TO A TASK DETAIL PAGE
+      // SENT TO A Calendar PAGE
       print('notification payload: $payload');
-      Get.to(() => NotifiedPage(label:payload));
+      Get.to(() => Calendar());
+      // Get.to(() => NotifiedPage(label:payload));
     }
   }
 

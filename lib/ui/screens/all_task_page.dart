@@ -209,11 +209,19 @@ class _AllTaskPageState extends State<AllTaskPage> {
               Task task = _taskController.taskList[index]; // pass an instance
 
               // reminder logic
-              if (task.repeat == "Daily") {
+              if (task.repeat == "Once") {
                 DateTime date =
                     DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
+              } else if (task.repeat == "Daily") {
+                DateTime date =
+                    DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.createDailyReminder(
                     int.parse(myTime.toString().split(":")[0]), // hours
                     int.parse(myTime.toString().split(":")[1]), // minutes
                     task);

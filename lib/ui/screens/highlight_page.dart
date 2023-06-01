@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
@@ -191,17 +192,25 @@ class _HighlightPageState extends State<HighlightPage> {
               Task task = _taskController.taskList[index]; // pass an instance
 
               // reminder logic
-              if (task.repeat == "Daily") {
+              if (task.repeat == "Once") {
                 DateTime date =
-                    DateFormat.jm().parse(task.startTime.toString());
+                DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
                     int.parse(myTime.toString().split(":")[1]), // minutes
                     task);
+              } else if (task.repeat == "Daily") {
+                DateTime date =
+                DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.createDailyReminder(
+                    int.parse(myTime.toString().split(":")[0]), // hours
+                    int.parse(myTime.toString().split(":")[1]), // minutes
+                    task);
               } else if (task.repeat == 'Weekly') {
                 DateTime date =
-                    DateFormat.jm().parse(task.startTime.toString());
+                DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.repeatWeeklyNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -432,13 +441,33 @@ class _HighlightPageState extends State<HighlightPage> {
             ),
           ),
           // todo step indicator: x Star tasks(x in total)
-          MyButton(
-              // Star Task progress design display
-              label: "x Star tasks(x in total)",
-              onTap: () async {
-                // await Get.to(() => AddTaskPage());
-                _taskController.getTasks();
-              })
+          SizedBox(
+            width: 65,
+            height: 65,
+            child: LiquidCircularProgressIndicator(
+              value: 0.6,
+              backgroundColor: Colors.white,
+              valueColor: AlwaysStoppedAnimation(bluishClr.withOpacity(0.5)),
+              // valueColor: AlwaysStoppedAnimation(Colors.blueAccent[400]!),
+              borderColor: bluishClr,
+              borderWidth: 5.0,
+              // getTotalTask is type of Future<int> so we have to use FutureBuilder
+              center: FutureBuilder<int>(
+                future: _taskController.getTotalStarProgress(),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  int result = snapshot.data ?? 0;
+                  return Text(
+                    result.toString() + "%",
+                    style: const TextStyle(
+                      color: bluishClr,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
