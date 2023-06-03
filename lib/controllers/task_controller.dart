@@ -208,12 +208,12 @@ class TaskController extends GetxController {
     return totalProgress;
   }
 
-  Future<double> getTotalStarTask() async {
+  Future<double> getTotalCompletedStarTask() async {
     double res = 0;
     List<Map<String, dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i].isStar == 1) {
+      if (taskList[i].isStar == 1 && taskList[i].isCompleted == 1) {
         res += 1;
       }
     }
@@ -222,10 +222,8 @@ class TaskController extends GetxController {
 
   Future<int> getTotalStarProgress() async {
     int totalProgress = 0;
-    double star = await getTotalStarTask();
+    double star = await getTotalCompletedStarTask();
     double total = await getTotalTask();
-    // use toInt() but not as int
-    // totalProgress = ((comp / total) * 100) as int; // wrong
     totalProgress = ((star / total) * 100).toInt();
     return totalProgress;
   }
