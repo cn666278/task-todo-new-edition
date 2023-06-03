@@ -7,6 +7,7 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
+import 'package:todo_app_new_edition/ui/screens/side_bar_entry/search.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
 
 import 'info_card.dart';
@@ -32,10 +33,10 @@ class _SideBarState extends State<SideBar> {
 
   List pages = [
     const EntryPoint(),
-    const AllTask(),
+    const Search(),
     const Highlight(),
     const Calendar(),
-    const EntryPoint(), // ReportPage(),
+    const EntryPoint(),
   ];
 
   @override
