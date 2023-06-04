@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
           NavigationItemModel(
             label: "Report",
             icon: SvgIcon.clipboard,
-            count: 3,
+            // count: 3,
           ),
         ],
       ),

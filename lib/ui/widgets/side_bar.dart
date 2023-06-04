@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
-import 'package:todo_app_new_edition/ui/add_task_bar.dart';
-import 'package:todo_app_new_edition/ui/screens/home_page.dart';
-import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/search.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'info_card.dart';
 import 'side_menu.dart';
@@ -33,11 +31,32 @@ class _SideBarState extends State<SideBar> {
 
   List pages = [
     const EntryPoint(),
+    const Calendar(),
     const Search(),
     const Highlight(),
-    const Calendar(),
-    const EntryPoint(),
   ];
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    bioController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    bioController = TextEditingController();
+    // todo -- error?
+    // initialize name and bio
+    nameController.text = "Steven";
+    bioController.text = "Flutter Developer";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +75,81 @@ class _SideBarState extends State<SideBar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const InfoCard(
-                // todo -- add the TABLE - User
-                name: "XMUM",
-                bio: "Student",
+              InfoCard(
+                name: TextFormField(
+                  controller: nameController,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  onTap: () {
+                    // 初始化控制器并设置初始值
+                    nameController = TextEditingController(text: "Steven");
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Edit Name'),
+                        content: TextFormField(
+                          controller: nameController,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                // Update the name here
+                              });
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                bio: TextFormField(
+                  controller: bioController,
+                  style: const TextStyle(color: Colors.grey),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  onTap: () {
+                    // 初始化控制器并设置初始值
+                    bioController = TextEditingController(text: "Flutter Developer");
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Edit Bio'),
+                        content: TextFormField(
+                          controller: bioController,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                // Update the bio here
+                              });
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
+
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(
@@ -82,12 +171,11 @@ class _SideBarState extends State<SideBar> {
                             selectedSideMenu = menu;
                             if (selectedSideMenu.title == "Home") {
                               index = 0;
-                            } else if (selectedSideMenu.title == "Search") {
-                              // todo -- search page
-                              index = 1;
-                            } else if (selectedSideMenu.title == "Favorites") {
-                              index = 2;
                             } else if (selectedSideMenu.title == "My day") {
+                              index = 1;
+                            } else if (selectedSideMenu.title == "Search") {
+                              index = 2;
+                            } else if (selectedSideMenu.title == "Favorites") {
                               index = 3;
                             } else {
                               index = -1;
@@ -104,7 +192,7 @@ class _SideBarState extends State<SideBar> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
                 child: Text(
-                  "My day".toUpperCase(),
+                  "Other".toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
@@ -119,6 +207,32 @@ class _SideBarState extends State<SideBar> {
                           RiveUtils.changeSMIBoolState(menu.rive.status!);
                           setState(() {
                             selectedSideMenu = menu;
+                            Get.dialog(
+                              AlertDialog(
+                                title: Row(
+                                  children: const [
+                                    Icon(Icons.file_copy_outlined),
+                                    SizedBox(width: 10),
+                                    Text("Github Repository"),
+                                  ],
+                                ),
+                                content: Text(
+                                    'https://github.com/cn666278/task-todo-new-edition'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('Access'),
+                                    onPressed: () async {
+                                      final url = Uri.parse(
+                                          'https://github.com/cn666278/task-todo-new-edition');
+                                      if (!await launchUrl(url)) {
+                                        throw Exception(
+                                            'Could not launch $url');
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
                           });
                         },
                         riveOnInit: (artboard) {
@@ -130,7 +244,7 @@ class _SideBarState extends State<SideBar> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
                 child: Text(
-                  "Theme Mode".toUpperCase(),
+                  "About".toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!

@@ -70,13 +70,13 @@ class _SearchPageState extends State<SearchPage> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.fill,
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4), BlendMode.dstATop),
-              image: Get.isDarkMode
-                  ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
-                  : Image.asset("assets/Backgrounds/colorful_bg.png").image,
-            )),
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4), BlendMode.dstATop),
+          image: Get.isDarkMode
+              ? Image.asset("assets/Backgrounds/colorful_dark_bg.png").image
+              : Image.asset("assets/Backgrounds/colorful_bg.png").image,
+        )),
         child: Column(
           children: [
             _addTaskBar(),
@@ -121,7 +121,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       // float button
       floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
+          FloatingActionButtonLocation.centerDocked, //控制浮动按钮停靠在底部中间位置
     );
   }
 
@@ -155,7 +155,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-
   /* used to show the task state: Task Completed / Delete Task
   * */
   _showBottomSheet(BuildContext context, Task task) {
@@ -177,24 +176,24 @@ class _SearchPageState extends State<SearchPage> {
           Spacer(),
           task.isCompleted == 1
               ? _bottomSheetButton(
-            label: "Undo Completed",
-            onTap: () {
-              _taskController.undoTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: Colors.green,
-            context: context,
-          )
+                  label: "Undo Completed",
+                  onTap: () {
+                    _taskController.undoTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: Colors.green,
+                  context: context,
+                )
               : _bottomSheetButton(
-            label: "Task Completed",
-            // TODO -- Add warning message to avoid wrong selection
-            onTap: () {
-              _taskController.markTaskCompleted(task.id!); // UPDATE
-              Get.back();
-            },
-            clr: primaryClr,
-            context: context,
-          ),
+                  label: "Task Completed",
+                  // TODO -- Add warning message to avoid wrong selection
+                  onTap: () {
+                    _taskController.markTaskCompleted(task.id!); // UPDATE
+                    Get.back();
+                  },
+                  clr: primaryClr,
+                  context: context,
+                ),
           _bottomSheetButton(
             label: "Delete Task",
             onTap: () {
@@ -245,8 +244,8 @@ class _SearchPageState extends State<SearchPage> {
             width: 2,
             color: isClose == true
                 ? Get.isDarkMode
-                ? Colors.grey[600]!
-                : Colors.grey[350]!
+                    ? Colors.grey[600]!
+                    : Colors.grey[350]!
                 : clr,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -257,13 +256,12 @@ class _SearchPageState extends State<SearchPage> {
             label,
             // copyWith() -- COPY ALL THE PROPERTY OF THE INSTANCE AND CHANGE SOME
             style:
-            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
     );
   }
-
 
   _addTaskBar() {
     return Container(
@@ -291,7 +289,8 @@ class _SearchPageState extends State<SearchPage> {
                     hintText: 'enter the title of your task',
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Get.isDarkMode ? Colors.white : Colors.black),
                 ),
               ),
               MyButton(
@@ -310,7 +309,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-
   AppBar _appBar() {
     return AppBar(
       elevation: 0,
@@ -322,7 +320,9 @@ class _SearchPageState extends State<SearchPage> {
             ThemeServices().switchTheme();
             notifyHelper.displayNotification(
               title: "Theme changed",
-              body: Get.isDarkMode ? "Activated Light Theme" : "Activated Dark Theme",
+              body: Get.isDarkMode
+                  ? "Activated Light Theme"
+                  : "Activated Dark Theme",
             );
           },
           icon: Icon(
@@ -335,5 +335,4 @@ class _SearchPageState extends State<SearchPage> {
       ],
     );
   }
-
 }

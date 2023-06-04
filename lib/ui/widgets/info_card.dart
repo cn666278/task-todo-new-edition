@@ -8,7 +8,8 @@ class InfoCard extends StatelessWidget {
     required this.bio,
   }) : super(key: key);
 
-  final String name, bio;
+  final Widget name;
+  final Widget bio;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +21,13 @@ class InfoCard extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      title: Text(
-        name,
+      title: DefaultTextStyle(
         style: const TextStyle(color: Colors.white),
+        child: name,
       ),
-      subtitle: Text(
-        bio,
+      subtitle: DefaultTextStyle(
         style: const TextStyle(color: Colors.white70),
+        child: bio,
       ),
     );
   }

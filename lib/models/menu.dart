@@ -39,24 +39,17 @@ List<Menu> sidebarMenus = [
 ];
 List<Menu> sidebarMenus2 = [
   Menu(
-    title: "Help",
+    title: "Contact",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
-  Menu(
-    title: "Notifications",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
-  ),
 ];
 
 List<Menu> sidebarMenus3 = [
   Menu(
-    title: "Profile",
+    title: "Developer",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "USER",

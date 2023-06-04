@@ -19,9 +19,7 @@ class MyButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           color: primaryClr,
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          // padding: const EdgeInsets.only(left: 22, top: 15, right: 2),
+        child: Center(
           child: Text(
             label,
             style: TextStyle(
