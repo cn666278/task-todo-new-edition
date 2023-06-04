@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_new_edition/models/menu.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
@@ -6,6 +7,7 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/entry_point.dart'
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/search.dart';
 import 'package:todo_app_new_edition/utils/rive_utils.dart';
+import 'package:todo_app_new_edition/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'info_card.dart';
@@ -38,7 +40,6 @@ class _SideBarState extends State<SideBar> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
-
 
   @override
   void dispose() {
@@ -120,7 +121,8 @@ class _SideBarState extends State<SideBar> {
                   ),
                   onTap: () {
                     // 初始化控制器并设置初始值
-                    bioController = TextEditingController(text: "Flutter Developer");
+                    bioController =
+                        TextEditingController(text: "Flutter Developer");
 
                     showDialog(
                       context: context,
@@ -149,7 +151,6 @@ class _SideBarState extends State<SideBar> {
                   },
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(
@@ -220,14 +221,20 @@ class _SideBarState extends State<SideBar> {
                                     'https://github.com/cn666278/task-todo-new-edition'),
                                 actions: [
                                   TextButton(
-                                    child: Text('Access'),
-                                    onPressed: () async {
-                                      final url = Uri.parse(
-                                          'https://github.com/cn666278/task-todo-new-edition');
-                                      if (!await launchUrl(url)) {
-                                        throw Exception(
-                                            'Could not launch $url');
-                                      }
+                                    child: Text('Copy'),
+                                    onPressed: () {
+                                      final String url =
+                                          'https://github.com/cn666278/task-todo-new-edition';
+                                      Clipboard.setData(
+                                              ClipboardData(text: url))
+                                          .then((_) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'URL copied to clipboard')),
+                                        );
+                                      });
                                     },
                                   ),
                                 ],
@@ -259,9 +266,34 @@ class _SideBarState extends State<SideBar> {
                           RiveUtils.changeSMIBoolState(menu.rive.status!);
                           setState(() {
                             selectedSideMenu = menu;
-                            Get.defaultDialog(
-                              title: "Developer",
-                              middleText: "Chen Nuo",
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Developer'),
+                                content: Container(
+                                  decoration: BoxDecoration(
+                                    color: bluishClr, // 替换为你想要的背景颜色
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  padding: EdgeInsets.all(16),
+                                  child: Text(
+                                    'Chen Nuo\n\na computer science student from XMUM.',
+                                    style: TextStyle(
+                                      color: Colors.white, // 替换为你想要的文字颜色
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Close'),
+                                  ),
+                                ],
+                              ),
                             );
                           });
                         },
