@@ -66,5 +66,8 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## README.md References:
+## README.md References
 1. [Shopify-flutter-demo/README.md design](https://github.com/mehulmk/Shopify-flutter-demo/tree/main)
+
+## License
+This project is licensed under the GPLv3 License - see the LICENSE.md file for details.
