@@ -61,7 +61,6 @@ class TaskController extends GetxController {
 
   // get all the data from table
   void getTaskDetails(Task task) async {
-    // todo edit the function query()
     List<Map<String, dynamic>> taskDetail =
         await DBHelper.queryTaskDetail(task);
     taskDetailList
@@ -107,7 +106,8 @@ class TaskController extends GetxController {
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
     double res = taskList
         .where((task) =>
-            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today))
+            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today) &&
+            isWithinSameMonth(DateFormat.yMd().parse(task.date!), today))
         .length
         .toDouble();
     return res;
@@ -159,12 +159,14 @@ class TaskController extends GetxController {
   }
 
   // get total completed tasks under 7 days (started from today)
+  // make sure isWithinSameMonth
   Future<double> getSevenDaysCompletedTasks() async {
     DateTime today = DateTime.now();
     double res = taskList
         .where((task) =>
             task.isCompleted == 1 &&
-            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today))
+            isWithinSevenDays(DateFormat.yMd().parse(task.date!), today) &&
+            isWithinSameMonth(DateFormat.yMd().parse(task.date!), today))
         .length
         .toDouble();
 
