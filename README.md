@@ -68,7 +68,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## User Hanbook
 ### 0. demo
-<img src="screenshots/all task page/all task 1.png" height="450px" />   
+<img src="screenshots/demo.gif" height="450px" />   
 
 ### 1. All Tasks page
 
@@ -116,11 +116,20 @@ You can edit the state of task by clicking the `Task Completed` or `Undo Complet
 
 <img src="screenshots/Task complted/ss1.png" height="450px" /> <img src="screenshots/Task complted/ssundo.png" height="450px" /> <img src="screenshots/Task complted/after complted.png" height="450px" />
 
-### 7. Sile bar menu  
+### 7. Star Task
+
+You can set the priority of our task by right silding on our task card (by `Star` or `Undo Star`). The task set as 'Star Task' will have a star added to the top left corner of the task card and displayed in the Highlights page.
+
+<img src="screenshots/s3.png" height="450px" /> <img src="screenshots/s4.png" height="450px" /> 
+
+### 8. Sile bar menu  
 <img src="screenshots/s8.png" height="450px" /> 
 
-### 8. Search tasks  
-<img src="screenshots/Search Task/s8.png" height="420px" /> <img src="screenshots/Search Task/s9.png" height="420px" /> <img src="screenshots/Search Task/sss1.png" height="420px" /> <img src="screenshots/Search Task/sss2.png" height="420px" />  
+### 9. Search tasks  
+<img src="screenshots/Search Task/s8.png" height="420px" /> <img src="screenshots/Search Task/sss1.png" height="420px" /> <img src="screenshots/Search Task/sss2.png" height="420px" /> <img src="screenshots/Search Task/s9.png" height="420px" />  
+
+### 10. Theme Mode Switch    
+<img src="screenshots/Drak Mode/all task 1.png" height="420px" /> <img src="screenshots/Drak Mode/d2.png" height="420px" /> <img src="screenshots/Drak Mode/d3.png" height="420px" /> <img src="screenshots/Drak Mode/d5.png" height="420px" />  
 
 ## README.md References
 1. [Shopify-flutter-demo/README.md design](https://github.com/mehulmk/Shopify-flutter-demo/tree/main)
