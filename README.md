@@ -68,7 +68,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## User Hanbook
 ### 0. demo
-<img src="screenshots/demo.gif" height="450px" />   
+<img src="screenshots/demo.gif" width="800px"/>   
 
 ### 1. All Tasks page
 
