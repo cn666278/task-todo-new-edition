@@ -66,5 +66,46 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## README.md References:
+## User Hanbook
+### 0. demo
+<img src="screenshots/all task page/all task 1.png" height="450px" />   
+
+### 1. All Tasks page
+
+Progress logic(on the uper right corner):
+```
+progress(%) = completed tasks / all tasks
+```
+
+<img src="screenshots/all task page/all task 1.png" height="450px" /> <img src="screenshots/all task page/alltask2.png" height="450px" /> <img src="screenshots/all task page/all task 3.png" height="450px" />
+
+### 2. Calendar page
+<img src="screenshots/Calendar Page/c1.png" height="450px" /> <img src="screenshots/Calendar Page/c2.png" height="450px" />
+
+### 3. Highlights page
+
+Progress logic(on the uper right corner):
+```
+progress(%) = completed star tasks / all star tasks
+```
+
+<img src="screenshots/Highlight Page/h1.png" height="450px" /> <img src="screenshots/Highlight Page/h2.png" height="450px" /> <img src="screenshots/Highlight Page/h3.png" height="450px" />
+
+### 4. Report page
+
+Report logic:
+```
+efficiency(%) = completed tasks / all tasks
+```
+
+<img src="screenshots/Report Page/r1.png" height="450px" /> <img src="screenshots/Report Page/r2.png" height="450px" /> <img src="screenshots/Report Page/r3.png" height="450px" /> <img src="screenshots/Report Page/r4.png" height="450px" /> 
+
+Click the button on the uper right corner to change the style of displaying.  
+
+<img src="screenshots/Report Page/r1.png" height="450px" /> <img src="screenshots/Report Page/r6.png" height="450px" /> <img src="screenshots/Report Page/r5.png" height="450px" />
+
+## README.md References
 1. [Shopify-flutter-demo/README.md design](https://github.com/mehulmk/Shopify-flutter-demo/tree/main)
+
+## License
+This project is licensed under the GPLv3 License - see the LICENSE.md file for details.
