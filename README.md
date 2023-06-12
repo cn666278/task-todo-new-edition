@@ -71,6 +71,7 @@ samples, guidance on mobile development, and a full API reference.
 <img src="screenshots/demo.gif" width="800px"/>   
 
 ### 1. All Tasks page
+This page is used to display all the tasks created by the current user, and you can freely view different types of tasks according to the three categories(Todo, Completed, All).  
 
 Progress logic(on the uper right corner):
 ```
@@ -80,9 +81,12 @@ progress(%) = completed tasks / all tasks
 <img src="screenshots/all task page/all task 1.png" height="450px" /> <img src="screenshots/all task page/alltask2.png" height="450px" /> <img src="screenshots/all task page/all task 3.png" height="450px" />
 
 ### 2. Calendar page
+This page is used to display all tasks by date that the user has selected for the current date.  
+
 <img src="screenshots/Calendar Page/c1.png" height="450px" /> <img src="screenshots/Calendar Page/c2.png" height="450px" />
 
 ### 3. Highlights page
+This page is used to display all your star tasks, and you can freely switch task types according to 3 different categories(Todo, Completed, All).
 
 Progress logic(on the uper right corner):
 ```
@@ -92,6 +96,9 @@ progress(%) = completed star tasks / all star tasks
 <img src="screenshots/Highlight Page/h1.png" height="450px" /> <img src="screenshots/Highlight Page/h2.png" height="450px" /> <img src="screenshots/Highlight Page/h3.png" height="450px" />
 
 ### 4. Report page
+* This page is used to generate a completion report of the current task, users can evaluate the completion of the current task according to the displayed data, and better arrange their tasks.
+* And provides four categories (all, 1 day, 7 days, this month) to facilitate users to view analysis reports according to different time length.
+* A toggle style button is provided in the upper right corner, which users can click to change the progress indicator display.
 
 Report logic:
 ```
@@ -126,9 +133,13 @@ You can set the priority of our task by right silding on our task card (by `Star
 <img src="screenshots/s8.png" height="450px" /> 
 
 ### 9. Search tasks  
+You can search the task by enter the title of that task.
+
 <img src="screenshots/Search Task/s8.png" height="420px" /> <img src="screenshots/Search Task/sss1.png" height="420px" /> <img src="screenshots/Search Task/sss2.png" height="420px" /> <img src="screenshots/Search Task/s9.png" height="420px" />  
 
 ### 10. Theme Mode Switch    
+Click the Sun/Moon icon on the upper right corner to change the Theme Mode(Light/Dark).
+
 <img src="screenshots/Drak Mode/all task 1.png" height="420px" /> <img src="screenshots/Drak Mode/d2.png" height="420px" /> <img src="screenshots/Drak Mode/d3.png" height="420px" /> <img src="screenshots/Drak Mode/d5.png" height="420px" />  
 
 ## README.md References
