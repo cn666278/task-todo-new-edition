@@ -68,7 +68,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## User Hanbook
 ### 0. demo
-<img src="screenshots/all task page/all task 1.png" height="450px" />   
+<img src="screenshots/demo.gif" width="800px"/>   
 
 ### 1. All Tasks page
 
@@ -98,11 +98,38 @@ Report logic:
 efficiency(%) = completed tasks / all tasks
 ```
 
-<img src="screenshots/Report Page/r1.png" height="450px" /> <img src="screenshots/Report Page/r2.png" height="450px" /> <img src="screenshots/Report Page/r3.png" height="450px" /> <img src="screenshots/Report Page/r4.png" height="450px" /> 
+<img src="screenshots/Report Page/r1.png" height="420px" /> <img src="screenshots/Report Page/r2.png" height="420px" /> <img src="screenshots/Report Page/r3.png" height="420px" /> <img src="screenshots/Report Page/r4.png" height="420px" /> 
 
 Click the button on the uper right corner to change the style of displaying.  
 
 <img src="screenshots/Report Page/r1.png" height="450px" /> <img src="screenshots/Report Page/r6.png" height="450px" /> <img src="screenshots/Report Page/r5.png" height="450px" />
+
+### 5. Task Details
+
+You can see all the task details by clicking the `Details` button in the corresponding task (the bottom bar of the pop-up below), and you can freely modify the content of the task, and finally update the current task content through the `Update Task` button.
+
+<img src="screenshots/Detail page/ss1.png" height="450px" /> <img src="screenshots/Detail page/detail.png" height="450px" />
+
+### 6. Task Completed
+
+You can edit the state of task by clicking the `Task Completed` or `Undo Completed` button in the corresponding task (the bottom bar pops up below), and the status of the task(`TODO` or `COMPLETED`) will be displayed on the far right of the task card when the modification is completed.  
+
+<img src="screenshots/Task complted/ss1.png" height="450px" /> <img src="screenshots/Task complted/ssundo.png" height="450px" /> <img src="screenshots/Task complted/after complted.png" height="450px" />
+
+### 7. Star Task
+
+You can set the priority of our task by right silding on our task card (by `Star` or `Undo Star`). The task set as 'Star Task' will have a star added to the top left corner of the task card and displayed in the Highlights page.
+
+<img src="screenshots/s3.png" height="450px" /> <img src="screenshots/s4.png" height="450px" /> 
+
+### 8. Sile bar menu  
+<img src="screenshots/s8.png" height="450px" /> 
+
+### 9. Search tasks  
+<img src="screenshots/Search Task/s8.png" height="420px" /> <img src="screenshots/Search Task/sss1.png" height="420px" /> <img src="screenshots/Search Task/sss2.png" height="420px" /> <img src="screenshots/Search Task/s9.png" height="420px" />  
+
+### 10. Theme Mode Switch    
+<img src="screenshots/Drak Mode/all task 1.png" height="420px" /> <img src="screenshots/Drak Mode/d2.png" height="420px" /> <img src="screenshots/Drak Mode/d3.png" height="420px" /> <img src="screenshots/Drak Mode/d5.png" height="420px" />  
 
 ## README.md References
 1. [Shopify-flutter-demo/README.md design](https://github.com/mehulmk/Shopify-flutter-demo/tree/main)
