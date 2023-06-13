@@ -20,7 +20,7 @@ A new Flutter project.
 5. Running the project   
 
 ### Prototype (GUI design)
-[![N|Solid](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?node-id=204%3A1086&scaling=scale-down&page-id=0%3A1&starting-point-node-id=204%3A1086&show-proto-sidebar=1)  
+[![N|Solid](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?type=design&node-id=729-5182&scaling=scale-down&page-id=0%3A1&starting-point-node-id=729%3A5182)
 
 ### Database
 `Sqflite` is a lightweight relational database, similar to `SQLite` in iOS and Android  
@@ -67,8 +67,22 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## User Hanbook
-### 0. demo
-<img src="screenshots/demo.gif" width="800px"/>   
+### demo vedio
+<img src="screenshots/demo.gif" width="800px"/>
+
+### 0. Add Task
+You can create your task by clicking the add icon in the middle of the bottom navigation bar.  
+
+On the create page, you can fill
+* title of the task (you need to fill in at least the title of the task to create the task, otherwise it will warning: information incomplete),
+* Note
+* Task Date
+* Task start time
+* Remind time
+* Set whether the task is repeated
+* Select the theme color of the task card
+
+<img src="screenshots/add1.png" height="420px"/> <img src="screenshots/add2.png" height="420px"/> <img src="screenshots/add3.png" height="420px"/> <img src="screenshots/add4.png" height="420px"/> 
 
 ### 1. All Tasks page
 This page is used to display all the tasks created by the current user, and you can freely view different types of tasks according to the three categories(Todo, Completed, All).  
