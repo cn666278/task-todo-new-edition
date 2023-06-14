@@ -4,7 +4,7 @@ Please fill out our questionnaire to make our software better
 
 [Tasking User feedback questionnaire](https://forms.office.com/r/L8TqrCBV3d)  
 
-<img src="screenshots/form.png"/>
+<img src="screenshots/form.png" height="300px"/>
 
 # todo_app_new_edition
 
