@@ -15,8 +15,16 @@ A new Flutter project.
 ## Getting Started
 
 ### Description and main functions  
+`Tasking: An app for personal task management`
 
-[The planning design of app](https://github.com/cn666278/task-todo-new-edition/blob/main/FYP_Final.edited.docx)  
+* Easily create tasks, add remarks, and set reminders for recurring tasks.
+* Effortlessly view, update, and edit tasks while seamlessly searching through your personalized task list.
+* Our vibrant and intuitive UI enhances your task display, making it visually appealing and engaging.
+* Experience convenient features like time scheduling, task completion analysis, and the option to switch between Dark and Light theme modes.
+* Tasking is built with Flutter + GetX + sqflite, ensuring a seamless and localized task management experience.
+Take full control of your tasks and stay organized with Tasking!
+
+[The planning design of app(proposal)](https://github.com/cn666278/task-todo-new-edition/blob/main/FYP_Final.edited.docx)  
 
 [Main functions design](https://github.com/cn666278/task-todo-new-edition/blob/main/Flutter%20Project%20Note.docx)  
 
@@ -27,7 +35,7 @@ A new Flutter project.
 4. Link to your devices(virtual machine or physical machine)
 5. Running the project   
 
-### Prototype (GUI design)
+### Prototype (GUI design) ！原型设计请点击下方Figma按钮！
 [![N|Solid](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?type=design&node-id=729-5182&scaling=scale-down&page-id=0%3A1&starting-point-node-id=729%3A5182)
 
 ### Database
