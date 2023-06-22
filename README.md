@@ -37,7 +37,9 @@ Take full control of your tasks and stay organized with Tasking!
 4. Link to your devices(virtual machine or physical machine)
 5. Running the project   
 
-### Prototype (GUI design) ！原型设计请点击下方Figma按钮！
+### Prototype (GUI design) 
+！原型设计请点击下方Figma按钮！  
+
 [![N|Solid](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/uJzJKBsqYq6PJWWApKvH8D/Task-todo-app?type=design&node-id=729-5182&scaling=scale-down&page-id=0%3A1&starting-point-node-id=729%3A5182)
 
 ### Database
