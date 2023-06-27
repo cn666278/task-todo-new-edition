@@ -23,7 +23,7 @@ A new Flutter project.
 * Effortlessly view, update, and edit tasks while seamlessly searching through your personalized task list.
 * Our vibrant and intuitive UI enhances your task display, making it visually appealing and engaging.
 * Experience convenient features like time scheduling, task completion analysis, and the option to switch between Dark and Light theme modes.
-* Tasking is built with Flutter + GetX + sqflite, ensuring a seamless and localized task management experience.
+* Tasking is built with Flutter + GetX + SQFLite, ensuring a seamless and localized task management experience.
 Take full control of your tasks and stay organized with Tasking!
 
 [The planning design of app(proposal)](https://github.com/cn666278/task-todo-new-edition/blob/main/FYP_Final.edited.docx)  
@@ -74,7 +74,7 @@ Dart API Package:
 ## Others
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Here are a few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
@@ -107,7 +107,7 @@ On the create page, you can fill
 ### 1. All Tasks page
 This page is used to display all the tasks created by the current user, and you can freely view different types of tasks according to the three categories(Todo, Completed, All).  
 
-Progress logic(on the uper right corner):
+Progress logic(on the upper right corner):
 ```
 progress(%) = completed tasks / all tasks
 ```
@@ -122,7 +122,7 @@ This page is used to display all tasks by date that the user has selected for th
 ### 3. Highlights page
 This page is used to display all your star tasks, and you can freely switch task types according to 3 different categories(Todo, Completed, All).
 
-Progress logic(on the uper right corner):
+Progress logic(on the upper right corner):
 ```
 progress(%) = completed star tasks / all star tasks
 ```
@@ -131,8 +131,8 @@ progress(%) = completed star tasks / all star tasks
 
 ### 4. Report page
 * This page is used to generate a completion report of the current task, users can evaluate the completion of the current task according to the displayed data, and better arrange their tasks.
-* And provides four categories (all, 1 day, 7 days, this month) to facilitate users to view analysis reports according to different time length.
-* A toggle style button is provided in the upper right corner, which users can click to change the progress indicator display.
+* And provides four categories (all, 1 day, 7 days, this month) to facilitate users to view analysis reports according to different time lengths.
+* A toggle-style button is provided in the upper right corner, which users can click to change the progress indicator display.
 
 Report logic:
 ```
@@ -141,7 +141,7 @@ efficiency(%) = completed tasks / all tasks
 
 <img src="screenshots/Report Page/r1.png" height="420px" /> <img src="screenshots/Report Page/r2.png" height="420px" /> <img src="screenshots/Report Page/r3.png" height="420px" /> <img src="screenshots/Report Page/r4.png" height="420px" /> 
 
-Click the button on the uper right corner to change the style of displaying.  
+Click the button on the upper right corner to change the style of displaying.  
 
 <img src="screenshots/Report Page/r1.png" height="450px" /> <img src="screenshots/Report Page/r6.png" height="450px" /> <img src="screenshots/Report Page/r5.png" height="450px" />
 
@@ -153,13 +153,13 @@ You can see all the task details by clicking the `Details` button in the corresp
 
 ### 6. Task Completed
 
-You can edit the state of task by clicking the `Task Completed` or `Undo Completed` button in the corresponding task (the bottom bar pops up below), and the status of the task(`TODO` or `COMPLETED`) will be displayed on the far right of the task card when the modification is completed.  
+You can edit the state of the task by clicking the `Task Completed` or `Undo Completed` button in the corresponding task (the bottom bar pops up below), and the status of the task(`TODO` or `COMPLETED`) will be displayed on the far right of the task card when the modification is completed.  
 
 <img src="screenshots/Task complted/ss1.png" height="450px" /> <img src="screenshots/Task complted/ssundo.png" height="450px" /> <img src="screenshots/Task complted/after complted.png" height="450px" />
 
 ### 7. Star Task
 
-You can set the priority of our task by right silding on our task card (by `Star` or `Undo Star`). The task set as 'Star Task' will have a star added to the top left corner of the task card and displayed in the Highlights page.
+You can set the priority of our task by right sliding on our task card (by `Star` or `Undo Star`). The task set as 'Star Task' will have a star added to the top left corner of the task card and displayed on the Highlights page.
 
 <img src="screenshots/s3.png" height="450px" /> <img src="screenshots/s4.png" height="450px" /> 
 
@@ -167,7 +167,7 @@ You can set the priority of our task by right silding on our task card (by `Star
 <img src="screenshots/s8.png" height="450px" /> 
 
 ### 9. Search tasks  
-You can search the task by enter the title of that task.
+You can search for the task by entering the title of that task.
 
 <img src="screenshots/Search Task/s8.png" height="420px" /> <img src="screenshots/Search Task/sss1.png" height="420px" /> <img src="screenshots/Search Task/sss2.png" height="420px" /> <img src="screenshots/Search Task/s9.png" height="420px" />  
 
