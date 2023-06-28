@@ -14,10 +14,10 @@ class DBHelper {
 
   static final db = MysqlUtils(
     settings: {
-      'host': '192.168.88.1',
+      'host': '192.xxx.xx.x',
       'port': 3306,
       'user': 'root',
-      'password': '130623',
+      'password': 'xxxx',
       'db': 'tasks',
       'maxConnections': 10,
       'secure': false,

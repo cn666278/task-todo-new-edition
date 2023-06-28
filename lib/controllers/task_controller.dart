@@ -12,7 +12,6 @@ class TaskController extends GetxController {
   var taskList = <Task>[].obs;
   var taskDetailList = <Task>[].obs;
 
-  // await 异步处理
   Future<int> addTask({Task? task}) async {
     return await DBHelper.insert(task!);
   }
@@ -26,9 +25,7 @@ class TaskController extends GetxController {
   // get all the data from table
   void getTasks() async {
     List<Map<String, dynamic>> tasks = await DBHelper.query();
-    // print(tasks);
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-    // print(taskList);
   }
 
   void delete(Task task) async {
