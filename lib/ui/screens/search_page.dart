@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
@@ -12,7 +10,6 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/report.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
-import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/ui/details.dart';
 import 'package:todo_app_new_edition/ui/widgets/button.dart';
 import 'package:todo_app_new_edition/ui/widgets/task_tile/task_tile.dart';

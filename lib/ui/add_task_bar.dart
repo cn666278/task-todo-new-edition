@@ -80,22 +80,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           color: Colors.grey,
                         )),
                   )),
-                  // SizedBox(
-                  //   width: 14,
-                  // ),
-                  // Expanded(
-                  //     child: MyInputField(
-                  //   title: "End Time",
-                  //   hint: _endTime,
-                  //   widget: IconButton(
-                  //       onPressed: () {
-                  //         _getTimeFromUser(isStartTime: false);
-                  //       },
-                  //       icon: const Icon(
-                  //         Icons.access_time_rounded,
-                  //         color: Colors.grey,
-                  //       )),
-                  // )),
                 ],
               ),
               MyInputField(

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:todo_app_new_edition/models/task.dart';
-import 'package:todo_app_new_edition/ui/notified_page.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 
 class NotifyHelper {
@@ -101,15 +100,12 @@ class NotifyHelper {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    // 获取当前时间
     var now = tz.TZDateTime.now(tz.local);
-    print("tz.local:");
-    print(tz.local);
-    // 设置每天晚上7点提醒
+
     var scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
     if (scheduledDate.isBefore(now)) {
-      // 如果当前时间已经过了晚上7点，则将提醒时间设为明天的晚上7点
+      // if the time is after today 7pm, then pass to next day 7pm
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
@@ -127,7 +123,6 @@ class NotifyHelper {
     );
   }
 
-  // not used so far
   void showCustomNotificationDialog(String? title, String? note, Task task) {
     showDialog(
       context: Get.overlayContext!,
@@ -320,24 +315,6 @@ class NotifyHelper {
         androidAllowWhileIdle: true);
   }
 
-  // NEW ADD FUNCTIONS(not used so far)
-  Future<void> _scheduleDailyTenAMLastYearNotification() async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'daily scheduled notification title',
-        'daily scheduled notification body',
-        _nextInstanceOfTenAMLastYear(),
-        const NotificationDetails(
-          android: AndroidNotificationDetails('daily notification channel id',
-              'daily notification channel name',
-              channelDescription: 'daily notification description'),
-        ),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
-  }
-
   Future<void> _scheduleWeeklyTenAMNotification() async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
@@ -365,26 +342,9 @@ class NotifyHelper {
     return scheduledDate;
   }
 
-  tz.TZDateTime _nextWeeklyInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 7));
-    }
-    return scheduledDate;
-  }
-
   tz.TZDateTime _nextInstanceOfTenAMLastYear() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     return tz.TZDateTime(tz.local, now.year - 1, now.month, now.day, 10);
   }
 
-  tz.TZDateTime _nextInstanceOfMondayTenAM() {
-    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
-    while (scheduledDate.weekday != DateTime.monday) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
 }

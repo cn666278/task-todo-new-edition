@@ -1,12 +1,10 @@
 import 'package:mysql1/mysql1.dart';
 
-// 192.168.137.1
-// 192.168.153.1
 
 class Mysql {
-  static String host = '192.168.88.1', // ?? localhost ?? http://192.168.88.1/
+  static String host = '192.xxx.xx.x',
                 user = 'root',
-                password = '130623',
+                password = 'xxxx',
                 db = 'tasks';
   static int port = 3306;
 

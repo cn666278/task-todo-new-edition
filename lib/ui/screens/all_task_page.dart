@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
-import 'package:todo_app_new_edition/db/db_helper.dart';
-import 'package:todo_app_new_edition/models/mysql.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/services/notification_services.dart';
 import 'package:todo_app_new_edition/services/theme_services.dart';
@@ -445,24 +443,6 @@ class _AllTaskPageState extends State<AllTaskPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // margin left
               children: [
-                // todo ? StepProgressIndicator
-                // StepProgressIndicator(
-                //   totalSteps: 100,
-                //   currentStep: 90,
-                //   // currentStep: homeCtrl.isTodoEmpty(task) ? 0 : homeCtrl.getDoneTodo(task),
-                //   size: 5,
-                //   padding: 0,
-                //   selectedGradientColor: LinearGradient(
-                //     begin: Alignment.topLeft,
-                //     end: Alignment.bottomRight,
-                //     colors: [Colors.blueAccent.withOpacity(0.5),Colors.blueAccent],
-                //   ),
-                //   unselectedGradientColor: const LinearGradient(
-                //     begin: Alignment.topLeft,
-                //     end: Alignment.bottomRight,
-                //     colors: [Colors.white, Colors.white],
-                //   ),
-                // ),
                 // you can change the time showing format by DateFormat.yMMMd()
                 Text(
                   DateFormat.MMMEd().format(DateTime.now()),
@@ -502,13 +482,6 @@ class _AllTaskPageState extends State<AllTaskPage> {
               ),
             ),
           ),
-          // MyButton(
-          //     // TODO Task progress design display
-          //     label: " Progress",
-          //     onTap: () async {
-          //       await Get.to(() => AddTaskPage());
-          //       _taskController.getTasks();
-          //     })
         ],
       ),
     );

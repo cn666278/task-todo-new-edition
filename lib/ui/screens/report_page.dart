@@ -10,7 +10,6 @@ import 'package:todo_app_new_edition/ui/screens/side_bar_entry/all_task.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/calendar.dart';
 import 'package:todo_app_new_edition/ui/screens/side_bar_entry/highlight.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/navigation.dart';
-import 'package:todo_app_new_edition/ui/add_task_bar.dart';
 import 'package:todo_app_new_edition/utils/constants.dart';
 import 'package:todo_app_new_edition/utils/icons.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
@@ -335,7 +334,6 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
           ),
         ],
       ),
-      // TODO - WE DONT NEED THE ADD TASK IN REPORT PAGE
       floatingActionButton: FloatingActionButton(
         backgroundColor: menuIconColor,
         onPressed: () async {
