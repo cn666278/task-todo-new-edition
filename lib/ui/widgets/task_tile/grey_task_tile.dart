@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,7 +9,7 @@ import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
-/* This file used for the tasks list UI design */
+/* This file used for the tasks list(completed category) UI design */
 class GreyTaskTile extends StatelessWidget {
   final Task? task;
 
@@ -69,8 +70,10 @@ class GreyTaskTile extends StatelessWidget {
                       ? Row(
                     children: [
                       Icon(
-                        Icons.star,
+                        FlutterIcons.star_face_mco,
+                        // Icons.star,
                         color: Colors.white,
+                        size: 22,
                       ),
                       SizedBox(
                         width: 10,

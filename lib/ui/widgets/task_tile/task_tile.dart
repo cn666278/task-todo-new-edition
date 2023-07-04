@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -97,8 +98,10 @@ class TaskTile extends StatelessWidget {
                       ? Row(
                           children: [
                             Icon(
-                              Icons.star,
-                              color: Colors.white,
+                              FlutterIcons.star_face_mco,
+                              // Icons.star,
+                              color: Colors.yellow[500],
+                              size: 22,
                             ),
                             SizedBox(
                               width: 10,
@@ -180,8 +183,6 @@ class TaskTile extends StatelessWidget {
     );
   }
 
-  // TODO -- starTask()
-  // TODO -- Star -> unStar animate
   void starTask(BuildContext context) {
     final taskController = Get.put(TaskController());
     taskController.markTaskStar(task!.id!); // mark star

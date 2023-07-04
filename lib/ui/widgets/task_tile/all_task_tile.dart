@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/controllers/task_controller.dart';
 import 'package:todo_app_new_edition/models/task.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
-/* This file used for the tasks list UI design */
+/* This file used for the tasks list(in all category) UI design */
 class AllTaskTile extends StatelessWidget {
   final Task? task;
 
@@ -23,34 +22,6 @@ class AllTaskTile extends StatelessWidget {
       child: Slidable(
         // Specify a key if the Slidable is dismissible.
         key: const ValueKey(0),
-
-        // The start action pane is the one at the left or the top side.
-        // startActionPane: ActionPane(
-        //   // A motion is a widget used to control how the pane animates.
-        //   motion: const ScrollMotion(),
-        //
-        //   // A pane can dismiss the Slidable.
-        //   dismissible: DismissiblePane(onDismissed: () {}),
-        //
-        //   // All actions are defined in the children parameter.
-        //   children: const [
-        //     // A SlidableAction can have an icon and/or a label.
-        //     SlidableAction(
-        //       onPressed: doNothing,
-        //       backgroundColor: Color(0xFFFE4A49),
-        //       foregroundColor: Colors.white,
-        //       icon: Icons.delete,
-        //       label: 'Delete',
-        //     ),
-        //     SlidableAction(
-        //       onPressed: doNothing,
-        //       backgroundColor: Color(0xFF21B7CA),
-        //       foregroundColor: Colors.white,
-        //       icon: Icons.share,
-        //       label: 'Share',
-        //     ),
-        //   ],
-        // ),
 
         // The end action pane is the one at the right or the bottom side.
         endActionPane: ActionPane(
@@ -97,9 +68,14 @@ class AllTaskTile extends StatelessWidget {
                       ? Row(
                     children: [
                       Icon(
-                        Icons.star,
-                        color: Colors.white,
+                        FlutterIcons.star_face_mco,
+                        color: Colors.yellow[500],
+                        size: 22,
                       ),
+                      // Icon(
+                      //   Icons.star,
+                      //   color: Colors.white,
+                      // ),
                       SizedBox(
                         width: 10,
                       ),
@@ -180,8 +156,6 @@ class AllTaskTile extends StatelessWidget {
     );
   }
 
-  // TODO -- starTask()
-  // TODO -- Star -> unStar animate
   void starTask(BuildContext context) {
     final taskController = Get.put(TaskController());
     taskController.markTaskStar(task!.id!); // mark star

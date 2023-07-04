@@ -59,6 +59,7 @@ dependencies:
   step_progress_indicator:
 #  flutter_progress_button: '^1.0.0'
   url_launcher:
+  flutter_icons: ^1.1.0
 
 dev_dependencies:
   flutter_test:

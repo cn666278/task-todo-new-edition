@@ -34,7 +34,7 @@ class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
 
   // by default first item will be selected
   int selectedIndex = 0;
-  List<String> categories = ['All', '1 day', '7 day', 'This Month'];
+  List<String> categories = ['All', 'Today', '7 day', 'This Month'];
 
   void onIndexChanged(int index) {
     setState(() {
