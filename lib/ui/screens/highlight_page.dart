@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +33,7 @@ class HighlightPage extends StatefulWidget {
 class _HighlightPageState extends State<HighlightPage> {
   final _taskController = Get.put(TaskController());
   var notifyHelper;
-  int currentIndex = 0;
+  int currentIndex = 2;
 
   // by default first item will be selected
   int selectedIndex = 0;
@@ -191,7 +192,7 @@ class _HighlightPageState extends State<HighlightPage> {
               // reminder logic
               if (task.repeat == "Once") {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -199,7 +200,7 @@ class _HighlightPageState extends State<HighlightPage> {
                     task);
               } else if (task.repeat == "Daily") {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.createDailyReminder(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -207,7 +208,7 @@ class _HighlightPageState extends State<HighlightPage> {
                     task);
               } else if (task.repeat == 'Weekly') {
                 DateTime date =
-                DateFormat.jm().parse(task.startTime.toString());
+                    DateFormat.jm().parse(task.startTime.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.repeatWeeklyNotification(
                     int.parse(myTime.toString().split(":")[0]), // hours
@@ -426,9 +427,13 @@ class _HighlightPageState extends State<HighlightPage> {
               crossAxisAlignment: CrossAxisAlignment.start, // margin left
               children: [
                 // you can change the time showing format by DateFormat.yMMMd()
-                Text(
-                  DateFormat.EEEE().format(DateTime.now()),
-                  style: subHeadingStyle,
+                // Text(
+                //   DateFormat.EEEE().format(DateTime.now()),
+                //   style: subHeadingStyle,
+                // ),
+                Icon(
+                  FlutterIcons.star_faw,
+                  color: Colors.yellow,
                 ),
                 Text(
                   "Star Task",

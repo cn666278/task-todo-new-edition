@@ -36,7 +36,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   // NEW ADDED for menu bar
   final PageController pageController = PageController();
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   void onIndexChanged(int index) {
     setState(() {

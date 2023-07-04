@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_new_edition/ui/widgets/btm_nav/icon.dart';
 import 'package:todo_app_new_edition/utils/theme.dart';
 
-
 class BuildNavigation extends StatelessWidget {
   final int currentIndex;
   final List<NavigationItemModel> items;
@@ -21,82 +20,59 @@ class BuildNavigation extends StatelessWidget {
     var ws = <Widget>[];
     var theme = Theme.of(context).bottomNavigationBarTheme;
     for (var i = 0; i < items.length; i++) {
-      // var labelStyle = currentIndex == i
-      //     ? theme.selectedLabelStyle
-      //     : theme.unselectedLabelStyle;
       var color = currentIndex == i
           ? theme.selectedItemColor
           : theme.unselectedItemColor;
       var gap = (items.length / 2).ceil();
       if (gap == i) ws.add(const SizedBox(width: 60));
-      ws.add(Expanded(
-        child: MaterialButton(
-          elevation: 0,
-          padding: const EdgeInsets.all(0),
-          onPressed: () => onTap(i),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  SvgIconWidget(
-                    items[i].icon,
-                    size: 20,
-                    color: currentIndex != i ? color : null,
+      ws.add(
+        Expanded(
+          child: GestureDetector(
+            onTap: () => onTap(i),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: EdgeInsets.all(currentIndex == i ? 5.0 : 0.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
+                    color: currentIndex == i ? bluishClr : null,
                   ),
-                  Positioned(
-                    right: -8,
-                    top: -5,
-                    child: items[i].count > 0
-                        ? Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 3,
-                            ),
-                            height: 16,
-                            constraints: const BoxConstraints(
-                              minWidth: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              items[i].count <= 99
-                                  ? items[i].count.toString()
-                                  : '99+',
-                              style: GoogleFonts.lato(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        : Container(),
+                  child: Transform.scale(
+                    scale: currentIndex == i ? 1.1 : 1.0,
+                    child: Column(
+                      children: [
+                        SvgIconWidget(
+                          items[i].icon,
+                          size: 20,
+                          color: currentIndex != i ? color : Colors.white,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          items[i].label,
+                          maxLines: 1,
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: currentIndex != i ? bluishClr : Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Text(
-                items[i].label,
-                maxLines: 1,
-                style: GoogleFonts.lato(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: bluishClr,
-                  // color: Colors.black,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ));
+      );
     }
     return BottomAppBar(
-      color: theme.backgroundColor, // bottom menu color
-      shape: const CircularNotchedRectangle(), // 中间凹下的形状
-      notchMargin: 10, // 凹下的尺寸
+      color: theme.backgroundColor,
+      shape: const CircularNotchedRectangle(),
+      notchMargin: 10,
       child: SizedBox(
         height: kBottomNavigationBarHeight,
         child: Row(children: ws),

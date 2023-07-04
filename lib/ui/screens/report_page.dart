@@ -24,7 +24,7 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> with TickerProviderStateMixin {
   final _taskController = Get.put(TaskController());
   var notifyHelper;
-  int currentIndex = 0;
+  int currentIndex = 3;
   int totalTask = 0;
   int completedTask = 0;
   bool isCircular = true;
