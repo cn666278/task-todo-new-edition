@@ -16,6 +16,9 @@ A new Flutter project.
 
 ## Getting Started
 
+### Download in PlayStore
+[Tasking - App Download](https://play.google.com/store/apps/details?id=com.ejadlab.tasking)
+
 ### Description and main functions  
 `Tasking: An app for personal task management`
 
